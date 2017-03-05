@@ -41,5 +41,6 @@ public class FirstScreenActivity extends AppCompatActivity implements IFirstScre
     @Override
     public void startUiLogin(AccountType type) {
         startActivity(LoginActivity.getLoginIntent(this, type));
+        finish();
     }
 }

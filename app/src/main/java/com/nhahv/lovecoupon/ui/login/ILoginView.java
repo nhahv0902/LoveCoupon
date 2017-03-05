@@ -5,4 +5,5 @@ package com.nhahv.lovecoupon.ui.login;
  * <></>
  */
 public interface ILoginView {
+    void startUiShopMain();
 }
