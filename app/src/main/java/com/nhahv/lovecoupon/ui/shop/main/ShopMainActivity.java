@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
+import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.ui.shop.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.shop.notification.NotificationFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
@@ -80,6 +81,7 @@ public class ShopMainActivity extends AppCompatActivity
             case R.id.action_history:
                 break;
             case R.id.action_share:
+                addFragment(ShareFragment.newInstance(), R.string.menu_share);
                 break;
             case R.id.action_exit:
                 break;

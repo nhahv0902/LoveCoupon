@@ -6,20 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.databinding.FragmentShareBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ShareFragment extends Fragment {
-    public ShareFragment() {
-        // Required empty public constructor
+    private FragmentShareBinding mBinding;
+
+    public static Fragment newInstance() {
+        return new ShareFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_share, container, false);
+        mBinding = FragmentShareBinding.inflate(inflater, container, false);
+        mBinding.setViewModel(new ShareViewModel(getActivity()));
+        return mBinding.getRoot();
     }
 }
