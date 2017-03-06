@@ -6,6 +6,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +17,8 @@ import android.view.MenuItem;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
+import com.nhahv.lovecoupon.ui.shop.notification.NotificationFragment;
+import com.nhahv.lovecoupon.util.ActivityUtil;
 
 public class ShopMainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, IShopMain {
@@ -46,16 +50,18 @@ public class ShopMainActivity extends AppCompatActivity
         NavHeaderShopMainBinding bindHeader =
             NavHeaderShopMainBinding.inflate(LayoutInflater.from(mBinding.navView.getContext()));
         mBinding.navView.addHeaderView(bindHeader.getRoot());
-        bindHeader.setImage("http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5");
+        bindHeader
+            .setImage("http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");
         bindHeader.setName("Hoang Van Nha");
         bindHeader.executePendingBindings();
+        addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
     }
 
     @Override
     public void onBackPressed() {
-       /* if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else super.onBackPressed();*/
+        } else super.onBackPressed();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -63,8 +69,10 @@ public class ShopMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_coupon:
+                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
                 break;
             case R.id.action_notification:
+                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
                 break;
             case R.id.action_settings:
                 break;
@@ -77,7 +85,12 @@ public class ShopMainActivity extends AppCompatActivity
             default:
                 break;
         }
-//        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
+        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void addFragment(Fragment fragment, int title) {
+        ActivityUtil.addFragment(getSupportFragmentManager(), fragment, R.id.frame_layout);
+        setTitle(title);
     }
 }

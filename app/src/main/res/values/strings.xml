@@ -25,4 +25,8 @@
     <string name="menu_history">History</string>
     <string name="menu_share">Share</string>
     <string name="menu_log_out">Logout</string>
+
+    <string name="title_like">Like</string>
+    <string name="title_share">Share</string>
+    <string name="title_more">More</string>
 </resources>

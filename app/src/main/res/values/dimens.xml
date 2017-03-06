@@ -26,4 +26,9 @@
     <dimen name="sp_17">17sp</dimen>
     <dimen name="size_82">82sp</dimen>
     <dimen name="dp_1">1dp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_2">2sp</dimen>
 </resources>
