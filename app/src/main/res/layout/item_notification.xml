@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_4"
         app:cardCornerRadius="@dimen/dp_4"
-        app:cardElevation="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_2"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -52,6 +52,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dp_16"
                     android:paddingRight="@dimen/dp_16">
+
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/text_name_shop"
@@ -179,14 +180,19 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
+                    android:gravity="bottom|center_horizontal"
                     android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_favorite_grey_24px"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawablePadding="@dimen/dp_4"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:padding="@dimen/dp_4"
                         android:text="@string/title_like"/>
                 </LinearLayout>
 
@@ -194,14 +200,19 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
+                    android:gravity="bottom|center_horizontal"
                     android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_share_notification"/>
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawablePadding="@dimen/dp_4"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:padding="@dimen/dp_4"
                         android:text="@string/title_share"/>
                 </LinearLayout>
 

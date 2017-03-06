@@ -44,8 +44,6 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
     private ColorFilter mColorFilter;
     private boolean mReady;
     private boolean mSetupPending;
-    private boolean mBorderOverlay;
-    private boolean mDisableCircularTransformation;
 
     public CircleImageView(Context context) {
         super(context);
@@ -92,10 +90,6 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mDisableCircularTransformation) {
-            super.onDraw(canvas);
-            return;
-        }
         if (mBitmap == null) return;
         if (mFillColor != Color.TRANSPARENT) {
             canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius,
@@ -217,8 +211,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
     }
 
     private void initializeBitmap() {
-        if (mDisableCircularTransformation) mBitmap = null;
-        else mBitmap = getBitmapFromDrawable(getDrawable());
+        mBitmap = getBitmapFromDrawable(getDrawable());
         setup();
     }
 
@@ -248,9 +241,6 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f,
             (mBorderRect.width() - mBorderWidth) / 2.0f);
         mDrawableRect.set(mBorderRect);
-        if (!mBorderOverlay && mBorderWidth > 0) {
-            mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f);
-        }
         mDrawableRadius = Math.min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f);
         applyColorFilter();
         updateShaderMatrix();

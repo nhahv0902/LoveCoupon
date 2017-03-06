@@ -22,7 +22,6 @@ public final class BindingUtil {
             .load(url)
             .error(error)
             .placeholder(error)
-            .thumbnail(0.5f)
             .into(view);
     }
 

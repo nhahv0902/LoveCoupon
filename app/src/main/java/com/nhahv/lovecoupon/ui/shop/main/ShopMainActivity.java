@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
+import com.nhahv.lovecoupon.ui.shop.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.shop.notification.NotificationFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 
@@ -54,7 +55,7 @@ public class ShopMainActivity extends AppCompatActivity
             .setImage("http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");
         bindHeader.setName("Hoang Van Nha");
         bindHeader.executePendingBindings();
-        addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
+        addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
     }
 
     @Override
@@ -69,7 +70,7 @@ public class ShopMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_coupon:
-                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
+                addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
                 break;
             case R.id.action_notification:
                 addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
