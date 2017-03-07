@@ -5,12 +5,16 @@ package com.nhahv.lovecoupon.util;
  * <></>
  */
 public final class Constant {
-    public static class BundleConstant {
+    public static final class BundleConstant {
         public static final String BUNDLE_NOTIFICATION = "BUNDLE_NOTIFICATION";
         public static final String BUNDLE_ACCOUNT_TYPE = "BUNDLE_ACCOUNT_TYPE";
     }
 
-    public class DataConstant {
+    public static final class RequestConstant {
+        public static final int REQUEST_GOOGLE = 1;
+    }
+
+    public static final class DataConstant {
         public static final String DATA_SCOPE =
             "oauth2:https://www.googleapis.com/auth/userinfo.profile";
         public static final String DATA_PUBLIC_PROFILE = "public_profile";
