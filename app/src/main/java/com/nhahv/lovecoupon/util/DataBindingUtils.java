@@ -14,6 +14,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 
@@ -31,8 +32,10 @@ public final class DataBindingUtils {
     public static void setCircleImage(final ImageView view, String url, final Drawable error) {
         Glide.with(view.getContext())
             .load(url)
-            .error(error)
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
             .placeholder(error)
+            .dontAnimate()
             .into(view);
     }
 

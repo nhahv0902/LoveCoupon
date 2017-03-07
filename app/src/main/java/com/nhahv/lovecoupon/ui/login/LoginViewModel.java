@@ -3,6 +3,9 @@ package com.nhahv.lovecoupon.ui.login;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
+
+import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -23,13 +26,22 @@ public class LoginViewModel extends BaseObservable {
         if (mILoginView == null) return;
         switch (type) {
             case NORMAL:
-                mILoginView.startUiShopMain();
-                break;
             case FACEBOOK:
+            case GOOGLE:
+                mILoginView.startUiMain();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void checkStartUiMain(@NonNull AccountType type) {
+        switch (type) {
+            case SHOP:
                 mILoginView.startUiShopMain();
                 break;
-            case GOOGLE:
-                mILoginView.startUiShopMain();
+            case CUSTOMER:
+                mILoginView.startUiCustomer();
                 break;
             default:
                 break;

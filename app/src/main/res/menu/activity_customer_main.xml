@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_coupon"
+            android:icon="@drawable/ic_menu_tags"
+            android:title="@string/menu_coupon"/>
+        <item
+            android:id="@+id/action_notification"
+            android:icon="@drawable/ic_menu_notifications"
+            android:title="@string/menu_notification"/>
+
+        <item
+            android:id="@+id/action_other_notification"
+            android:icon="@drawable/ic_map_marker"
+            android:title="@string/menu_other_notification"/>
+        <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/menu_share"/>
+        <item
+            android:id="@+id/action_exit"
+            android:icon="@drawable/ic_menu_exit"
+            android:title="@string/menu_log_out"/>
+    </group>
+</menu>

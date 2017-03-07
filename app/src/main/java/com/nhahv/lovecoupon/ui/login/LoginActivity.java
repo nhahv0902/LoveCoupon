@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityLoginBinding;
+import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
 import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
@@ -16,6 +17,7 @@ import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_T
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding mBinding;
     private LoginViewModel mViewModel;
+    private AccountType mAccountType;
 
     public static Intent getLoginIntent(Context context, AccountType type) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -25,22 +27,34 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         return intent;
     }
 
-    private AccountType getDataFromIntent() {
+    private void getDataFromIntent() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle == null) return AccountType.SHOP;
-        return (AccountType) bundle.getSerializable(BUNDLE_ACCOUNT_TYPE);
+        if (bundle == null) return;
+        mAccountType = (AccountType) bundle.getSerializable(BUNDLE_ACCOUNT_TYPE);
+        if (mAccountType == null) mAccountType = AccountType.SHOP;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        getDataFromIntent();
         mViewModel = new LoginViewModel(getApplicationContext(), this);
         mBinding.setViewModel(mViewModel);
     }
 
     @Override
+    public void startUiMain() {
+        mViewModel.checkStartUiMain(mAccountType);
+    }
+
+    @Override
     public void startUiShopMain() {
         startActivity(ShopMainActivity.getShopMainIntent(this));
+    }
+
+    @Override
+    public void startUiCustomer() {
+        startActivity(CustomerMainActivity.getCustomerMainIntent(this));
     }
 }

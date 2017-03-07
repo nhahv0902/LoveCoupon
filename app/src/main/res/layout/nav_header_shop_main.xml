@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:bind="http://schemas.android.com/tools">
 
     <data>
@@ -26,6 +27,7 @@
             android:layout_width="@dimen/size_82"
             android:layout_height="@dimen/size_82"
             android:layout_marginTop="@dimen/dp_20"
+            app:srcCompat="@drawable/ic_logo"
             bind:circleImage="@{image}"
             bind:error="@{@drawable/ic_logo}"/>
 
