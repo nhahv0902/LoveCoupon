@@ -7,4 +7,5 @@
     <color name="color_red_600">#E53935</color>
     <color name="color_blue_600">#3949AB</color>
     <color name="color_grey_8080">#808080</color>
+    <color name="color_grey_100">#cad6d6</color>
 </resources>

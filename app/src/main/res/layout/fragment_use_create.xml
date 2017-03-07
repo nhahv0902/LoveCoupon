@@ -1,0 +1,43 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.shop.history.usecoupon.UseCreateViewModel"/>
+
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_150"
+            android:gravity="center"
+            android:text="@string/msg_only_admin"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/sp_26"
+            android:visibility="gone"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewModel.showData? View.VISIBLE : View.GONE}">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                bind:adapter="@{viewModel.adapter}"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

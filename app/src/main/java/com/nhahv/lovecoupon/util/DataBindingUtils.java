@@ -2,6 +2,9 @@ package com.nhahv.lovecoupon.util;
 
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
@@ -20,7 +23,7 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
-public final class BindingUtil {
+public final class DataBindingUtils {
     /*
     * bind image path file and url internet
     * */
@@ -85,5 +88,25 @@ public final class BindingUtil {
                     break;
             }
         });
+    }
+
+    /*
+    * HistoryFragment
+    * */
+    /*
+    * viewpager
+    * */
+
+    @BindingAdapter({"bind:adapterViewPager"})
+    public static void setUpViewPager(ViewPager view, FragmentPagerAdapter adapter) {
+        view.setAdapter(adapter);
+    }
+
+    /*
+    * view pager of tab layout
+     */
+    @BindingAdapter({"bind:viewPagerTabLayout"})
+    public static void setUpTabLayout(TabLayout view, ViewPager viewPager) {
+        view.setupWithViewPager(viewPager);
     }
 }
