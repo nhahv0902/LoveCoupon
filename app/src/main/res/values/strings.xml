@@ -45,4 +45,7 @@
     <string name="title_create">Create</string>
     <string name="title_use">Use</string>
     <string name="menu_other_notification">Other notification</string>
+    <string name="key_google_server">672185057715-866s5fulqp63uph3as26i0ranm8e8934.apps.googleusercontent.com</string>
+    <string name="key_facebook">1875391312728728</string>
+    <string name="msg_login_error">Login failed</string>
 </resources>

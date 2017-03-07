@@ -6,13 +6,17 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.facebook.login.LoginManager;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityLoginBinding;
 import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
 import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
+import java.util.Collections;
+
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_TYPE;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_FACEBOOK;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding mBinding;
@@ -41,6 +45,18 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         getDataFromIntent();
         mViewModel = new LoginViewModel(getApplicationContext(), this);
         mBinding.setViewModel(mViewModel);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void loginFacebook() {
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, Collections.singletonList(DATA_FACEBOOK));
     }
 
     @Override

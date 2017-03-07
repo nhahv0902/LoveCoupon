@@ -18,5 +18,6 @@ public final class Constant {
         public static final String DATA_ADMIN = "1";
         public static final String FIRST_BASE64 = "data:image/jpeg;base64,";
         public static final int DATA_PREVIEW_PICTURE = 6;
+        public static final String DATA_FACEBOOK = "public_profile";
     }
 }

@@ -8,4 +8,5 @@ public interface ILoginView {
     void startUiShopMain();
     void startUiCustomer();
     void startUiMain();
+    void loginFacebook();
 }

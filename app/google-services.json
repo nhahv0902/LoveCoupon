@@ -1,0 +1,153 @@
+{
+  "project_info": {
+    "project_number": "672185057715",
+    "firebase_url": "https://love-coupon-6f34a.firebaseio.com",
+    "project_id": "love-coupon-6f34a",
+    "storage_bucket": "love-coupon-6f34a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672185057715:android:9085741a1db8973d",
+        "android_client_info": {
+          "package_name": "com.ln.mycoupon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672185057715-3aejv6msuff07cfn8p541fb5bfcq4vor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ln.mycoupon",
+            "certificate_hash": "7342882d1639d8e5e4bf4a67f5b164fa87258e0f"
+          }
+        },
+        {
+          "client_id": "672185057715-hi0d9bq3nlelu5hlhp953c6p647jecip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ln.mycoupon",
+            "certificate_hash": "8bb0050740a266c5de2d56001e74a11afaa1cf4f"
+          }
+        },
+        {
+          "client_id": "672185057715-jll2c24umqkrfeak9r3p65h82nb7murd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ln.mycoupon",
+            "certificate_hash": "dde0895420c53163bf19512f739cd73b64805899"
+          }
+        },
+        {
+          "client_id": "672185057715-6tao6dd4vg1eq8l6pbbh74shc1sahle2.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-5phsf47hamcas26jhfdh31q24t4hbtoj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-ti4ac9lkhe32rsstv1sdimj58v6o9116.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-rl48oitsfjd22bnobv6vnd96rb8e2enq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ln.mycoupon",
+            "certificate_hash": "70464a1c685468f11a362089808a47fc47428f2d"
+          }
+        },
+        {
+          "client_id": "672185057715-e58oh5je7mesjn2nm290ou277jp6eu0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY49r7GAFYMIv1rVo6mTuNsLqbwVcY9Jc"
+        },
+        {
+          "current_key": "AIzaSyCya8uwaihCEKTwI5iELFgjtBQnG6e-2IY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672185057715-6tao6dd4vg1eq8l6pbbh74shc1sahle2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672185057715:android:b8418d8e35c99925",
+        "android_client_info": {
+          "package_name": "com.nhahv.lovecoupon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672185057715-vf27jmroqb8tbf9d3p1sbf4tu8bs68kt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nhahv.lovecoupon",
+            "certificate_hash": "7342882d1639d8e5e4bf4a67f5b164fa87258e0f"
+          }
+        },
+        {
+          "client_id": "672185057715-6tao6dd4vg1eq8l6pbbh74shc1sahle2.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-5phsf47hamcas26jhfdh31q24t4hbtoj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-ti4ac9lkhe32rsstv1sdimj58v6o9116.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "672185057715-e58oh5je7mesjn2nm290ou277jp6eu0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY49r7GAFYMIv1rVo6mTuNsLqbwVcY9Jc"
+        },
+        {
+          "current_key": "AIzaSyCya8uwaihCEKTwI5iELFgjtBQnG6e-2IY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672185057715-6tao6dd4vg1eq8l6pbbh74shc1sahle2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

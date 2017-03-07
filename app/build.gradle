@@ -27,7 +27,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
+def fireBase = "10.2.0"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
@@ -42,4 +42,9 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.1'
+    compile "com.google.firebase:firebase-messaging:${fireBase}"
+    compile "com.google.android.gms:play-services-auth:${fireBase}"
+    compile "com.google.firebase:firebase-core:${fireBase}"
+    compile 'com.facebook.android:facebook-android-sdk:4.20.0'
 }
+apply plugin: 'com.google.gms.google-services'
