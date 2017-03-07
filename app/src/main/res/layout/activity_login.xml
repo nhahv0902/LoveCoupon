@@ -40,7 +40,7 @@
                 app:met_primaryColor="@android:color/white"
                 app:met_singleLineEllipsis="true"
                 app:met_textColor="@android:color/white"
-                app:met_textColorHint="@color/color_grey_700"
+                app:met_textColorHint="@color/color_grey_200"
                 app:met_underlineColor="@android:color/white"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -56,7 +56,7 @@
                 app:met_primaryColor="@android:color/white"
                 app:met_singleLineEllipsis="true"
                 app:met_textColor="@android:color/white"
-                app:met_textColorHint="@color/color_grey_700"
+                app:met_textColorHint="@color/color_grey_200"
                 app:met_underlineColor="@android:color/white"/>
 
             <android.support.v7.widget.CardView

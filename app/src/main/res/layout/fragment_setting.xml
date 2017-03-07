@@ -13,7 +13,7 @@
         <import type="com.nhahv.lovecoupon.ui.shop.setting.UserType"/>
 
         <variable
-            name="profile"
+            name="loginShopBody"
             type="com.nhahv.lovecoupon.data.model.ShopProfile"/>
 
     </data>
@@ -31,9 +31,9 @@
             <include
                 android:id="@+id/layout_header"
                 layout="@layout/partial_header_setting"
-                bind:address="@{profile.address}"
-                bind:image="@{profile.logoLink}"
-                bind:shopName="@{profile.name}"
+                bind:address="@{loginShopBody.address}"
+                bind:image="@{loginShopBody.logoLink}"
+                bind:shopName="@{loginShopBody.name}"
                 bind:viewModel="@{viewModel}"/>
 
             <TextView
@@ -76,7 +76,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_shop_name"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={profile.name}"
+                            android:text="@={loginShopBody.name}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_18"
                             app:met_singleLineEllipsis="true"/>
@@ -88,7 +88,7 @@
                             android:layout_marginTop="@dimen/dp_12"
                             android:hint="@string/hint_shop_address"
                             android:paddingTop="@dimen/dp_12"
-                            android:text="@={profile.address}"
+                            android:text="@={loginShopBody.address}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_18"
                             app:met_singleLineEllipsis="true"/>
@@ -116,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_user1"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={profile.user1}"
+                            android:text="@={loginShopBody.user1}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
                             app:met_singleLineEllipsis="true"/>
@@ -134,7 +134,7 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:paddingTop="@dimen/dp_12"
-                                android:text="@={profile.password1}"
+                                android:text="@={loginShopBody.password1}"
                                 android:textColor="@color/color_grey_700"
                                 android:textSize="@dimen/sp_17"
                                 app:met_singleLineEllipsis="true"/>
@@ -179,7 +179,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_user2"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={profile.user2}"
+                            android:text="@={loginShopBody.user2}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
                             app:met_singleLineEllipsis="true"/>
@@ -197,7 +197,7 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:paddingTop="@dimen/dp_12"
-                                android:text="@={profile.password2}"
+                                android:text="@={loginShopBody.password2}"
                                 android:textColor="@color/color_grey_700"
                                 android:textSize="@dimen/sp_17"
                                 app:met_singleLineEllipsis="true"/>

@@ -19,7 +19,7 @@ import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 import java.util.Collections;
 
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_TYPE;
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_FACEBOOK;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PUBLIC_PROFILE;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_GOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            mViewModel.handleGoogle(result);
+            mViewModel.handlerGoogle(result);
             return;
         }
         mViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data);
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void loginFacebook() {
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Collections.singletonList(DATA_FACEBOOK));
+            .logInWithReadPermissions(this, Collections.singletonList(DATA_PUBLIC_PROFILE));
     }
 
     @Override

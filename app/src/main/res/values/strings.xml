@@ -15,7 +15,7 @@
     <string name="title_facebook">Facebook</string>
     <string name="title_google">Google</string>
     <string name="title_reset_password">Send Email</string>
-    <string name="msg_email_error">Email is empty or match</string>
+    <string name="msg_email_error">Email is not correct</string>
     <string name="action_send_email_success">Send email success</string>
     <string name="send_email_fails">Send email failed</string>
     <string name="agree">AGREE</string>
@@ -48,4 +48,5 @@
     <string name="key_google_server">672185057715-866s5fulqp63uph3as26i0ranm8e8934.apps.googleusercontent.com</string>
     <string name="key_facebook">1875391312728728</string>
     <string name="msg_login_error">Login failed</string>
+    <string name="msg_password_error">Password is not empty.</string>
 </resources>
