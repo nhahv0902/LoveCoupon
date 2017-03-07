@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
-import com.bumptech.glide.Glide;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityCustomerMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
+import com.nhahv.lovecoupon.ui.customer.coupon.CouponFragment;
+import com.nhahv.lovecoupon.ui.customer.notification.NotificationFragment;
+import com.nhahv.lovecoupon.ui.share.ShareFragment;
+import com.nhahv.lovecoupon.util.ActivityUtil;
 
 public class CustomerMainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +41,6 @@ public class CustomerMainActivity extends AppCompatActivity
     }
 
     private void start() {
-        Glide.with(this).load(URL_IMAGE).thumbnail(0.5f).centerCrop().preload();
         Toolbar toolbar = mBinding.toolbar;
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
@@ -55,6 +58,7 @@ public class CustomerMainActivity extends AppCompatActivity
             .setImage(URL_IMAGE);
         bindHeader.setName("Hoang Van Nha");
         bindHeader.executePendingBindings();
+        addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
     }
 
     @Override
@@ -69,14 +73,15 @@ public class CustomerMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_coupon:
+                addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
                 break;
             case R.id.action_notification:
+                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
                 break;
-            case R.id.action_settings:
-                break;
-            case R.id.action_history:
+            case R.id.action_other_notification:
                 break;
             case R.id.action_share:
+                addFragment(ShareFragment.newInstance(), R.string.menu_share);
                 break;
             case R.id.action_exit:
                 break;
@@ -85,5 +90,10 @@ public class CustomerMainActivity extends AppCompatActivity
         }
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void addFragment(Fragment fragment, int title) {
+        ActivityUtil.addFragment(getSupportFragmentManager(), fragment, R.id.frame_layout);
+        setTitle(title);
     }
 }

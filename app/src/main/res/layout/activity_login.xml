@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="@dimen/dp_80">
+            android:paddingTop="@dimen/dp_82">
 
 
             <com.rengwuxian.materialedittext.MaterialEditText

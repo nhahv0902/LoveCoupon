@@ -29,6 +29,8 @@
             android:label="@string/title_activity_customer_main"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".ui.customer.couponofshop.CouponOfShopActivity">
+        </activity>
     </application>
 
 </manifest>

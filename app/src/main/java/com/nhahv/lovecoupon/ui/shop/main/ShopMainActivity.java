@@ -54,7 +54,7 @@ public class ShopMainActivity extends AppCompatActivity
         NavHeaderShopMainBinding bindHeader =
             NavHeaderShopMainBinding.inflate(LayoutInflater.from(mBinding.navView.getContext()));
         bindHeader
-            .setImage("http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jp");
+            .setImage("http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");
         bindHeader.setName("Hoang Van Nha");
         bindHeader.executePendingBindings();
         mBinding.navView.addHeaderView(bindHeader.getRoot());
