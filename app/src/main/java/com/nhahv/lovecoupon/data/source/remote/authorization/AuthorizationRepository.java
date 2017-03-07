@@ -2,7 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.ShopProfile;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.data.source.Callback;
 
 /**
@@ -24,10 +24,10 @@ public class AuthorizationRepository implements AuthorizationDataSource {
 
     @Override
     public void loginNormalShop(@NonNull String user, @NonNull String password,
-                                @NonNull Callback<ShopProfile> callback) {
-        mDataSource.loginNormalShop(user, password, new Callback<ShopProfile>() {
+                                @NonNull Callback<ProfileShop> callback) {
+        mDataSource.loginNormalShop(user, password, new Callback<ProfileShop>() {
             @Override
-            public void onSuccess(ShopProfile data) {
+            public void onSuccess(ProfileShop data) {
                 callback.onSuccess(data);
             }
 
@@ -40,10 +40,10 @@ public class AuthorizationRepository implements AuthorizationDataSource {
 
     @Override
     public void loginSocialShop(@NonNull String id, @NonNull String social, @NonNull String token,
-                                @NonNull Callback<ShopProfile> callback) {
-        mDataSource.loginSocialShop(id, social, token, new Callback<ShopProfile>() {
+                                @NonNull Callback<ProfileShop> callback) {
+        mDataSource.loginSocialShop(id, social, token, new Callback<ProfileShop>() {
             @Override
-            public void onSuccess(ShopProfile data) {
+            public void onSuccess(ProfileShop data) {
                 callback.onSuccess(data);
             }
 

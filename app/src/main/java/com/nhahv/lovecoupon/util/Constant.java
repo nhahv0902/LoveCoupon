@@ -16,6 +16,9 @@ public final class Constant {
 
     public static final class PreferenceConstant {
         public static final String PREF_TOKEN = "PREF_TOKEN";
+        public static final String PREF_IS_LOGIN = "PREF_IS_LOGIN";
+        public static final String PREF_ACCOUNT_TYPE = "PREF_ACCOUNT_TYPE";
+
     }
 
     public static final class DataConstant {
@@ -29,5 +32,7 @@ public final class Constant {
         public static final String DATA_FACEBOOK = "facebook";
         public static final String DATA_GOOGLE = "google";
         public static final int SUCCESS = 1;
+        public static final String URL_IMAGE =
+            "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg";
     }
 }

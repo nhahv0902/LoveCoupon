@@ -6,4 +6,6 @@ package com.nhahv.lovecoupon.ui.firstscreen;
  */
 public interface IFirstScreen {
     void startUiLogin(AccountType type);
+    void startUiMainShop();
+    void startUiMainCustomer();
 }

@@ -49,4 +49,5 @@
     <string name="key_facebook">1875391312728728</string>
     <string name="msg_login_error">Login failed</string>
     <string name="msg_password_error">Password is not empty.</string>
+    <string name="msg_load_data_error">Load data failed.</string>
 </resources>

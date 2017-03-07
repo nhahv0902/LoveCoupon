@@ -14,7 +14,9 @@ import android.util.Log;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityFirstScreenBinding;
+import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
 import com.nhahv.lovecoupon.ui.login.LoginActivity;
+import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -56,6 +58,18 @@ public class FirstScreenActivity extends AppCompatActivity implements IFirstScre
         } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void startUiMainShop() {
+        startActivity(ShopMainActivity.getShopMainIntent(this));
+        finish();
+    }
+
+    @Override
+    public void startUiMainCustomer() {
+        startActivity(CustomerMainActivity.getCustomerMainIntent(this));
+        finish();
     }
 
     @Override

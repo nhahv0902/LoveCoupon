@@ -5,5 +5,13 @@ package com.nhahv.lovecoupon.ui.firstscreen;
  * <></>
  */
 public enum AccountType {
-    SHOP, CUSTOMER
+    NORMAL, SHOP, CUSTOMER;
+
+    public static AccountType toAccountType(String type) {
+        try {
+            return valueOf(type);
+        } catch (Exception ex) {
+            return NORMAL;
+        }
+    }
 }

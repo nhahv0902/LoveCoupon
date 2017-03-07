@@ -2,6 +2,11 @@ package com.nhahv.lovecoupon.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.nhahv.lovecoupon.data.model.ProfileCustomer;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
@@ -9,6 +14,8 @@ import android.content.SharedPreferences;
  */
 public class SharePreferenceUtil {
     private static final String SHARED_PREFERENCE = "LoveCoupon";
+    private static final String PREF_PROFILE_SHOP = "PREF_PROFILE_SHOP";
+    private static final String PREF_PROFILE_CUSTOMER = "PREF_PROFILE_CUSTOMER";
     private SharedPreferences mPreferences;
     private static SharePreferenceUtil sInstance;
 
@@ -25,7 +32,33 @@ public class SharePreferenceUtil {
         mPreferences.edit().putString(key, value).apply();
     }
 
+    public void writePreference(String key, boolean value) {
+        mPreferences.edit().putBoolean(key, value).apply();
+    }
+
+    public void writeProfileShop(@NonNull ProfileShop profile) {
+        mPreferences.edit().putString(PREF_PROFILE_SHOP, new Gson().toJson(profile)).apply();
+    }
+
+    public ProfileShop profileShop() {
+        return new Gson()
+            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ProfileShop.class);
+    }
+
+    public ProfileCustomer profileCustomer() {
+        return new Gson()
+            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ProfileCustomer.class);
+    }
+
+    public void writeProfileCustomer(@NonNull ProfileCustomer profile) {
+        mPreferences.edit().putString(PREF_PROFILE_CUSTOMER, new Gson().toJson(profile)).apply();
+    }
+
     public String getString(String key) {
-        return mPreferences.getString(key, null);
+        return mPreferences.getString(key, "");
+    }
+
+    public boolean getBoolean(String key) {
+        return mPreferences.getBoolean(key, false);
     }
 }

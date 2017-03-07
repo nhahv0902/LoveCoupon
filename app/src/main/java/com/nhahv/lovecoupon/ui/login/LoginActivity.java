@@ -80,4 +80,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void startUiCustomer() {
         startActivity(CustomerMainActivity.getCustomerMainIntent(this));
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mViewModel.stopTracker();
+    }
 }

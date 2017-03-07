@@ -5,21 +5,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.databinding.ItemShopCouponBinding;
+
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHolder> {
-    private final ObservableList<CouponItem> mListCoupon;
+    private final ObservableList<CouponTemplate> mListCoupon;
     private final CouponViewModel mViewModel;
     private LayoutInflater mInflater;
 
-    public CouponAdapter(ObservableList<CouponItem> couponItems, CouponViewModel viewModel) {
+    public CouponAdapter(ObservableList<CouponTemplate> couponItems, CouponViewModel viewModel) {
         mListCoupon = couponItems;
         mViewModel = viewModel;
+    }
+
+    public void update() {
+        notifyDataSetChanged();
     }
 
     @Override
@@ -31,6 +37,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
     @Override
     public void onBindViewHolder(CouponHolder holder, int position) {
+        CouponTemplate template = mListCoupon.get(position);
+        if (template != null) holder.bind(template);
     }
 
     @Override
@@ -39,8 +47,18 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
     }
 
     public class CouponHolder extends RecyclerView.ViewHolder {
+        private ItemShopCouponBinding mBinding;
+
         public CouponHolder(ItemShopCouponBinding binding) {
             super(binding.getRoot());
+            mBinding = binding;
+        }
+
+        private void bind(CouponTemplate template) {
+            mBinding.setTemplate(template);
+            mBinding.setShopName("Coffee Ha Noi");
+            mBinding.setImage(URL_IMAGE);
+            mBinding.executePendingBindings();
         }
     }
 }

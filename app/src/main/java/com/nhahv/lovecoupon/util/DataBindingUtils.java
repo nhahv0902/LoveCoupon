@@ -15,10 +15,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.nhahv.lovecoupon.data.model.ShopProfile;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -31,7 +32,7 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:circleImage", "bind:error"})
     public static void setCircleImage(final ImageView view, String url, final Drawable error) {
         Glide.with(view.getContext())
-            .load(url)
+            .load(URL_IMAGE)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
             .placeholder(error)
@@ -46,6 +47,7 @@ public final class DataBindingUtils {
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     /*
@@ -66,7 +68,7 @@ public final class DataBindingUtils {
     * check admin setting fragment
     * */
     @BindingAdapter({"bind:profile", "bind:type"})
-    public static void onCheckedAdmin(AppCompatCheckBox view, ShopProfile profile, UserType type) {
+    public static void onCheckedAdmin(AppCompatCheckBox view, ProfileShop profile, UserType type) {
         switch (type) {
             case USER1:
                 if (profile.getUserAdmin1() == null) view.setChecked(false);

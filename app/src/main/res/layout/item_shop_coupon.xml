@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.lang.String"/>
+
+        <variable
+            name="image"
+            type="java.lang.String"/>
+
+        <variable
+            name="shopName"
+            type="java.lang.String"/>
+
+        <variable
+            name="template"
+            type="com.nhahv.lovecoupon.data.model.CouponTemplate"/>
+
+
+    </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginRight="@dimen/dp_2"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/dp_10"
         app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="@dimen/dp_2"
-        app:cardElevation="@dimen/dp_2"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_4"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/dp_10">
+            android:padding="@dimen/dp_16">
 
             <com.nhahv.lovecoupon.ui.view.CircleImageView
                 android:id="@+id/image_logo"
-                android:layout_width="@dimen/size_82"
-                android:layout_height="@dimen/size_82"
+                android:layout_width="@dimen/dp_92"
+                android:layout_height="@dimen/dp_92"
                 android:layout_gravity="top"
-                android:layout_marginTop="@dimen/dp_10"
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_logo"/>
+                app:srcCompat="@drawable/ic_logo"
+                bind:circleImage="@{image}"
+                bind:error="@{@drawable/ic_logo}"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:text="Coffee Ha Noi"
+                    android:text="@{shopName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/color_grey_8080"
                     android:textSize="@dimen/sp_20"
@@ -54,7 +77,7 @@
                     android:layout_gravity="start"
                     android:ellipsize="marquee"
                     android:maxLines="1"
-                    android:text="200k"
+                    android:text="@{String.valueOf(template.value)}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp_26"
@@ -64,60 +87,39 @@
                     android:id="@+id/text_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="KHuyen mai ngay nhap hoc"
+                    android:text="@{template.content}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textSize="@dimen/sp_16"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
                     android:gravity="end|bottom"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/linear_time"
-                        android:layout_width="0dp"
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="bottom|end|center_vertical"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_4">
+                        app:srcCompat="@drawable/ic_date_range_red_24px"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="bottom"
+                        android:paddingLeft="@dimen/dp_8"
+                        android:paddingRight="@dimen/dp_8"
+                        android:text="@{String.valueOf(template.duration)}"
+                        android:textSize="@dimen/sp_18"/>
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="wrap_content"
+                        android:gravity="end|bottom"
+                        android:orientation="horizontal">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:textSize="@dimen/sp_16"
-                            app:srcCompat="@drawable/ic_calendar_red"/>
-
-                        <TextView
-                            android:id="@+id/text_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="bottom"
-                            android:gravity="bottom"
-                            android:paddingLeft="@dimen/dp_4"
-                            android:paddingRight="@dimen/dp_4"
-                            android:text="20"
-                            android:textSize="@dimen/sp_18"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linear_more"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:gravity="end"
-                        android:paddingLeft="@dimen/dp_5"
-                        android:paddingRight="@dimen/dp_5"
-                        android:paddingTop="@dimen/dp_5">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:contentDescription="@null"
-                            android:scaleType="centerCrop"
                             app:srcCompat="@drawable/ic_more_vert"/>
                     </LinearLayout>
                 </LinearLayout>

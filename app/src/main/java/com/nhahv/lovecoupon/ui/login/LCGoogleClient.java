@@ -2,6 +2,7 @@ package com.nhahv.lovecoupon.ui.login;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -19,12 +20,18 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_SCOPE;
  * <></>
  */
 public class LCGoogleClient {
+    private static LCGoogleClient sInstance;
     private Context mContext;
     private GoogleApiClient mClient;
 
-    public LCGoogleClient(Context context) {
+    private LCGoogleClient(Context context) {
         mContext = context;
         initGoogle();
+    }
+
+    public static LCGoogleClient getInstance(Context context) {
+        if (sInstance == null) sInstance = new LCGoogleClient(context);
+        return sInstance;
     }
 
     private void initGoogle() {
@@ -37,6 +44,14 @@ public class LCGoogleClient {
             .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
             .build();
         mClient.connect();
+    }
+
+    public void logout(@NonNull SignOutCallback callback) {
+        Auth.GoogleSignInApi.signOut(mClient).setResultCallback(
+            status -> {
+                if (status.isSuccess()) callback.onSuccess();
+                else callback.onError();
+            });
     }
 
     public void requestToken(String email, CallBack callBack) {
@@ -77,5 +92,10 @@ public class LCGoogleClient {
     public interface CallBack {
         void getTokenSuccess(String token);
         void getTokenError();
+    }
+
+    public interface SignOutCallback {
+        void onSuccess();
+        void onError();
     }
 }

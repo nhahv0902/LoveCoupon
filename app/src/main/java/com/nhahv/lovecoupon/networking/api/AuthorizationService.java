@@ -1,7 +1,7 @@
 package com.nhahv.lovecoupon.networking.api;
 
 import com.google.gson.annotations.SerializedName;
-import com.nhahv.lovecoupon.data.model.ShopProfile;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ANDROID;
 public interface AuthorizationService {
     interface LoginService {
         @POST("/get_company_profile")
-        Call<List<ShopProfile>> loginShop(@Body LoginShopBody body);
+        Call<List<ProfileShop>> loginShop(@Body LoginShopBody body);
         @POST("/get_user_profile")
         Call<Integer> loginCustomer(@Body LoginCustomerBody body);
     }
