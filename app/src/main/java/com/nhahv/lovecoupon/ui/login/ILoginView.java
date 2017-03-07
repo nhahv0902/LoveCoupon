@@ -9,7 +9,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public interface ILoginView {
     void startUiShopMain();
     void startUiCustomer();
-    void startUiMain();
     void loginFacebook();
     void loginGoogle(GoogleApiClient client);
 }

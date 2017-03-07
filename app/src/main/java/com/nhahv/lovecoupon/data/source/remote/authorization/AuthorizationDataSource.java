@@ -1,4 +1,4 @@
-package com.nhahv.lovecoupon.data.source.remote;
+package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
 
@@ -14,4 +14,6 @@ public interface AuthorizationDataSource {
                          @NonNull Callback<ShopProfile> callback);
     void loginSocialShop(@NonNull String id, @NonNull String social, @NonNull String token,
                          @NonNull Callback<ShopProfile> callback);
+    void loginCustomer(@NonNull String name, String password, @NonNull String token,
+                       @NonNull Callback<Integer> callback);
 }

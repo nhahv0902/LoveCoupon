@@ -13,11 +13,11 @@ import com.nhahv.lovecoupon.data.model.CouponItem;
  */
 public class CouponViewModel {
     private Context mContext;
-    private ICoupon mICoupon;
+    private ICouponTemplate mICoupon;
     private ObservableList<CouponItem> mListCoupon = new ObservableArrayList<>();
     private ObservableField<CouponAdapter> mAdapter = new ObservableField<>();
 
-    public CouponViewModel(Context context, ICoupon iCoupon) {
+    public CouponViewModel(Context context, ICouponTemplate iCoupon) {
         mContext = context;
         mICoupon = iCoupon;
         mAdapter.set(new CouponAdapter(mListCoupon, this));

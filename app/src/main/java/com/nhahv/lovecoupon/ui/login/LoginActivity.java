@@ -25,7 +25,6 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 public class LoginActivity extends AppCompatActivity implements ILoginView {
     private ActivityLoginBinding mBinding;
     private LoginViewModel mViewModel;
-    private AccountType mAccountType;
 
     public static Intent getLoginIntent(Context context, AccountType type) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -35,19 +34,17 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         return intent;
     }
 
-    private void getDataFromIntent() {
+    private AccountType getDataFromIntent() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle == null) return;
-        mAccountType = (AccountType) bundle.getSerializable(BUNDLE_ACCOUNT_TYPE);
-        if (mAccountType == null) mAccountType = AccountType.SHOP;
+        if (bundle == null) return AccountType.SHOP;
+        return (AccountType) bundle.getSerializable(BUNDLE_ACCOUNT_TYPE);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        getDataFromIntent();
-        mViewModel = new LoginViewModel(getApplicationContext(), this);
+        mViewModel = new LoginViewModel(getApplicationContext(), this, getDataFromIntent());
         mBinding.setViewModel(mViewModel);
     }
 
@@ -72,11 +69,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     public void loginGoogle(GoogleApiClient client) {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(client);
         startActivityForResult(signInIntent, REQUEST_GOOGLE);
-    }
-
-    @Override
-    public void startUiMain() {
-        mViewModel.checkStartUiMain(mAccountType);
     }
 
     @Override

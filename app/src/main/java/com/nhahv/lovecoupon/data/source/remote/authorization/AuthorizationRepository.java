@@ -1,4 +1,4 @@
-package com.nhahv.lovecoupon.data.source.remote;
+package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
 
@@ -44,6 +44,22 @@ public class AuthorizationRepository implements AuthorizationDataSource {
         mDataSource.loginSocialShop(id, social, token, new Callback<ShopProfile>() {
             @Override
             public void onSuccess(ShopProfile data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void loginCustomer(@NonNull String name, String password, @NonNull String token,
+                              @NonNull Callback<Integer> callback) {
+        mDataSource.loginCustomer(name, password, token, new Callback<Integer>() {
+            @Override
+            public void onSuccess(Integer data) {
                 callback.onSuccess(data);
             }
 

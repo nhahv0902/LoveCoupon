@@ -11,7 +11,7 @@ import com.nhahv.lovecoupon.databinding.FragmentCouponBinding;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CouponFragment extends Fragment implements ICoupon {
+public class CouponFragment extends Fragment implements ICouponTemplate {
     private FragmentCouponBinding mBinding;
     private CouponViewModel mViewModel;
 

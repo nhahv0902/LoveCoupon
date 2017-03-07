@@ -1,4 +1,4 @@
-package com.nhahv.lovecoupon.data.source.remote;
+package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
 
@@ -11,6 +11,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.SUCCESS;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
@@ -80,6 +82,26 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
 
                 @Override
                 public void onFailure(Call<List<ShopProfile>> call, Throwable t) {
+                    callback.onError();
+                }
+            });
+    }
+
+    @Override
+    public void loginCustomer(@NonNull String name, String password, @NonNull String token,
+                              @NonNull Callback<Integer> callback) {
+        AuthorizationService.LoginCustomerBody body =
+            new AuthorizationService.LoginCustomerBody(name, password, token);
+        ServiceGenerator.createService(AuthorizationService.LoginService.class).loginCustomer(body)
+            .enqueue(new retrofit2.Callback<Integer>() {
+                @Override
+                public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    if (response.body() == SUCCESS) callback.onSuccess(response.body());
+                    else callback.onError();
+                }
+
+                @Override
+                public void onFailure(Call<Integer> call, Throwable t) {
                     callback.onError();
                 }
             });

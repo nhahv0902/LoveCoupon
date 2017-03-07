@@ -3,7 +3,6 @@ package com.nhahv.lovecoupon.ui.login;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.facebook.AccessToken;
@@ -16,12 +15,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
-import com.nhahv.lovecoupon.data.source.remote.AuthorizationRepository;
+import com.nhahv.lovecoupon.data.source.remote.authorization.AuthorizationRepository;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
 import com.nhahv.lovecoupon.util.ActivityUtil;
+import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_FACEBOOK;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_GOOGLE;
+import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_TOKEN;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -36,10 +37,12 @@ public class LoginViewModel extends BaseObservable {
     private LCGoogleClient mClient;
     private CallbackManager mCallbackManager;
     private AuthorizationRepository mRepository;
+    private AccountType mType;
 
-    public LoginViewModel(Context context, ILoginView iLoginView) {
+    public LoginViewModel(Context context, ILoginView iLoginView, AccountType type) {
         mContext = context;
         mILoginView = iLoginView;
+        mType = type;
         mRepository = AuthorizationRepository.getInstance();
         mClient = new LCGoogleClient(mContext);
         initFacebook();
@@ -68,26 +71,67 @@ public class LoginViewModel extends BaseObservable {
     }
 
     private void handlerFacebook(AccessToken result) {
-        mRepository.loginSocialShop(result.getUserId(), DATA_FACEBOOK, result.getToken(),
-            new Callback<ShopProfile>() {
-                @Override
-                public void onSuccess(ShopProfile data) {
-                    Log.d(TAG, data.getShopId());
-                    Log.d(TAG, data.getToken());
-                }
+        switch (mType) {
+            case SHOP:
+                mRepository.loginSocialShop(result.getUserId(), DATA_FACEBOOK, result.getToken(),
+                    new Callback<ShopProfile>() {
+                        @Override
+                        public void onSuccess(ShopProfile data) {
+                            checkStartUiMain();
+                        }
 
-                @Override
-                public void onError() {
-                    loginError();
-                }
-            });
+                        @Override
+                        public void onError() {
+                            loginError();
+                        }
+                    });
+                break;
+            case CUSTOMER:
+                String token = SharePreferenceUtil.getInstance(mContext).getString(PREF_TOKEN);
+                mRepository.loginCustomer(result.getUserId(), null, token, new Callback<Integer>() {
+                    @Override
+                    public void onSuccess(Integer data) {
+                        Log.d(TAG, "success = " + data);
+                    }
+
+                    @Override
+                    public void onError() {
+                        loginError();
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 
     public void handlerGoogle(GoogleSignInResult result) {
         if (result.isSuccess() && result.getSignInAccount() != null) {
-            requestGoogleToken(result.getSignInAccount().getId(),
-                result.getSignInAccount().getEmail());
-        } else ActivityUtil.showMsg(mContext, R.string.msg_login_error);
+            switch (mType) {
+                case SHOP:
+                    requestGoogleToken(result.getSignInAccount().getId(),
+                        result.getSignInAccount().getEmail());
+                    break;
+                case CUSTOMER:
+                    if (result.getSignInAccount().getId() == null) return;
+                    String token = SharePreferenceUtil.getInstance(mContext).getString(PREF_TOKEN);
+                    mRepository.loginCustomer(result.getSignInAccount().getId(), null, token,
+                        new Callback<Integer>() {
+                            @Override
+                            public void onSuccess(Integer data) {
+                                Log.d(TAG, "success = " + data);
+                            }
+
+                            @Override
+                            public void onError() {
+                                loginError();
+                            }
+                        });
+                    break;
+                default:
+                    break;
+            }
+        } else loginError();
     }
 
     private void requestGoogleToken(String id, String email) {
@@ -97,8 +141,7 @@ public class LoginViewModel extends BaseObservable {
                 mRepository.loginSocialShop(id, DATA_GOOGLE, token, new Callback<ShopProfile>() {
                     @Override
                     public void onSuccess(ShopProfile data) {
-                        Log.d(TAG, "id = " + data.getShopId());
-                        Log.d(TAG, "token = " + data.getToken());
+                        checkStartUiMain();
                     }
 
                     @Override
@@ -136,19 +179,40 @@ public class LoginViewModel extends BaseObservable {
         new UserValidation(mEmail.get(), mPassword.get()).validation(new UserValidation.Callback() {
             @Override
             public void onSuccess() {
-                mRepository.loginNormalShop(mEmail.get(), mPassword.get(),
-                    new Callback<ShopProfile>() {
-                        @Override
-                        public void onSuccess(ShopProfile data) {
-                            Log.d(TAG, "id  = " + data.getShopId());
-                            Log.d(TAG, "token = " + data.getToken());
-                        }
+                String token = SharePreferenceUtil.getInstance(mContext).getString(PREF_TOKEN);
+                Log.d(TAG, "token = " + token);
+                switch (mType) {
+                    case SHOP:
+                        mRepository.loginNormalShop(mEmail.get(), mPassword.get(),
+                            new Callback<ShopProfile>() {
+                                @Override
+                                public void onSuccess(ShopProfile data) {
+                                    checkStartUiMain();
+                                }
 
-                        @Override
-                        public void onError() {
-                            loginError();
-                        }
-                    });
+                                @Override
+                                public void onError() {
+                                    loginError();
+                                }
+                            });
+                        break;
+                    case CUSTOMER:
+                        mRepository.loginCustomer(mEmail.get(), mPassword.get(), token,
+                            new Callback<Integer>() {
+                                @Override
+                                public void onSuccess(Integer data) {
+                                    checkStartUiMain();
+                                }
+
+                                @Override
+                                public void onError() {
+                                    loginError();
+                                }
+                            });
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -167,8 +231,8 @@ public class LoginViewModel extends BaseObservable {
         });
     }
 
-    public void checkStartUiMain(@NonNull AccountType type) {
-        switch (type) {
+    private void checkStartUiMain() {
+        switch (mType) {
             case SHOP:
                 mILoginView.startUiShopMain();
                 break;

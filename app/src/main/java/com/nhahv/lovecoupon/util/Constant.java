@@ -14,6 +14,10 @@ public final class Constant {
         public static final int REQUEST_GOOGLE = 1;
     }
 
+    public static final class PreferenceConstant {
+        public static final String PREF_TOKEN = "PREF_TOKEN";
+    }
+
     public static final class DataConstant {
         public static final String DATA_SCOPE =
             "oauth2:https://www.googleapis.com/auth/userinfo.profile";
@@ -24,5 +28,6 @@ public final class Constant {
         public static final int DATA_PREVIEW_PICTURE = 6;
         public static final String DATA_FACEBOOK = "facebook";
         public static final String DATA_GOOGLE = "google";
+        public static final int SUCCESS = 1;
     }
 }
