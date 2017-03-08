@@ -4,4 +4,12 @@
         <item>@string/title_create</item>
         <item>@string/title_use</item>
     </string-array>
+    <string-array name="activity_main_shop">
+        <item>@string/menu_coupon</item>
+        <item>@string/menu_notification</item>
+        <item>@string/menu_setting</item>
+        <item>@string/menu_history</item>
+        <item>@string/menu_share</item>
+        <item>@string/menu_log_out</item>
+    </string-array>
 </resources>

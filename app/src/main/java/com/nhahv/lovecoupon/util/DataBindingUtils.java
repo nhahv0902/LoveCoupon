@@ -3,23 +3,29 @@ package com.nhahv.lovecoupon.util;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
@@ -29,13 +35,16 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
  * <></>
  */
 public final class DataBindingUtils {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     /*
     * bind image path file and url internet
     * */
     @BindingAdapter({"bind:circleImage", "bind:error"})
     public static void setCircleImage(final ImageView view, String url, final Drawable error) {
         Glide.with(view.getContext())
-            .load(URL_IMAGE)
+            .load(url)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
             .placeholder(error)
@@ -79,8 +88,13 @@ public final class DataBindingUtils {
     public static void setShowPassword(AppCompatImageView view, AppCompatEditText edit) {
         edit.setSelection(edit.getText().length());
         view.setOnClickListener(v -> {
-            if (edit.getTransformationMethod() != null) edit.setTransformationMethod(null);
-            else edit.setTransformationMethod(new PasswordTransformationMethod());
+            if (edit.getTransformationMethod() != null) {
+                edit.setTransformationMethod(null);
+                view.setImageResource(R.drawable.ic_eye_hide_grey_24px);
+            } else {
+                edit.setTransformationMethod(new PasswordTransformationMethod());
+                view.setImageResource(R.drawable.ic_eye_show_grey);
+            }
             edit.setSelection(edit.getText().length());
         });
     }
@@ -117,6 +131,31 @@ public final class DataBindingUtils {
     }
 
     /*
+    * check user another user2
+    * */
+
+    @BindingAdapter({"bind:checkUser"})
+    public static void checkUser(MaterialEditText view, MaterialEditText user) {
+        view.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = view.getText().toString().trim();
+                String text2 = user.getText().toString().trim();
+                if (text.equals(text2) && !text2.isEmpty()) {
+                    view.setError(view.getContext().getString(R.string.msg_existing));
+                }
+            }
+        });
+    }
+    /*
     * HistoryFragment
     * */
     /*
@@ -134,5 +173,14 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:viewPagerTabLayout"})
     public static void setUpTabLayout(TabLayout view, ViewPager viewPager) {
         view.setupWithViewPager(viewPager);
+    }
+    /*
+    * bind change icon of Floating button Main shop
+    * */
+
+    @BindingAdapter({"tools:iconDone"})
+    public static void onChangeIcon(FloatingActionButton view, boolean isDone) {
+        int icon = isDone ? R.drawable.ic_done_white_24px : R.drawable.ic_add_white_24dp;
+        view.setImageResource(icon);
     }
 }

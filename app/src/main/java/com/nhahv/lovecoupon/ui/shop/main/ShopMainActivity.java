@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +29,9 @@ import com.nhahv.lovecoupon.ui.shop.setting.SettingFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGIN;
 
 public class ShopMainActivity extends AppCompatActivity
@@ -35,7 +39,12 @@ public class ShopMainActivity extends AppCompatActivity
     private ActivityShopMainBinding mBinding;
     private ShopMainViewModel mViewModel;
     private SharePreferenceUtil mPreference;
-
+    private final List<Fragment> mListFragment = new ArrayList<>();
+    private String[] mTitles;
+    private int mPositionFragment;
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     public static Intent getShopMainIntent(Context context) {
         return new Intent(context, ShopMainActivity.class);
     }
@@ -47,7 +56,17 @@ public class ShopMainActivity extends AppCompatActivity
         mViewModel = new ShopMainViewModel(getApplicationContext(), this);
         mBinding.setViewModel(mViewModel);
         mPreference = SharePreferenceUtil.getInstance(this);
+        initFragment();
         start();
+    }
+
+    private void initFragment() {
+        mListFragment.add(CouponFragment.newInstance());
+        mListFragment.add(NotificationFragment.newInstance());
+        mListFragment.add(SettingFragment.newInstance());
+        mListFragment.add(HistoryFragment.newInstance());
+        mListFragment.add(ShareFragment.newInstance());
+        mTitles = getResources().getStringArray(R.array.activity_main_shop);
     }
 
     private void start() {
@@ -66,7 +85,7 @@ public class ShopMainActivity extends AppCompatActivity
         bindHeader.setName(profile.getName());
         bindHeader.executePendingBindings();
         mBinding.navView.addHeaderView(bindHeader.getRoot());
-        addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
+        startFragment(mPositionFragment);
     }
 
     @Override
@@ -81,19 +100,19 @@ public class ShopMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_coupon:
-                addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
+                mPositionFragment = 0;
                 break;
             case R.id.action_notification:
-                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
+                mPositionFragment = 1;
                 break;
             case R.id.action_settings:
-                addFragment(SettingFragment.newInstance(), R.string.menu_setting);
+                mPositionFragment = 2;
                 break;
             case R.id.action_history:
-                addFragment(HistoryFragment.newInstance(), R.string.menu_history);
+                mPositionFragment = 3;
                 break;
             case R.id.action_share:
-                addFragment(ShareFragment.newInstance(), R.string.menu_share);
+                mPositionFragment = 4;
                 break;
             case R.id.action_exit:
                 LoginManager.getInstance().logOut();
@@ -103,12 +122,17 @@ public class ShopMainActivity extends AppCompatActivity
             default:
                 break;
         }
+        startFragment(mPositionFragment);
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void addFragment(Fragment fragment, int title) {
-        ActivityUtil.addFragment(getSupportFragmentManager(), fragment, R.id.frame_layout);
-        setTitle(title);
+    private void startFragment(int position) {
+        mViewModel.updateShowImagePlus(mPositionFragment <= 2);
+        mViewModel.updateIconDone(mPositionFragment == 2);
+        setTitle(mTitles[position]);
+        ActivityUtil.addFragment(getSupportFragmentManager(),
+            mListFragment.get(position),
+            R.id.frame_layout);
     }
 }

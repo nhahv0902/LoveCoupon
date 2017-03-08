@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.shop.main.ShopMainViewModel"/>
@@ -48,7 +50,9 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/dp_16"
                 android:onClick="@{()->viewModel.clickImagePlus()}"
-                app:srcCompat="@drawable/ic_add_white_24dp"/>
+                android:visibility="@{viewModel.showImagePlus ? View.VISIBLE : View.GONE}"
+                app:srcCompat="@drawable/ic_add_white_24dp"
+                tools:iconDone="@{viewModel.iconDone}"/>
 
         </android.support.design.widget.CoordinatorLayout>
 

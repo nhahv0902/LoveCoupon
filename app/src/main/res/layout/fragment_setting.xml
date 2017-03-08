@@ -11,11 +11,6 @@
         <import type="android.view.View"/>
 
         <import type="com.nhahv.lovecoupon.ui.shop.setting.UserType"/>
-
-        <variable
-            name="loginShopBody"
-            type="com.nhahv.lovecoupon.data.model.ProfileShop"/>
-
     </data>
 
     <ScrollView
@@ -31,9 +26,9 @@
             <include
                 android:id="@+id/layout_header"
                 layout="@layout/partial_header_setting"
-                bind:address="@{loginShopBody.address}"
-                bind:image="@{loginShopBody.logoLink}"
-                bind:shopName="@{loginShopBody.name}"
+                bind:address="@{viewModel.profile.address}"
+                bind:image="@{viewModel.profile.logoLink}"
+                bind:shopName="@{viewModel.profile.name}"
                 bind:viewModel="@{viewModel}"/>
 
             <TextView
@@ -76,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_shop_name"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={loginShopBody.name}"
+                            android:text="@={viewModel.profile.name}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_18"
                             app:met_singleLineEllipsis="true"/>
@@ -88,7 +83,7 @@
                             android:layout_marginTop="@dimen/dp_12"
                             android:hint="@string/hint_shop_address"
                             android:paddingTop="@dimen/dp_12"
-                            android:text="@={loginShopBody.address}"
+                            android:text="@={viewModel.profile.address}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_18"
                             app:met_singleLineEllipsis="true"/>
@@ -116,10 +111,11 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_user1"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={loginShopBody.user1}"
+                            android:text="@={viewModel.profile.user1}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
-                            app:met_singleLineEllipsis="true"/>
+                            app:met_singleLineEllipsis="true"
+                            bind:checkUser="@{editUserTwo}"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -134,7 +130,7 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:paddingTop="@dimen/dp_12"
-                                android:text="@={loginShopBody.password1}"
+                                android:text="@={viewModel.profile.password1}"
                                 android:textColor="@color/color_grey_700"
                                 android:textSize="@dimen/sp_17"
                                 app:met_singleLineEllipsis="true"/>
@@ -153,7 +149,9 @@
                             android:buttonTint="@color/color_grey_700"
                             android:text="@string/title_check_admin"
                             android:textColor="@color/color_grey_700"
-                            android:textSize="@dimen/sp_16"/>
+                            android:textSize="@dimen/sp_16"
+                            bind:profile="@{viewModel.profile}"
+                            bind:type="@{UserType.USER1}"/>
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
@@ -175,14 +173,16 @@
                         android:padding="@dimen/dp_8">
 
                         <com.rengwuxian.materialedittext.MaterialEditText
+                            android:id="@+id/edit_user_two"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/hint_user2"
                             android:paddingTop="@dimen/dp_16"
-                            android:text="@={loginShopBody.user2}"
+                            android:text="@={viewModel.profile.user2}"
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
-                            app:met_singleLineEllipsis="true"/>
+                            app:met_singleLineEllipsis="true"
+                            bind:checkUser="@{editUserOne}"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -197,7 +197,7 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1"
                                 android:paddingTop="@dimen/dp_12"
-                                android:text="@={loginShopBody.password2}"
+                                android:text="@={viewModel.profile.password2}"
                                 android:textColor="@color/color_grey_700"
                                 android:textSize="@dimen/sp_17"
                                 app:met_singleLineEllipsis="true"/>
@@ -216,7 +216,9 @@
                             android:buttonTint="@color/color_grey_700"
                             android:text="@string/title_check_admin"
                             android:textColor="@color/color_grey_700"
-                            android:textSize="@dimen/sp_16"/>
+                            android:textSize="@dimen/sp_16"
+                            bind:profile="@{viewModel.profile}"
+                            bind:type="@{UserType.USER2}"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>

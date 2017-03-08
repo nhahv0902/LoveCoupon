@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">LoveCoupon</string>
-    <string name="action_open">Open navigation drawer</string>
-    <string name="action_close">Close navigation drawer</string>
+    <string name="action_open">Open</string>
+    <string name="action_close">Close</string>
     <string name="action_settings">Settings</string>
     <string name="title_you_are">You are</string>
     <string name="title_shop">Shop</string>
@@ -50,6 +50,8 @@
     <string name="msg_send_email">Send email</string>
     <string name="msg_share_facebook">The app for shop and beloved customers</string>
     <string name="msg_description_share_facebook">With LoveCoupon, the shops can reward coupons and send promotions to beloved customers easily , the customers do not need to bring paper coupons and never miss any promotions from favorite shops</string>
+    <string name="msg_existing">*Existing</string>
+    <string name="bind_number_image">%d</string>
 
 
 </resources>
