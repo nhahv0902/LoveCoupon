@@ -8,12 +8,17 @@
             name="folder"
             type="com.nhahv.lovecoupon.data.model.ImageFolder"/>
 
+        <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.pickimage.folder.ImageFolderViewModel"/>
+
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_4"
+        android:onClick="@{()->viewModel.clickStartImagePicker(folder)}"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_16"
         android:paddingRight="@dimen/dp_16">

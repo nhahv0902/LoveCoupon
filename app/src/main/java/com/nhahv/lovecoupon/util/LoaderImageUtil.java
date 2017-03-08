@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 
 import com.nhahv.lovecoupon.data.model.ImageFolder;
-import com.nhahv.lovecoupon.data.model.LocalImage;
+import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,14 +30,14 @@ public class LoaderImageUtil {
         MediaStore.Images.Media.MIME_TYPE + "=? or " + MediaStore.Images.Media.MIME_TYPE + "=?";
     private static final String[] SELECTION_ARGS = new String[]{"image/jpeg", "image/png"};
 
-    public static List<LocalImage> getListImage(Context context) {
-        List<LocalImage> images = new ArrayList<>();
+    public static List<LoaderImageItem> getListImage(Context context) {
+        List<LoaderImageItem> images = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
             IMAGE_PROJECTION, SELECTION, SELECTION_ARGS,
             IMAGE_PROJECTION[2] + " DESC", null);
         if (cursor == null || !cursor.moveToFirst()) return images;
-        LocalImage localImage;
+        LoaderImageItem loaderImageItem;
         int indexPath = cursor.getColumnIndex(IMAGE_PROJECTION[0]);
         int indexName = cursor.getColumnIndex(IMAGE_PROJECTION[1]);
         int indexFolder = cursor.getColumnIndex(IMAGE_PROJECTION[3]);
@@ -47,8 +47,8 @@ public class LoaderImageUtil {
             fileName = cursor.getString(indexName);
             folderName = cursor.getString(indexFolder);
             folderPath = new File(pathImage).getParent();
-            localImage = new LocalImage(fileName, folderName, pathImage, folderPath);
-            images.add(localImage);
+            loaderImageItem = new LoaderImageItem(fileName, folderName, pathImage, folderPath);
+            images.add(loaderImageItem);
             cursor.moveToNext();
         }
         cursor.close();
@@ -57,11 +57,11 @@ public class LoaderImageUtil {
 
     public static List<ImageFolder> getListFolder(Context context) {
         List<ImageFolder> folders = new ArrayList<>();
-        List<LocalImage> images = getListImage(context);
+        List<LoaderImageItem> images = getListImage(context);
         if (images.size() == 0) return folders;
         // set up list folder image
         ImageFolder folder;
-        for (LocalImage item : images) {
+        for (LoaderImageItem item : images) {
             if (!existsFolder(item.getFolderName(), folders)) {
                 folder = new ImageFolder(item.getFolderName(), item.getFolderPath());
                 folder.getListImage().addAll(getListFiles(new File(folder.getFolderPath())));
@@ -71,13 +71,14 @@ public class LoaderImageUtil {
         return folders;
     }
 
-    private static List<String> getListFiles(File parentDir) {
-        ArrayList<String> inFiles = new ArrayList<>();
+    private static List<ImagePickerItem> getListFiles(File parentDir) {
+        List<ImagePickerItem> inFiles = new ArrayList<>();
         File[] files = parentDir.listFiles();
         for (File file : files) {
             if (file.isDirectory()) inFiles.addAll(getListFiles(file));
-            else if (file.getPath().endsWith(DATA_JPG) ||
-                file.getPath().endsWith(DATA_PNG)) inFiles.add(file.getPath());
+            else if (file.getPath().endsWith(DATA_JPG) || file.getPath().endsWith(DATA_PNG)) {
+                inFiles.add(new ImagePickerItem(file.getPath()));
+            }
         }
         return inFiles;
     }
@@ -87,5 +88,27 @@ public class LoaderImageUtil {
             if (item.getFolderName().toLowerCase().equals(nameFolder.toLowerCase())) return true;
         }
         return false;
+    }
+
+    public static class LoaderImageItem {
+        private String mFileName;
+        private String mFolderName;
+        private String mPathImage;
+        private String mFolderPath;
+
+        public LoaderImageItem(String name, String folder, String path, String folderPath) {
+            mFileName = name;
+            mFolderName = folder;
+            mPathImage = path;
+            mFolderPath = folderPath;
+        }
+
+        public String getFolderName() {
+            return mFolderName;
+        }
+
+        public String getFolderPath() {
+            return mFolderPath;
+        }
     }
 }

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -28,7 +29,7 @@ import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_SPAN;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -76,6 +77,16 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:adapter"})
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        view.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    /*
+       * bind adapter of recycler with linearLayout
+       * */
+    @BindingAdapter({"bind:gridAdapter"})
+    public static void setGridAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
+        view.setLayoutManager(new GridLayoutManager(view.getContext(), DATA_SPAN));
         view.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

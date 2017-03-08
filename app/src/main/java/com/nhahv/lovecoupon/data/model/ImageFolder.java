@@ -11,7 +11,7 @@ import java.util.List;
 public class ImageFolder extends BaseObservable {
     private String mFolderName;
     private String mFolderPath;
-    private List<String> mListImage = new ArrayList<>();
+    private List<ImagePickerItem> mListImage = new ArrayList<>();
 
     public ImageFolder() {
     }
@@ -21,7 +21,7 @@ public class ImageFolder extends BaseObservable {
         mFolderPath = folderPath;
     }
 
-    public ImageFolder(String folderName, List<String> images) {
+    public ImageFolder(String folderName, List<ImagePickerItem> images) {
         mFolderName = folderName;
         mListImage.addAll(images);
     }
@@ -47,11 +47,11 @@ public class ImageFolder extends BaseObservable {
     }
 
     @Bindable
-    public List<String> getListImage() {
+    public List<ImagePickerItem> getListImage() {
         return mListImage;
     }
 
-    public void setListImage(List<String> listImage) {
+    public void setListImage(List<ImagePickerItem> listImage) {
         mListImage = listImage;
         notifyPropertyChanged(BR.listImage);
     }

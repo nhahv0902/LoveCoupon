@@ -7,6 +7,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 
 import com.nhahv.lovecoupon.data.model.ImageFolder;
+import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerActivity;
 
 /**
  * Created by Nhahv0902 on 3/9/2017.
@@ -19,7 +20,7 @@ public class ImageFolderViewModel extends BaseObservable {
 
     public ImageFolderViewModel(Context context) {
         mContext = context;
-        mAdapter.set(new ImageFolderAdapter(mListFolder));
+        mAdapter.set(new ImageFolderAdapter(this, mListFolder));
         mListFolder.add(new ImageFolder());
         mListFolder.add(new ImageFolder());
         mListFolder.add(new ImageFolder());
@@ -29,5 +30,9 @@ public class ImageFolderViewModel extends BaseObservable {
 
     public ObservableField<ImageFolderAdapter> getAdapter() {
         return mAdapter;
+    }
+
+    public void clickStartImagePicker(ImageFolder folder) {
+        mContext.startActivity(ImagePickerActivity.getImagePickerIntent(mContext));
     }
 }

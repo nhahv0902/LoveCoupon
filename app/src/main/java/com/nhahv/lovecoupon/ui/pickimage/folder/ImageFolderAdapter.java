@@ -13,17 +13,21 @@ import com.nhahv.lovecoupon.databinding.ItemImageFolderBinding;
  * <></>
  */
 public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.FolderHolder> {
+    private final ImageFolderViewModel mViewModel;
     private LayoutInflater mInflater;
     private final ObservableList<ImageFolder> mListFolder;
 
-    public ImageFolderAdapter(ObservableList<ImageFolder> listFolder) {
+    public ImageFolderAdapter(ImageFolderViewModel viewModel,
+                              ObservableList<ImageFolder> listFolder) {
         mListFolder = listFolder;
+        mViewModel = viewModel;
     }
 
     @Override
     public FolderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemImageFolderBinding binding = ItemImageFolderBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new FolderHolder(binding);
     }
 
