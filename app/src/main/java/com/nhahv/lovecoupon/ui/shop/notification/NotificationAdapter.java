@@ -1,17 +1,14 @@
 package com.nhahv.lovecoupon.ui.shop.notification;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.NotificationItem;
+import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
-
-import java.util.List;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -20,16 +17,10 @@ import java.util.List;
 public class NotificationAdapter
     extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<NotificationItem> mListNotification = new ObservableArrayList<>();
+    private ObservableList<Notification> mListNotification;
 
-    public NotificationAdapter(ObservableList<NotificationItem> notification) {
-        mListNotification.addAll(notification);
-    }
-
-    public void update(List<NotificationItem> notificationItems) {
-        mListNotification.clear();
-        mListNotification.addAll(notificationItems);
-        notifyDataSetChanged();
+    public NotificationAdapter(ObservableList<Notification> notification) {
+        mListNotification = notification;
     }
 
     @Override
@@ -42,13 +33,13 @@ public class NotificationAdapter
 
     @Override
     public void onBindViewHolder(NotificationHolder holder, int position) {
-        NotificationItem item = mListNotification.get(position);
+        Notification item = mListNotification.get(position);
         if (item != null) holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return mListNotification.size();
+        return mListNotification == null ? 0 : mListNotification.size();
     }
 
     public class NotificationHolder extends RecyclerView.ViewHolder {
@@ -59,7 +50,7 @@ public class NotificationAdapter
             mBinding = binding;
         }
 
-        private void bind(NotificationItem item) {
+        private void bind(Notification item) {
             mBinding.setNotification(item);
             mBinding.setUrl(
                 "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
@@ -38,6 +40,20 @@ public final class DataBindingUtils {
             .placeholder(error)
             .dontAnimate()
             .into(view);
+    }
+
+    /*
+    * bind SwipeRefreshLayout refresh
+    * */
+
+    @BindingAdapter({"bind:onRefresh", "bind:refresh"})
+    public static void onRefresh(SwipeRefreshLayout view, ViewModel viewModel, boolean isShow) {
+        /*
+        * true is show refresh
+        * false is hide refresh
+        * */
+        view.setRefreshing(isShow);
+        view.setOnRefreshListener(viewModel::onRefresh);
     }
 
     /*

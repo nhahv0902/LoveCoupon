@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.NotificationItem;
+import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 
 import java.util.List;
@@ -20,15 +20,15 @@ import java.util.List;
 public class NotificationAdapter
     extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<NotificationItem> mListNotification = new ObservableArrayList<>();
+    private ObservableList<Notification> mListNotification = new ObservableArrayList<>();
 
-    public NotificationAdapter(ObservableList<NotificationItem> notification) {
+    public NotificationAdapter(ObservableList<Notification> notification) {
         mListNotification.addAll(notification);
     }
 
-    public void update(List<NotificationItem> notificationItems) {
+    public void update(List<Notification> notifications) {
         mListNotification.clear();
-        mListNotification.addAll(notificationItems);
+        mListNotification.addAll(notifications);
         notifyDataSetChanged();
     }
 
@@ -42,7 +42,7 @@ public class NotificationAdapter
 
     @Override
     public void onBindViewHolder(NotificationHolder holder, int position) {
-        NotificationItem item = mListNotification.get(position);
+        Notification item = mListNotification.get(position);
         if (item != null) holder.bind(item);
     }
 
@@ -59,7 +59,7 @@ public class NotificationAdapter
             mBinding = binding;
         }
 
-        private void bind(NotificationItem item) {
+        private void bind(Notification item) {
             mBinding.setNotification(item);
             mBinding.setUrl(
                 "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");

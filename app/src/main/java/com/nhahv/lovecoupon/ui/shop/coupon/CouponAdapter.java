@@ -24,10 +24,6 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         mViewModel = viewModel;
     }
 
-    public void update() {
-        notifyDataSetChanged();
-    }
-
     @Override
     public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());

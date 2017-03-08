@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Nhahv0902 on 3/6/2017.
  * <.
  */
-public class NotificationItem extends BaseObservable {
+public class Notification extends BaseObservable {
     @SerializedName("message_id")
     public String mNotificationId;
     @SerializedName("content")
