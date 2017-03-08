@@ -41,7 +41,9 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
         loadData();
     }
 
-    private void loadData() {
+    @Override
+    public void loadData() {
+        if (mRepository == null) return;
         mRepository.getCoupon(DATA_ID_SHOP, new Callback<List<CouponTemplate>>() {
             @Override
             public void onSuccess(List<CouponTemplate> data) {
@@ -59,7 +61,8 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
         });
     }
 
-    private void loadError() {
+    @Override
+    public void loadError() {
         ActivityUtil.showMsg(mContext, R.string.msg_load_data_error);
     }
 
@@ -73,11 +76,5 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
 
     public ObservableField<CouponAdapter> getAdapter() {
         return mAdapter;
-    }
-
-    @Override
-    public void onRefresh() {
-        mRefresh.set(true);
-        loadData();
     }
 }

@@ -1,64 +1,63 @@
 package com.nhahv.lovecoupon.ui.shop.history;
 
 import android.content.Context;
+import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.ui.shop.history.usecoupon.UseCreateFragment;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
  * <></>
  */
-public class HistoryViewModel {
-    private Context mContext;
-    private IHistoryFragment mIHistoryFragment;
-    private ObservableField<ViewPagerAdapter> mAdapter = new ObservableField<>();
+public class HistoryViewModel extends BaseObservable implements DatePickerDialog.OnDateSetListener {
+    private final String TAG = getClass().getSimpleName();
+    private final Context mContext;
+    private final IHistoryFragment mIHistoryFragment;
+    private final ObservableField<ViewPagerAdapter> mAdapter = new ObservableField<>();
+    private List<UseCreateFragment> mFragments = new ArrayList<>();
 
     public HistoryViewModel(Context context, IHistoryFragment iHistoryFragment,
                             FragmentManager fragmentManager) {
         mContext = context;
         mIHistoryFragment = iHistoryFragment;
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(UseCreateFragment.newInstance());
-        fragments.add(UseCreateFragment.newInstance());
-        mAdapter.set(new ViewPagerAdapter(fragmentManager, fragments,
+        mFragments.add(UseCreateFragment.newInstance(UseCreateType.CREATE));
+        mFragments.add(UseCreateFragment.newInstance(UseCreateType.USE));
+        mAdapter.set(new ViewPagerAdapter(fragmentManager, mFragments,
             context.getResources().getStringArray(R.array.array_history)));
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar now = Calendar.getInstance();
+        now.set(year, monthOfYear, dayOfMonth);
+        now.set(Calendar.HOUR_OF_DAY, 0);
+        now.set(Calendar.MINUTE, 0);
+        now.set(Calendar.SECOND, 0);
+        now.set(Calendar.MILLISECOND, 0);
+        long utc1 = now.getTimeInMillis();
+        mIHistoryFragment.updateMenuDatePicker(toStringDatePicker(now));
+        mIHistoryFragment.updateDatePicker(now);
+        for (UseCreateFragment fragment : mFragments) {
+            fragment.onDateChange(utc1);
+        }
     }
 
     public ObservableField<ViewPagerAdapter> getAdapter() {
         return mAdapter;
     }
 
-    public class ViewPagerAdapter extends FragmentPagerAdapter {
-        private List<Fragment> mListFragment;
-        private String[] mTitle;
-
-        public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] title) {
-            super(fm);
-            mListFragment = fragments;
-            mTitle = title;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mListFragment.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mListFragment == null ? 0 : mListFragment.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitle[position];
-        }
+    public String toStringDatePicker(Calendar calendar) {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return fmt.format(calendar.getTime());
     }
 }

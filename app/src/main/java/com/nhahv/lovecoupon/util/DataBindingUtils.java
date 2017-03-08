@@ -1,6 +1,7 @@
 package com.nhahv.lovecoupon.util;
 
 import android.databinding.BindingAdapter;
+import android.databinding.ObservableBoolean;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -47,13 +48,17 @@ public final class DataBindingUtils {
     * */
 
     @BindingAdapter({"bind:onRefresh", "bind:refresh"})
-    public static void onRefresh(SwipeRefreshLayout view, ViewModel viewModel, boolean isShow) {
+    public static void onRefresh(SwipeRefreshLayout view, ViewModel viewModel,
+                                 ObservableBoolean isShow) {
         /*
         * true is show refresh
         * false is hide refresh
         * */
-        view.setRefreshing(isShow);
-        view.setOnRefreshListener(viewModel::onRefresh);
+        view.setRefreshing(isShow.get());
+        view.setOnRefreshListener(() -> {
+            isShow.set(true);
+            viewModel.loadData();
+        });
     }
 
     /*

@@ -38,7 +38,8 @@ public class NotificationViewModel implements ViewModel {
         loadData();
     }
 
-    private void loadData() {
+    @Override
+    public void loadData() {
         if (mRepository == null) return;
         mRepository.getNotificationShop(DATA_ID_SHOP, new Callback<List<Notification>>() {
             @Override
@@ -58,12 +59,7 @@ public class NotificationViewModel implements ViewModel {
     }
 
     @Override
-    public void onRefresh() {
-        mRefresh.set(true);
-        loadData();
-    }
-
-    private void loadError() {
+    public void loadError() {
         ActivityUtil.showMsg(mContext, R.string.msg_load_data_error);
     }
 

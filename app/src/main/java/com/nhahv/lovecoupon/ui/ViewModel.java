@@ -5,5 +5,6 @@ package com.nhahv.lovecoupon.ui;
  * <></>
  */
 public interface ViewModel {
-    void onRefresh();
+    void loadData();
+    void loadError();
 }

@@ -8,6 +8,7 @@ public final class Constant {
     public static final class BundleConstant {
         public static final String BUNDLE_NOTIFICATION = "BUNDLE_NOTIFICATION";
         public static final String BUNDLE_ACCOUNT_TYPE = "BUNDLE_ACCOUNT_TYPE";
+        public static final String BUNDLE_USE_CREATE_TYPE = "BUNDLE_USE_CREATE_TYPE";
     }
 
     public static final class RequestConstant {
@@ -34,5 +35,6 @@ public final class Constant {
         public static final String URL_IMAGE =
             "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg";
         public static final String DATA_ID_SHOP = "qqIHubd8BF3N3Cf";
+        public static final String DATA_DATE_PICKER = "DATA_DATE_PICKER";
     }
 }
