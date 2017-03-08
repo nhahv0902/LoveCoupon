@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
+import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.service.NetworkReceiver;
+
 /**
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
@@ -16,5 +19,11 @@ public final class ActivityUtil {
 
     public static void showMsg(Context context, int msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        if (NetworkReceiver.isConnect(context)) return true;
+        showMsg(context, R.string.msg_network_error);
+        return false;
     }
 }

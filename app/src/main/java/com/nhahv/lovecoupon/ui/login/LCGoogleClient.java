@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
@@ -26,6 +27,7 @@ public class LCGoogleClient {
 
     private LCGoogleClient(Context context) {
         mContext = context;
+        FacebookSdk.sdkInitialize(mContext.getApplicationContext());
         initGoogle();
     }
 

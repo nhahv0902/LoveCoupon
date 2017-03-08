@@ -143,7 +143,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end|center_vertical"
-                                app:srcCompat="@drawable/ic_show"
+                                app:srcCompat="@drawable/ic_eye_show_grey"
                                 bind:showPassword="@{editPasswordOne}"/>
                         </FrameLayout>
 
@@ -206,7 +206,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="end|center_vertical"
-                                app:srcCompat="@drawable/ic_show"
+                                app:srcCompat="@drawable/ic_eye_show_grey"
                                 bind:showPassword="@{editPasswordTwo}"/>
                         </FrameLayout>
 

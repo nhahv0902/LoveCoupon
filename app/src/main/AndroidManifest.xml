@@ -40,6 +40,12 @@
             </intent-filter>
         </receiver>
 
+        <!--provider-->
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1875391312728728"
+            android:exported="true"/>
+
         <activity
             android:name=".ui.shop.main.ShopMainActivity"/>
         <activity android:name=".ui.login.LoginActivity">

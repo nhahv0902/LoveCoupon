@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">LoveCoupon</string>
-
     <string name="action_open">Open navigation drawer</string>
     <string name="action_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="title_you_are">You are</string>
     <string name="title_shop">Shop</string>
@@ -25,11 +23,9 @@
     <string name="menu_history">History</string>
     <string name="menu_share">Share</string>
     <string name="menu_log_out">Logout</string>
-
     <string name="title_like">Like</string>
     <string name="title_share">Share</string>
     <string name="title_more">More</string>
-
     <string name="msg_share">We are like you, love coupons and promotions</string>
     <string name="title_contact">Contact Our Team:</string>
     <string name="title_support">info@lovecoupon.com</string>
@@ -50,4 +46,10 @@
     <string name="msg_login_error">Login failed</string>
     <string name="msg_password_error">Password is not empty.</string>
     <string name="msg_load_data_error">Load data failed.</string>
+    <string name="msg_network_error">Internet connection is not available</string>
+    <string name="msg_send_email">Send email</string>
+    <string name="msg_share_facebook">The app for shop and beloved customers</string>
+    <string name="msg_description_share_facebook">With LoveCoupon, the shops can reward coupons and send promotions to beloved customers easily , the customers do not need to bring paper coupons and never miss any promotions from favorite shops</string>
+
+
 </resources>

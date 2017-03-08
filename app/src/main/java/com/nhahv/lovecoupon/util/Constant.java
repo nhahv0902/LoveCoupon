@@ -36,5 +36,8 @@ public final class Constant {
             "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg";
         public static final String DATA_ID_SHOP = "qqIHubd8BF3N3Cf";
         public static final String DATA_DATE_PICKER = "DATA_DATE_PICKER";
+        public static final String DATA_EMAIL_LOVE_COUPON = "info@lovecoupon.com";
+        public static final String DATA_WEB_SITE = "http://www.lovecoupon.com";
+        public static final String DATA_LINK_PHOTO = "http://188.166.199.25:4000/logo/love.jpg";
     }
 }
