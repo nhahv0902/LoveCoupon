@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.ui.customer.notification;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 
-import java.util.List;
-
 /**
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
@@ -20,16 +17,10 @@ import java.util.List;
 public class NotificationAdapter
     extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<Notification> mListNotification = new ObservableArrayList<>();
+    private ObservableList<Notification> mListNotification;
 
     public NotificationAdapter(ObservableList<Notification> notification) {
-        mListNotification.addAll(notification);
-    }
-
-    public void update(List<Notification> notifications) {
-        mListNotification.clear();
-        mListNotification.addAll(notifications);
-        notifyDataSetChanged();
+        mListNotification = notification;
     }
 
     @Override
@@ -48,7 +39,7 @@ public class NotificationAdapter
 
     @Override
     public int getItemCount() {
-        return mListNotification.size();
+        return mListNotification == null ? 0 : mListNotification.size();
     }
 
     public class NotificationHolder extends RecyclerView.ViewHolder {

@@ -6,13 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.databinding.FragmentCustomerCouponBinding;
+import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
+import com.nhahv.lovecoupon.databinding.FragmentNotificationBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CouponFragment extends Fragment {
-    private FragmentCustomerCouponBinding mBinding;
+    private FragmentNotificationBinding mBinding;
     private CouponViewModel mViewModel;
 
     public static Fragment newInstance() {
@@ -21,8 +22,8 @@ public class CouponFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
-        mBinding = FragmentCustomerCouponBinding.inflate(inflater, view, false);
-        mViewModel = new CouponViewModel(getActivity());
+        mBinding = FragmentNotificationBinding.inflate(inflater, view, false);
+        mViewModel = new CouponViewModel(getActivity(), CouponRepository.getInstance());
         mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }

@@ -101,6 +101,7 @@ public class LoginViewModel extends BaseObservable {
     }
 
     private void handlerFacebook(AccessToken result) {
+        Log.d(TAG, "id = " + result.getUserId());
         switch (mType) {
             case SHOP:
                 mRepository.loginSocialShop(result.getUserId(), DATA_FACEBOOK, result.getToken(),
@@ -230,7 +231,6 @@ public class LoginViewModel extends BaseObservable {
             @Override
             public void onSuccess() {
                 String token = mPreference.getString(PREF_TOKEN);
-                Log.d(TAG, "token = " + token);
                 switch (mType) {
                     case SHOP:
                         mRepository.loginNormalShop(mEmail.get(), mPassword.get(),

@@ -3,6 +3,7 @@ package com.nhahv.lovecoupon.data.source.remote.notification;
 import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.data.model.Notification;
+import com.nhahv.lovecoupon.data.model.NotificationCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
 import com.nhahv.lovecoupon.networking.api.NotificationService;
@@ -30,7 +31,8 @@ public class NotificationRemoteDataSource implements NotificationDataSource {
     }
 
     @Override
-    public void getNotificationShop(String idShop, @NonNull Callback<List<Notification>> callback) {
+    public void getNotificationShop(@NonNull String idShop,
+                                    @NonNull Callback<List<Notification>> callback) {
         if (mService == null) return;
         mService.getNotificationShop(idShop).enqueue(new retrofit2.Callback<List<Notification>>() {
             @Override
@@ -45,5 +47,45 @@ public class NotificationRemoteDataSource implements NotificationDataSource {
                 callback.onError();
             }
         });
+    }
+
+    @Override
+    public void getNotificationCustomer(@NonNull String id,
+                                        @NonNull Callback<List<NotificationCustomer>> callback) {
+        if (mService == null) return;
+        mService.getNotificationCustomer(id).enqueue(
+            new retrofit2.Callback<List<NotificationCustomer>>() {
+                @Override
+                public void onResponse(Call<List<NotificationCustomer>> call,
+                                       Response<List<NotificationCustomer>> response) {
+                    if (response == null || response.body() == null) callback.onError();
+                    else callback.onSuccess(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<List<NotificationCustomer>> call, Throwable t) {
+                    callback.onError();
+                }
+            });
+    }
+
+    @Override
+    public void getOtherNotificationCustomer(@NonNull String id, @NonNull String city, @NonNull
+        Callback<List<NotificationCustomer>> callback) {
+        if (mService == null) return;
+        mService.getOtherNotificationCustomer(id, city).enqueue(
+            new retrofit2.Callback<List<NotificationCustomer>>() {
+                @Override
+                public void onResponse(Call<List<NotificationCustomer>> call,
+                                       Response<List<NotificationCustomer>> response) {
+                    if (response == null || response.body() == null) callback.onError();
+                    else callback.onSuccess(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<List<NotificationCustomer>> call, Throwable t) {
+                    callback.onError();
+                }
+            });
     }
 }

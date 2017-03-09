@@ -13,13 +13,14 @@ import java.util.List;
  * <></>
  */
 public class CouponRepository implements CouponDataSource {
-    private static CouponDataSource sRepository;
+    private static CouponRepository sRepository;
     private CouponDataSource mDataSource;
 
     private CouponRepository() {
+        mDataSource = CouponRemoteDataSource.getInstance();
     }
 
-    public static CouponDataSource getInstance() {
+    public static CouponRepository getInstance() {
         if (sRepository == null) sRepository = new CouponRepository();
         return sRepository;
     }

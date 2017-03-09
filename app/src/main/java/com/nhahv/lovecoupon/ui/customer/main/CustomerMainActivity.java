@@ -21,6 +21,7 @@ import com.nhahv.lovecoupon.databinding.ActivityCustomerMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
 import com.nhahv.lovecoupon.ui.customer.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.customer.notification.NotificationFragment;
+import com.nhahv.lovecoupon.ui.customer.notification.NotificationType;
 import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
 import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
@@ -33,6 +34,7 @@ public class CustomerMainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener {
     private ActivityCustomerMainBinding mBinding;
     private SharePreferenceUtil mPreference;
+    private CustomerMainViewModel mViewModel;
 
     public static Intent getCustomerMainIntent(Context context) {
         return new Intent(context, CustomerMainActivity.class);
@@ -42,7 +44,8 @@ public class CustomerMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_customer_main);
-        mBinding.setViewModel(new CustomerMainViewModel(getApplicationContext()));
+        mViewModel = new CustomerMainViewModel(getApplicationContext());
+        mBinding.setViewModel(mViewModel);
         mPreference = SharePreferenceUtil.getInstance(this);
         start();
     }
@@ -81,17 +84,26 @@ public class CustomerMainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.action_coupon:
                 addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
+                mViewModel.setShowImagePlus(true);
                 break;
             case R.id.action_notification:
-                addFragment(NotificationFragment.newInstance(), R.string.menu_notification);
+                addFragment(NotificationFragment.newInstance(NotificationType.NOTIFICATION),
+                    R.string.menu_notification);
+                mViewModel.setShowImagePlus(false);
                 break;
             case R.id.action_other_notification:
+                addFragment(NotificationFragment.newInstance(NotificationType.NOTIFICATION_OTHER),
+                    R.string.menu_notification);
+                mViewModel.setShowImagePlus(false);
+                mViewModel.setShowImagePlus(false);
                 break;
             case R.id.action_share:
                 addFragment(ShareFragment.newInstance(), R.string.menu_share);
+                mViewModel.setShowImagePlus(false);
                 break;
             case R.id.action_exit:
                 LoginManager.getInstance().logOut();
+                mViewModel.setShowImagePlus(false);
                 SharePreferenceUtil.getInstance(this).writePreference(PREF_IS_LOGIN, false);
                 startActivity(FirstScreenActivity.getFirstIntent(this, 0));
                 break;

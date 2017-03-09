@@ -16,8 +16,6 @@ import java.util.List;
 public class CouponCustomer extends BaseObservable {
     @SerializedName("company_id")
     public String mShopId;
-    @SerializedName("logo")
-    public String mLogo;
     @SerializedName("logo_link")
     public String mLogoLink;
     @SerializedName("name")
@@ -30,11 +28,6 @@ public class CouponCustomer extends BaseObservable {
     public void setShopId(String shopId) {
         mShopId = shopId;
         notifyPropertyChanged(BR.shopId);
-    }
-
-    public void setLogo(String logo) {
-        mLogo = logo;
-        notifyPropertyChanged(BR.logo);
     }
 
     public void setLogoLink(String logoLink) {
@@ -60,11 +53,6 @@ public class CouponCustomer extends BaseObservable {
     @Bindable
     public String getShopId() {
         return mShopId;
-    }
-
-    @Bindable
-    public String getLogo() {
-        return mLogo;
     }
 
     @Bindable
