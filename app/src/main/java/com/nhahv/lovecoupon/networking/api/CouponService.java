@@ -1,5 +1,6 @@
 package com.nhahv.lovecoupon.networking.api;
 
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.model.CouponItem;
 
 import java.util.List;
@@ -14,6 +15,9 @@ import retrofit2.http.Query;
  * <></>
  */
 public interface CouponService {
+    /*
+    * Coupon of shop
+    * */
     @GET("/get_created_coupon_by_company_id")
     Call<List<CouponItem>> getCreatedCoupon(@Header("Authorization") String token,
                                             @Query("company_id") String company_id,
@@ -22,4 +26,9 @@ public interface CouponService {
     Call<List<CouponItem>> getUsedCoupon(@Header("Authorization") String token,
                                          @Query("company_id") String company_id,
                                          @Query("utc1") long utc1, @Query("utc2") long utc2);
+    /*
+    * coupon of customer
+    * */
+    @GET("/get_companies_by_user_id")
+    Call<List<CouponCustomer>> getCouponOfCustomer(@Query("user_id") String id);
 }

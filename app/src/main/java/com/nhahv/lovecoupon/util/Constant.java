@@ -16,7 +16,7 @@ public final class Constant {
     public static final class RequestConstant {
         public static final int REQUEST_GOOGLE = 1;
         public static final int REQUEST_PICK_IMAGE = 2;
-
+        public static final int REQUEST_OPEN_GALLERY = 3;
     }
 
     public static final class PreferenceConstant {
@@ -44,5 +44,6 @@ public final class Constant {
         public static final String DATA_EMAIL_LOVE_COUPON = "info@lovecoupon.com";
         public static final String DATA_WEB_SITE = "http://www.lovecoupon.com";
         public static final String DATA_LINK_PHOTO = "http://188.166.199.25:4000/logo/love.jpg";
+        public static final String DATA_PICK_LOGO = "LoveCoupon Pick Logo";
     }
 }

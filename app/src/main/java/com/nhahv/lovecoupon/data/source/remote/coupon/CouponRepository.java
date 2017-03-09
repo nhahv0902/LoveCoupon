@@ -2,6 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.coupon;
 
 import android.support.annotation.NonNull;
 
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.model.CouponItem;
 import com.nhahv.lovecoupon.data.source.Callback;
 
@@ -45,6 +46,22 @@ public class CouponRepository implements CouponDataSource {
         mDataSource.getUsedCoupon(header, id, utc1, utc2, new Callback<List<CouponItem>>() {
             @Override
             public void onSuccess(List<CouponItem> data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void getCouponCustomer(@NonNull String idUser,
+                                  @NonNull Callback<List<CouponCustomer>> callback) {
+        mDataSource.getCouponCustomer(idUser, new Callback<List<CouponCustomer>>() {
+            @Override
+            public void onSuccess(List<CouponCustomer> data) {
                 callback.onSuccess(data);
             }
 

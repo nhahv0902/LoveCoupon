@@ -3,6 +3,7 @@ package com.nhahv.lovecoupon.util;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableBoolean;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -27,6 +28,7 @@ import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
+import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -156,8 +158,9 @@ public final class DataBindingUtils {
     * check user another user2
     * */
 
-    @BindingAdapter({"bind:checkUser"})
-    public static void checkUser(MaterialEditText view, MaterialEditText user) {
+    @BindingAdapter({"bind:checkUser", "bind:viewModel"})
+    public static void checkUser(MaterialEditText view, MaterialEditText user,
+                                 @NonNull final SettingViewModel viewModel) {
         view.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -173,6 +176,7 @@ public final class DataBindingUtils {
                 String text2 = user.getText().toString().trim();
                 if (text.equals(text2) && !text2.isEmpty()) {
                     view.setError(view.getContext().getString(R.string.msg_existing));
+                    viewModel.setUserTrueFailed();
                 }
             }
         });

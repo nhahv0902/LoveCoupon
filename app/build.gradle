@@ -48,5 +48,7 @@ dependencies {
     compile 'com.android.support:customtabs:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.5.1'
+    compile 'com.yalantis:ucrop:2.2.0'
+    compile 'com.commit451:PhotoView:1.2.5'
 }
 apply plugin: 'com.google.gms.google-services'

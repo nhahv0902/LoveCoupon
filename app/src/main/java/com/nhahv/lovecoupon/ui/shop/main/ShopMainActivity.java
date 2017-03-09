@@ -3,6 +3,7 @@ package com.nhahv.lovecoupon.ui.shop.main;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -35,13 +36,13 @@ import java.util.List;
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGIN;
 
 public class ShopMainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener, IShopMain {
+    implements NavigationView.OnNavigationItemSelectedListener, IShopMainHandler {
     private ActivityShopMainBinding mBinding;
     private ShopMainViewModel mViewModel;
     private SharePreferenceUtil mPreference;
     private final List<Fragment> mListFragment = new ArrayList<>();
     private String[] mTitles;
-    private int mPositionFragment;
+    private ObservableInt mPositionFragment = new ObservableInt();
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -53,7 +54,7 @@ public class ShopMainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_shop_main);
-        mViewModel = new ShopMainViewModel(getApplicationContext(), this);
+        mViewModel = new ShopMainViewModel(getApplicationContext(), mPositionFragment, this);
         mBinding.setViewModel(mViewModel);
         mPreference = SharePreferenceUtil.getInstance(this);
         initFragment();
@@ -85,7 +86,7 @@ public class ShopMainActivity extends AppCompatActivity
         bindHeader.setName(profile.getName());
         bindHeader.executePendingBindings();
         mBinding.navView.addHeaderView(bindHeader.getRoot());
-        startFragment(mPositionFragment);
+        startFragment(mPositionFragment.get());
     }
 
     @Override
@@ -100,19 +101,19 @@ public class ShopMainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_coupon:
-                mPositionFragment = 0;
+                mPositionFragment.set(0);
                 break;
             case R.id.action_notification:
-                mPositionFragment = 1;
+                mPositionFragment.set(1);
                 break;
             case R.id.action_settings:
-                mPositionFragment = 2;
+                mPositionFragment.set(2);
                 break;
             case R.id.action_history:
-                mPositionFragment = 3;
+                mPositionFragment.set(3);
                 break;
             case R.id.action_share:
-                mPositionFragment = 4;
+                mPositionFragment.set(4);
                 break;
             case R.id.action_exit:
                 LoginManager.getInstance().logOut();
@@ -122,17 +123,25 @@ public class ShopMainActivity extends AppCompatActivity
             default:
                 break;
         }
-        startFragment(mPositionFragment);
+        startFragment(mPositionFragment.get());
         mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void startFragment(int position) {
-        mViewModel.updateShowImagePlus(mPositionFragment <= 2);
-        mViewModel.updateIconDone(mPositionFragment == 2);
+        mViewModel.updateShowImagePlus(mPositionFragment.get() <= 2);
+        mViewModel.updateIconDone(mPositionFragment.get() == 2);
         setTitle(mTitles[position]);
         ActivityUtil.addFragment(getSupportFragmentManager(),
             mListFragment.get(position),
             R.id.frame_layout);
+    }
+
+    @Override
+    public void clickUpdateProfile() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        if (fragment instanceof SettingFragment) {
+            ((SettingFragment) fragment).updateProfile();
+        }
     }
 }

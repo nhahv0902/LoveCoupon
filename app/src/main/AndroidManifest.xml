@@ -47,21 +47,21 @@
         <activity android:name=".ui.shop.main.ShopMainActivity"/>
         <activity android:name=".ui.login.LoginActivity"/>
         <activity android:name=".ui.firstscreen.FirstScreenActivity">
-        </activity>
-        <activity android:name=".ui.resetpassword.ResetPasswordActivity"/>
-        <activity android:name=".ui.customer.main.CustomerMainActivity"/>
-        <activity android:name=".ui.customer.couponofshop.CouponOfShopActivity"/>
-        <activity android:name=".ui.pickimage.folder.ImageFolderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.pickimage.image.ImagePickerActivity">
-        </activity>
-        <activity android:name=".ui.pickimage.preview.ImagePreviewerActivity">
-        </activity>
+        <activity android:name=".ui.resetpassword.ResetPasswordActivity"/>
+        <activity android:name=".ui.customer.main.CustomerMainActivity"/>
+        <activity android:name=".ui.customer.couponofshop.CouponOfShopActivity"/>
+        <activity android:name=".ui.pickimage.folder.ImageFolderActivity"/>
+        <activity android:name=".ui.pickimage.image.ImagePickerActivity"/>
+        <activity android:name=".ui.pickimage.preview.ImagePreviewerActivity"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
-
 </manifest>

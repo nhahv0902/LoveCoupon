@@ -50,7 +50,7 @@ public class ImageFolderActivity extends BaseActivity implements IImageFolder {
             List<ImagePickerItem> imagePickerItems = bundle.getParcelableArrayList(BUNDLE_IMAGE);
             if (imagePickerItems == null) return;
             for (ImagePickerItem item : imagePickerItems) {
-                // TODO: 3/9/2017 result intnet 
+                // TODO: 3/9/2017 result intnet
             }
         }
     }

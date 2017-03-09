@@ -115,7 +115,8 @@
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
                             app:met_singleLineEllipsis="true"
-                            bind:checkUser="@{editUserTwo}"/>
+                            bind:checkUser="@{editUserTwo}"
+                            bind:viewModel="@{viewModel}"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
@@ -182,7 +183,8 @@
                             android:textColor="@color/color_grey_700"
                             android:textSize="@dimen/sp_17"
                             app:met_singleLineEllipsis="true"
-                            bind:checkUser="@{editUserOne}"/>
+                            bind:checkUser="@{editUserOne}"
+                            bind:viewModel="@{viewModel}"/>
 
                         <FrameLayout
                             android:layout_width="match_parent"
