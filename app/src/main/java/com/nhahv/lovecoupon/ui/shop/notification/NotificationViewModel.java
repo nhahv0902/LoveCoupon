@@ -6,6 +6,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
@@ -26,9 +27,7 @@ public class NotificationViewModel implements ViewModel {
     private final Context mContext;
     private final IShopNotification mIShopNotification;
     private final NotificationRepository mRepository;
-    private final ObservableField<NotificationAdapter> mAdapter = new ObservableField<>();
     private final ObservableList<Notification> mListNotification = new ObservableArrayList<>();
-    private ObservableBoolean mRefresh = new ObservableBoolean(false);
 
     public NotificationViewModel(@NonNull Context context, IShopNotification iShopNotification) {
         mContext = context;
@@ -47,13 +46,13 @@ public class NotificationViewModel implements ViewModel {
                 mListNotification.clear();
                 mListNotification.addAll(data);
                 mAdapter.get().notifyDataSetChanged();
-                mRefresh.set(false);
+                setRefresh(false);
             }
 
             @Override
             public void onError() {
                 loadError();
-                mRefresh.set(false);
+                setRefresh(false);
             }
         });
     }
@@ -67,7 +66,13 @@ public class NotificationViewModel implements ViewModel {
         return mRefresh;
     }
 
-    public ObservableField<NotificationAdapter> getAdapter() {
+    @Override
+    public void setRefresh(boolean isRefresh) {
+        mRefresh.set(isRefresh);
+    }
+
+    @Override
+    public ObservableField<RecyclerView.Adapter> getAdapter() {
         return mAdapter;
     }
 }

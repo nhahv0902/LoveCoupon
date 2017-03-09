@@ -6,6 +6,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.support.v7.widget.RecyclerView;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
@@ -28,9 +29,7 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
     private final ICouponTemplate mICoupon;
     private final ObservableList<CouponTemplate> mListCoupon = new ObservableArrayList<>();
-    private final ObservableField<CouponAdapter> mAdapter = new ObservableField<>();
     private final ObservableField<ProfileShop> mProfile = new ObservableField<>();
-    private ObservableBoolean mRefresh = new ObservableBoolean(false);
     private final CouponTemplateRepository mRepository;
 
     public CouponViewModel(Context context, ICouponTemplate iCoupon) {
@@ -50,13 +49,13 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
                 mListCoupon.clear();
                 mListCoupon.addAll(data);
                 mAdapter.get().notifyDataSetChanged();
-                mRefresh.set(false);
+                setRefresh(false);
             }
 
             @Override
             public void onError() {
                 loadError();
-                mRefresh.set(false);
+                setRefresh(false);
             }
         });
     }
@@ -66,15 +65,22 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
         ActivityUtil.showMsg(mContext, R.string.msg_load_data_error);
     }
 
+    @Override
     public ObservableBoolean getRefresh() {
         return mRefresh;
+    }
+
+    @Override
+    public void setRefresh(boolean isRefresh) {
+        mRefresh.set(isRefresh);
     }
 
     public ObservableField<ProfileShop> getProfile() {
         return mProfile;
     }
 
-    public ObservableField<CouponAdapter> getAdapter() {
+    @Override
+    public ObservableField<RecyclerView.Adapter> getAdapter() {
         return mAdapter;
     }
 }

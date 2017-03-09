@@ -28,16 +28,9 @@
             android:textSize="@dimen/sp_26"
             android:visibility="@{viewModel.showData? View.GONE : View.VISIBLE}"/>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewModel.showData? View.VISIBLE : View.GONE}">
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                bind:adapter="@{viewModel.adapter}"/>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
+        <include
+            layout="@layout/fragment_notification"
+            android:visibility="@{viewModel.showData? View.VISIBLE : View.GONE}"
+            bind:viewModel="@{viewModel}"/>
     </FrameLayout>
 </layout>

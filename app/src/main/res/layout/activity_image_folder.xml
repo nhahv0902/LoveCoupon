@@ -30,10 +30,9 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                bind:adapter="@{viewModel.adapter}"/>
+            <include
+                layout="@layout/fragment_notification"
+                bind:viewModel="@{viewModel}"/>
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton

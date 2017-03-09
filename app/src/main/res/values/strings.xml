@@ -52,6 +52,9 @@
     <string name="msg_description_share_facebook">With LoveCoupon, the shops can reward coupons and send promotions to beloved customers easily , the customers do not need to bring paper coupons and never miss any promotions from favorite shops</string>
     <string name="msg_existing">*Existing</string>
     <string name="bind_number_image">%d</string>
+    <string name="msg_load_image_error">Do not load image, please reload.</string>
+    <string name="title_albums">Albums</string>
+    <string name="title_all_albums">All albums</string>
 
 
 </resources>

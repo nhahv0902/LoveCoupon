@@ -6,6 +6,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.support.v7.widget.RecyclerView;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponItem;
@@ -29,10 +30,8 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
     private final long UTC1 = 1488960000901L;
     private final long UTC2 = 1488960006901L;
     private final Context mContext;
-    private final ObservableField<UseCreateAdapter> mAdapter = new ObservableField<>();
     private final ObservableList<CouponItem> mListCoupon = new ObservableArrayList<>();
     private final ObservableBoolean mShowData = new ObservableBoolean(true);
-    private ObservableBoolean mRefresh = new ObservableBoolean(false);
     private final CouponDataSource mRepository;
     private final UseCreateType mType;
 
@@ -55,7 +54,7 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
                             mListCoupon.clear();
                             mListCoupon.addAll(data);
                             mAdapter.get().notifyDataSetChanged();
-                            loadFinish();
+                            setRefresh(false);
                         }
 
                         @Override
@@ -69,7 +68,7 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
                     public void onSuccess(List<CouponItem> data) {
                         mListCoupon.clear();
                         mListCoupon.addAll(data);
-                        loadFinish();
+                        setRefresh(false);
                         mAdapter.get().notifyDataSetChanged();
                     }
 
@@ -89,20 +88,27 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
         loadData();
     }
 
-    private void loadFinish() {
-        mRefresh.set(false);
-    }
-
     @Override
     public void loadError() {
         ActivityUtil.showMsg(mContext, R.string.msg_load_data_error);
+    }
+
+    @Override
+    public ObservableBoolean getRefresh() {
+        return mRefresh;
+    }
+
+    @Override
+    public void setRefresh(boolean isRefresh) {
+        mRefresh.set(isRefresh);
     }
 
     public ObservableBoolean getShowData() {
         return mShowData;
     }
 
-    public ObservableField<UseCreateAdapter> getAdapter() {
+    @Override
+    public ObservableField<RecyclerView.Adapter> getAdapter() {
         return mAdapter;
     }
 }

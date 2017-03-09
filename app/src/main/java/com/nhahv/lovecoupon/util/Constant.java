@@ -9,6 +9,7 @@ public final class Constant {
         public static final String BUNDLE_NOTIFICATION = "BUNDLE_NOTIFICATION";
         public static final String BUNDLE_ACCOUNT_TYPE = "BUNDLE_ACCOUNT_TYPE";
         public static final String BUNDLE_USE_CREATE_TYPE = "BUNDLE_USE_CREATE_TYPE";
+        public static final String BUNDLE_IMAGE = "BUNDLE_IMAGE";
     }
 
     public static final class RequestConstant {
@@ -40,7 +41,5 @@ public final class Constant {
         public static final String DATA_EMAIL_LOVE_COUPON = "info@lovecoupon.com";
         public static final String DATA_WEB_SITE = "http://www.lovecoupon.com";
         public static final String DATA_LINK_PHOTO = "http://188.166.199.25:4000/logo/love.jpg";
-        public static final String DATA_JPG = ".jpg";
-        public static final String DATA_PNG = ".png";
     }
 }

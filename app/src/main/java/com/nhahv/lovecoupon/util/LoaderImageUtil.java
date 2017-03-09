@@ -2,7 +2,9 @@ package com.nhahv.lovecoupon.util;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.data.model.ImageFolder;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
@@ -11,43 +13,57 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_JPG;
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PNG;
-
 /**
  * Created by dee on 15/11/19.
  * <></>
  */
 public class LoaderImageUtil {
     private static final String TAG = "LoaderImageUtil";
+    private static final String DATA_JPG = ".jpg";
+    private static final String DATA_PNG = ".png";
+    private static final String[] SELECTION_ARGS = new String[]{"image/jpeg", "image/png"};
+    private static final String MIME_TYPE = MediaStore.Images.Media.MIME_TYPE;
+    private static final String SELECTION = MIME_TYPE + "=? or " + MIME_TYPE + "=?";
     private final static String[] IMAGE_PROJECTION = {
         MediaStore.Images.Media.DATA,
         MediaStore.Images.Media.DISPLAY_NAME,
         MediaStore.Images.Media.DATE_ADDED,
         MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
     };
-    private static final String SELECTION =
-        MediaStore.Images.Media.MIME_TYPE + "=? or " + MediaStore.Images.Media.MIME_TYPE + "=?";
-    private static final String[] SELECTION_ARGS = new String[]{"image/jpeg", "image/png"};
+    private static LoaderImageUtil sInstance;
+    private Context mContext;
 
-    public static List<LoaderImageItem> getListImage(Context context) {
+    private LoaderImageUtil(Context context) {
+        mContext = context;
+    }
+
+    public static LoaderImageUtil getInstance(Context context) {
+        if (sInstance == null) sInstance = new LoaderImageUtil(context);
+        return sInstance;
+    }
+
+    public void getImageFolders(@NonNull LoaderCallback callback) {
+        new LoaderImageAsync(callback).execute();
+    }
+
+    private List<LoaderImageItem> getListImage() {
         List<LoaderImageItem> images = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(
+        Cursor cursor = mContext.getContentResolver().query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            IMAGE_PROJECTION, SELECTION, SELECTION_ARGS,
+            IMAGE_PROJECTION,
+            SELECTION,
+            SELECTION_ARGS,
             IMAGE_PROJECTION[2] + " DESC", null);
         if (cursor == null || !cursor.moveToFirst()) return images;
         LoaderImageItem loaderImageItem;
         int indexPath = cursor.getColumnIndex(IMAGE_PROJECTION[0]);
-        int indexName = cursor.getColumnIndex(IMAGE_PROJECTION[1]);
         int indexFolder = cursor.getColumnIndex(IMAGE_PROJECTION[3]);
-        String pathImage, fileName, folderPath, folderName;
+        String pathImage, folderPath, folderName;
         while (!cursor.isAfterLast()) {
             pathImage = cursor.getString(indexPath);
-            fileName = cursor.getString(indexName);
             folderName = cursor.getString(indexFolder);
             folderPath = new File(pathImage).getParent();
-            loaderImageItem = new LoaderImageItem(fileName, folderName, pathImage, folderPath);
+            loaderImageItem = new LoaderImageItem(folderName, folderPath);
             images.add(loaderImageItem);
             cursor.moveToNext();
         }
@@ -55,11 +71,10 @@ public class LoaderImageUtil {
         return images;
     }
 
-    public static List<ImageFolder> getListFolder(Context context) {
+    public List<ImageFolder> getListFolder() {
         List<ImageFolder> folders = new ArrayList<>();
-        List<LoaderImageItem> images = getListImage(context);
+        List<LoaderImageItem> images = getListImage();
         if (images.size() == 0) return folders;
-        // set up list folder image
         ImageFolder folder;
         for (LoaderImageItem item : images) {
             if (!existsFolder(item.getFolderName(), folders)) {
@@ -71,7 +86,7 @@ public class LoaderImageUtil {
         return folders;
     }
 
-    private static List<ImagePickerItem> getListFiles(File parentDir) {
+    private List<ImagePickerItem> getListFiles(File parentDir) {
         List<ImagePickerItem> inFiles = new ArrayList<>();
         File[] files = parentDir.listFiles();
         for (File file : files) {
@@ -83,23 +98,19 @@ public class LoaderImageUtil {
         return inFiles;
     }
 
-    private static boolean existsFolder(String nameFolder, List<ImageFolder> folder) {
+    private boolean existsFolder(String nameFolder, List<ImageFolder> folder) {
         for (ImageFolder item : folder) {
             if (item.getFolderName().toLowerCase().equals(nameFolder.toLowerCase())) return true;
         }
         return false;
     }
 
-    public static class LoaderImageItem {
-        private String mFileName;
+    public class LoaderImageItem {
         private String mFolderName;
-        private String mPathImage;
         private String mFolderPath;
 
-        public LoaderImageItem(String name, String folder, String path, String folderPath) {
-            mFileName = name;
-            mFolderName = folder;
-            mPathImage = path;
+        public LoaderImageItem(String folderName, String folderPath) {
+            mFolderName = folderName;
             mFolderPath = folderPath;
         }
 
@@ -110,5 +121,31 @@ public class LoaderImageUtil {
         public String getFolderPath() {
             return mFolderPath;
         }
+    }
+
+    private class LoaderImageAsync extends AsyncTask<Void, Void, List<ImageFolder>> {
+        private LoaderCallback mCallback;
+
+        public LoaderImageAsync(@NonNull LoaderCallback callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        protected List<ImageFolder> doInBackground(Void... params) {
+            return getListFolder();
+        }
+
+        @Override
+        protected void onPostExecute(List<ImageFolder> imageFolders) {
+            super.onPostExecute(imageFolders);
+            if (mCallback == null) return;
+            if (imageFolders != null) mCallback.onSuccess(imageFolders);
+            else mCallback.onError();
+        }
+    }
+
+    public interface LoaderCallback {
+        void onSuccess(List<ImageFolder> imageFolders);
+        void onError();
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -27,9 +28,10 @@
             android:layout_width="@dimen/dp_82"
             android:layout_height="@dimen/dp_82"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_photo_grey_24dp"/>
-        <!-- bind:circleImage="@{folder.listImage.get(0)}"
-                    bind:error="@{@drawable/ic_logo}-->
+            app:srcCompat="@drawable/ic_photo_grey_24dp"
+            bind:circleImage="@{folder.listImage.get(0).pathImage}"
+            bind:error="@{@drawable/ic_logo}"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,9 +58,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="@dimen/dp_4"
-                    android:text="10"
+                    android:text="@{@string/bind_number_image(folder.listImage.size())}"
                     />
-                <!-- android:text="@{@string/bind_number_image(item.listImage.size())}"-->
 
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="wrap_content"

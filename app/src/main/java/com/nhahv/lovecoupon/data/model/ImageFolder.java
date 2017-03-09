@@ -16,6 +16,10 @@ public class ImageFolder extends BaseObservable {
     public ImageFolder() {
     }
 
+    public ImageFolder(String folderName) {
+        mFolderName = folderName;
+    }
+
     public ImageFolder(String folderName, String folderPath) {
         mFolderName = folderName;
         mFolderPath = folderPath;

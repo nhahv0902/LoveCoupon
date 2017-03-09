@@ -8,23 +8,17 @@ import android.databinding.ObservableList;
 
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
+import java.util.List;
 
 public class ImagePickerViewModel extends BaseObservable {
     private final Context mContext;
     private final ObservableField<ImagePickerAdapter> mAdapter = new ObservableField<>();
     private final ObservableList<ImagePickerItem> mListImage = new ObservableArrayList<>();
 
-    public ImagePickerViewModel(Context context) {
+    public ImagePickerViewModel(Context context, List<ImagePickerItem> imagePickerItems) {
         mContext = context;
-        mAdapter.set(new ImagePickerAdapter(this,mListImage));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
-        mListImage.add(new ImagePickerItem(URL_IMAGE));
+        mAdapter.set(new ImagePickerAdapter(this, mListImage));
+        mListImage.addAll(imagePickerItems);
     }
 
     public ObservableField<ImagePickerAdapter> getAdapter() {
