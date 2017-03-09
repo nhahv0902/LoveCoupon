@@ -59,6 +59,9 @@
     <string name="msg_shop_name_error">Name of shop not empty.</string>
     <string name="msg_shop_address_error">Address of shop not empty.</string>
     <string name="msg_update_profile_error">Update information failed, please again.</string>
-
+    <string name="bind_coupon_template_day">%d days</string>
+    <string name="action_other_code">Other Code</string>
+    <string name="title_coupon_creation">Coupon %1$S</string>
+    <string name="action_create_coupon_error">Create coupon failed.</string>
 
 </resources>

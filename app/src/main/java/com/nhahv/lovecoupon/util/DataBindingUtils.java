@@ -32,6 +32,8 @@ import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import net.glxn.qrgen.android.QRCode;
+
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_SPAN;
 
@@ -223,5 +225,13 @@ public final class DataBindingUtils {
             item.setChecked(view.isSelected());
             viewModel.updateNumberImage();
         });
+    }
+
+    /*
+    * Bind QRCode Of CouponCreation
+    * */
+    @BindingAdapter({"bind:generate"})
+    public static void generateQRCode(AppCompatImageView view, String content) {
+        view.setImageBitmap(QRCode.from(content).bitmap());
     }
 }

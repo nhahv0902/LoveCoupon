@@ -28,6 +28,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
     public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemShopCouponBinding binding = ItemShopCouponBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new CouponHolder(binding);
     }
 

@@ -6,11 +6,13 @@ import android.databinding.Bindable;
 import com.google.gson.annotations.SerializedName;
 import com.nhahv.lovecoupon.BR;
 
+import java.io.Serializable;
+
 /**
  * Created by Nhahv0902 on 3/8/2017.
  * <></>
  */
-public class CouponTemplate extends BaseObservable {
+public class CouponTemplate extends BaseObservable implements Serializable{
     @SerializedName("coupon_template_id")
     public String mCouponTemplateId;
     @SerializedName("content")

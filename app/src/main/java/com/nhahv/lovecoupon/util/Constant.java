@@ -11,6 +11,7 @@ public final class Constant {
         public static final String BUNDLE_USE_CREATE_TYPE = "BUNDLE_USE_CREATE_TYPE";
         public static final String BUNDLE_IMAGE = "BUNDLE_IMAGE";
         public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
+        public static final String BUNDLE_TEMPLATE = "BUNDLE_TEMPLATE";
     }
 
     public static final class RequestConstant {
