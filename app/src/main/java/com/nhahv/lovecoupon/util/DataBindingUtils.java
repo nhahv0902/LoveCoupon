@@ -23,8 +23,10 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.ui.ViewModel;
+import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -53,6 +55,15 @@ public final class DataBindingUtils {
             .into(view);
     }
 
+    @BindingAdapter({"bind:urlImage"})
+    public static void setCircleImage(final ImageView view, String url) {
+        Glide.with(view.getContext())
+            .load(url)
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+            .dontAnimate()
+            .into(view);
+    }
     /*
     * bind SwipeRefreshLayout refresh
     * */
@@ -173,9 +184,10 @@ public final class DataBindingUtils {
     * viewpager
     * */
 
-    @BindingAdapter({"bind:adapterViewPager"})
-    public static void setUpViewPager(ViewPager view, FragmentPagerAdapter adapter) {
+    @BindingAdapter({"bind:adapterViewPager", "bind:position"})
+    public static void setUpViewPager(ViewPager view, FragmentPagerAdapter adapter, int position) {
         view.setAdapter(adapter);
+        view.setCurrentItem(position);
     }
 
     /*
@@ -193,5 +205,19 @@ public final class DataBindingUtils {
     public static void onChangeIcon(FloatingActionButton view, boolean isDone) {
         int icon = isDone ? R.drawable.ic_done_white_24px : R.drawable.ic_add_white_24dp;
         view.setImageResource(icon);
+    }
+
+    /*
+    * bind on adapter pickImage
+    * */
+    @BindingAdapter({"bind:onChecked", "bind:viewModel"})
+    public static void onChecked(AppCompatImageView view, ImagePickerItem item,
+                                 ImagePickerViewModel viewModel) {
+        view.setSelected(item.isChecked());
+        view.setOnClickListener(v -> {
+            view.setSelected(!view.isSelected());
+            item.setChecked(view.isSelected());
+            viewModel.updateNumberImage();
+        });
     }
 }

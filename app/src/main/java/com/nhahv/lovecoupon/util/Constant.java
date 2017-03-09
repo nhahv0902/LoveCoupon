@@ -10,10 +10,13 @@ public final class Constant {
         public static final String BUNDLE_ACCOUNT_TYPE = "BUNDLE_ACCOUNT_TYPE";
         public static final String BUNDLE_USE_CREATE_TYPE = "BUNDLE_USE_CREATE_TYPE";
         public static final String BUNDLE_IMAGE = "BUNDLE_IMAGE";
+        public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
     }
 
     public static final class RequestConstant {
         public static final int REQUEST_GOOGLE = 1;
+        public static final int REQUEST_PICK_IMAGE = 2;
+
     }
 
     public static final class PreferenceConstant {

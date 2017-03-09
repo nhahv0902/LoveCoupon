@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImageFolder;
-import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.ui.ViewModel;
-import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.LoaderImageUtil;
 
@@ -24,16 +22,19 @@ import java.util.List;
  */
 public class ImageFolderViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
+    private final IImageFolder mListener;
     private final ObservableList<ImageFolder> mListFolder = new ObservableArrayList<>();
 
-    public ImageFolderViewModel(Context context) {
+    public ImageFolderViewModel(Context context, IImageFolder iImageFolder) {
         mContext = context;
+        mListener = iImageFolder;
         mAdapter.set(new ImageFolderAdapter(this, mListFolder));
         loadData();
     }
 
     public void clickStartImagePicker(ImageFolder folder) {
-        mContext.startActivity(ImagePickerActivity.getImagePickerIntent(mContext, folder.getListImage()));
+        if (mListener != null)
+            mListener.openImagePicker(folder);
     }
 
     @Override
@@ -42,14 +43,6 @@ public class ImageFolderViewModel extends BaseObservable implements ViewModel {
             @Override
             public void onSuccess(List<ImageFolder> imageFolders) {
                 mListFolder.clear();
-                ImageFolder all = new ImageFolder(getString(R.string.title_all_albums));
-                for (ImageFolder folder : imageFolders) {
-                    List<ImagePickerItem> imagePickerItems = folder.getListImage();
-                    for (ImagePickerItem item : imagePickerItems) {
-                        all.getListImage().add(new ImagePickerItem(item.getPathImage()));
-                    }
-                }
-                mListFolder.add(all);
                 mListFolder.addAll(imageFolders);
                 mAdapter.get().notifyDataSetChanged();
                 setRefresh(false);

@@ -27,13 +27,14 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
     public ImagePickerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemImagePickerBinding binding = ItemImagePickerBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new ImagePickerHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ImagePickerHolder holder, int position) {
         ImagePickerItem image = mListFolder.get(position);
-        if (image != null) holder.bind(image);
+        if (image != null) holder.bind(image, position);
     }
 
     @Override
@@ -49,8 +50,9 @@ public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.
             mBinding = binding;
         }
 
-        private void bind(ImagePickerItem image) {
+        private void bind(ImagePickerItem image, int position) {
             mBinding.setImagePicker(image);
+            mBinding.setPosition(position);
             mBinding.executePendingBindings();
         }
     }

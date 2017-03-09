@@ -6,6 +6,14 @@
     <data>
 
         <variable
+            name="position"
+            type="java.lang.Integer"/>
+
+        <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel"/>
+
+        <variable
             name="imagePicker"
             type="com.nhahv.lovecoupon.data.model.ImagePickerItem"/>
 
@@ -20,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
+            android:onClick="@{()->viewModel.clickPreviewImage(position)}"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_photo_grey_24dp"
             bind:circleImage="@{imagePicker.pathImage}"
@@ -30,6 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            bind:onChecked="@{imagePicker}"
+            bind:viewModel="@{viewModel}"
             android:padding="@dimen/dp_8"
             app:srcCompat="@drawable/ic_image_picker_checked"/>
     </com.nhahv.lovecoupon.ui.view.SquareLayout>

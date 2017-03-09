@@ -51,6 +51,7 @@ public class ImageFolderAdapter extends RecyclerView.Adapter<ImageFolderAdapter.
         }
 
         private void bind(ImageFolder folder) {
+            if (folder.getListImage() == null) return;
             mBinding.setFolder(folder);
             mBinding.executePendingBindings();
         }
