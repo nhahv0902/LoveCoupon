@@ -39,4 +39,8 @@ public class NotificationFragment extends Fragment implements IShopNotification 
                 .getNotificationIntent(getActivity(), notification, ActionNotificationType.EDIT),
             REQUEST_NOTIFICATION);
     }
+
+    public void loadData() {
+        mViewModel.loadData();
+    }
 }

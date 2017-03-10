@@ -20,6 +20,7 @@ public final class Constant {
         public static final int REQUEST_PICK_IMAGE = 2;
         public static final int REQUEST_OPEN_GALLERY = 3;
         public static final int REQUEST_NOTIFICATION = 4;
+        public static final int REQUEST_TEMPLATE = 5;
     }
 
     public static final class PreferenceConstant {
@@ -42,7 +43,7 @@ public final class Constant {
         public static final int SUCCESS = 1;
         public static final String URL_IMAGE =
             "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg";
-        public static final String DATA_ID_SHOP = "qqIHubd8BF3N3Cf";
+        public static final String DATA_ID_SHOP = "0EW720whM80m8fe";
         public static final String DATA_DATE_PICKER = "DATA_DATE_PICKER";
         public static final String DATA_EMAIL_LOVE_COUPON = "info@lovecoupon.com";
         public static final String DATA_WEB_SITE = "http://www.lovecoupon.com";

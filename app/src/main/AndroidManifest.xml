@@ -67,6 +67,8 @@
         </activity>
         <activity android:name=".ui.shop.notificationcreation.NotificationCreationActivity">
         </activity>
+        <activity android:name=".ui.shop.templatecreation.TemplateCreationActivity">
+        </activity>
     </application>
 
 </manifest>

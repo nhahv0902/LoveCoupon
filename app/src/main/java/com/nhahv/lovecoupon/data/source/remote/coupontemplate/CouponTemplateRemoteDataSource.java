@@ -33,8 +33,8 @@ public class CouponTemplateRemoteDataSource implements CouponTemplateDataSource 
     }
 
     @Override
-    public void getCoupon(@NonNull String shopId,
-                          @NonNull Callback<List<CouponTemplate>> callback) {
+    public void getCouponTemplate(@NonNull String shopId,
+                                  @NonNull Callback<List<CouponTemplate>> callback) {
         if (mService == null) return;
         mService.getCoupon(shopId).enqueue(new retrofit2.Callback<List<CouponTemplate>>() {
             @Override
@@ -52,10 +52,48 @@ public class CouponTemplateRemoteDataSource implements CouponTemplateDataSource 
     }
 
     @Override
+    public void createCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                                     @NonNull Callback<Boolean> callback) {
+        if (mService == null) return;
+        mService.createCouponTemplate(token, template).enqueue(new retrofit2.Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response == null || response.body() == null || response.body() != SUCCESS) {
+                    callback.onError();
+                } else callback.onSuccess(true);
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
     public void generateCoupon(@NonNull String token, @NonNull CouponItem coupon,
                                @NonNull Callback<Boolean> callback) {
         if (mService == null) return;
         mService.generateCoupon(token, coupon).enqueue(new retrofit2.Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response == null || response.body() == null || response.body() != SUCCESS) {
+                    callback.onError();
+                } else callback.onSuccess(true);
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void deleteCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                                     @NonNull Callback<Boolean> callback) {
+        if (mService == null) return;
+        mService.deleteCouponTemplate(token, template).enqueue(new retrofit2.Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response == null || response.body() == null || response.body() != SUCCESS) {

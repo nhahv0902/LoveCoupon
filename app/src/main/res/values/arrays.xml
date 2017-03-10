@@ -12,4 +12,18 @@
         <item>@string/menu_share</item>
         <item>@string/menu_log_out</item>
     </string-array>
+    <string-array name="spinner_month">
+        <item>@string/text_month_1</item>
+        <item>@string/text_month_2</item>
+        <item>@string/text_month_3</item>
+        <item>@string/text_month_4</item>
+        <item>@string/text_month_5</item>
+        <item>@string/text_month_6</item>
+        <item>@string/text_month_7</item>
+        <item>@string/text_month_8</item>
+        <item>@string/text_month_9</item>
+        <item>@string/text_month_10</item>
+        <item>@string/text_month_11</item>
+        <item>@string/text_month_12</item>
+    </string-array>
 </resources>

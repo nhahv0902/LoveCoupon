@@ -7,4 +7,5 @@ package com.nhahv.lovecoupon.ui.shop.main;
 public interface IShopMainHandler {
     void clickUpdateProfile();
     void createNotification();
+    void createCouponTemplate();
 }

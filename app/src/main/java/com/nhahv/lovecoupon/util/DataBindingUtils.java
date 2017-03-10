@@ -1,6 +1,8 @@
 package com.nhahv.lovecoupon.util;
 
 import android.databinding.BindingAdapter;
+import android.databinding.InverseBindingAdapter;
+import android.databinding.InverseBindingListener;
 import android.databinding.ObservableBoolean;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -13,12 +15,15 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -233,5 +238,32 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:generate"})
     public static void generateQRCode(AppCompatImageView view, String content) {
         view.setImageBitmap(QRCode.from(content).bitmap());
+    }
+
+    /*
+    * Bind spinner
+    *
+    * */
+    @BindingAdapter(value = {"bind:selectedValue", "bind:selectedValueChanged"}, requireAll = false)
+    public static void bindSpinnerData(AppCompatSpinner view, int newSelectedValue,
+                                       final InverseBindingListener newTextAttrChanged) {
+        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                newTextAttrChanged.onChange();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        if (newSelectedValue != -1) {
+            view.setSelection(newSelectedValue, true);
+        }
+    }
+
+    @InverseBindingAdapter(attribute = "bind:selectedValue", event = "bind:selectedValueChanged")
+    public static int spinnerSelected(AppCompatSpinner view) {
+        return view.getSelectedItemPosition();
     }
 }

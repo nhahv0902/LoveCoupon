@@ -30,6 +30,7 @@ import com.nhahv.lovecoupon.ui.shop.notification.NotificationFragment;
 import com.nhahv.lovecoupon.ui.shop.notificationcreation.ActionNotificationType;
 import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationActivity;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingFragment;
+import com.nhahv.lovecoupon.ui.shop.templatecreation.TemplateCreationActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
@@ -38,6 +39,7 @@ import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGIN;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_NOTIFICATION;
+import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_TEMPLATE;
 
 public class ShopMainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, IShopMainHandler {
@@ -142,11 +144,29 @@ public class ShopMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void clickUpdateProfile() {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
-        if (fragment instanceof SettingFragment) {
-            ((SettingFragment) fragment).updateProfile();
+        switch (requestCode) {
+            case REQUEST_TEMPLATE:
+                if (fragment != null && fragment instanceof CouponFragment) {
+                    ((CouponFragment) fragment).loadData();
+                }
+                break;
+            case REQUEST_NOTIFICATION:
+                if (fragment != null && fragment instanceof NotificationFragment) {
+                    ((NotificationFragment) fragment).loadData();
+                }
+                break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void createCouponTemplate() {
+        startActivityForResult(TemplateCreationActivity.getTemplateIntent(this), REQUEST_TEMPLATE);
     }
 
     @Override
@@ -154,5 +174,13 @@ public class ShopMainActivity extends AppCompatActivity
         startActivityForResult(NotificationCreationActivity
                 .getNotificationIntent(this, new Notification(), ActionNotificationType.CREATE),
             REQUEST_NOTIFICATION);
+    }
+
+    @Override
+    public void clickUpdateProfile() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        if (fragment instanceof SettingFragment) {
+            ((SettingFragment) fragment).updateProfile();
+        }
     }
 }

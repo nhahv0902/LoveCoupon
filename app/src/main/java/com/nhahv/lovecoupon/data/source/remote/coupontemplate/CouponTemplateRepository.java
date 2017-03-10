@@ -26,12 +26,29 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
     }
 
     @Override
-    public void getCoupon(@NonNull String shopId,
-                          @NonNull Callback<List<CouponTemplate>> callback) {
+    public void getCouponTemplate(@NonNull String shopId,
+                                  @NonNull Callback<List<CouponTemplate>> callback) {
         if (mDataSource == null) return;
-        mDataSource.getCoupon(shopId, new Callback<List<CouponTemplate>>() {
+        mDataSource.getCouponTemplate(shopId, new Callback<List<CouponTemplate>>() {
             @Override
             public void onSuccess(List<CouponTemplate> data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void createCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                                     @NonNull Callback<Boolean> callback) {
+        if (mDataSource == null) return;
+        mDataSource.createCouponTemplate(token, template, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
                 callback.onSuccess(data);
             }
 
@@ -47,6 +64,23 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
                                @NonNull Callback<Boolean> callback) {
         if (mDataSource == null) return;
         mDataSource.generateCoupon(token, coupon, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void deleteCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                                     @NonNull Callback<Boolean> callback) {
+        if (mDataSource == null) return;
+        mDataSource.deleteCouponTemplate(token, template, new Callback<Boolean>() {
             @Override
             public void onSuccess(Boolean data) {
                 callback.onSuccess(data);

@@ -13,7 +13,12 @@ import java.util.List;
  * <></>
  */
 public interface CouponTemplateDataSource {
-    void getCoupon(@NonNull String shopId, @NonNull Callback<List<CouponTemplate>> callback);
+    void getCouponTemplate(@NonNull String shopId,
+                           @NonNull Callback<List<CouponTemplate>> callback);
+    void createCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                              @NonNull Callback<Boolean> callback);
     void generateCoupon(@NonNull String token, @NonNull CouponItem coupon,
                         @NonNull Callback<Boolean> callback);
+    void deleteCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
+                              @NonNull Callback<Boolean> callback);
 }

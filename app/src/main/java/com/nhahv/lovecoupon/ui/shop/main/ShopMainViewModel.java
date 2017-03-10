@@ -24,6 +24,7 @@ public class ShopMainViewModel {
     public void clickImagePlus() {
         switch (mPosition.get()) {
             case 0:
+                mHandler.createCouponTemplate();
                 break;
             case 1:
                 mHandler.createNotification();

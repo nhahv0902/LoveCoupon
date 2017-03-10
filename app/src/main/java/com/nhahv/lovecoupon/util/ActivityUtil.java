@@ -17,6 +17,7 @@ import java.util.Random;
 public final class ActivityUtil {
     private static final String ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm";
     public static final int DATA_NUMBER = 20;
+    public static final int DATA_NUMBER_TEMPLATE = 15;
 
     public static void addFragment(FragmentManager manager, Fragment fragment, int layout) {
         manager.beginTransaction().replace(layout, fragment).commit();
@@ -36,6 +37,15 @@ public final class ActivityUtil {
         final Random random = new Random();
         final StringBuilder sb = new StringBuilder(DATA_NUMBER);
         for (int i = 0; i < DATA_NUMBER; ++i) {
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        }
+        return sb.toString();
+    }
+
+    public static String randomTemplateId() {
+        final Random random = new Random();
+        final StringBuilder sb = new StringBuilder(DATA_NUMBER_TEMPLATE);
+        for (int i = 0; i < DATA_NUMBER_TEMPLATE; ++i) {
             sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
         }
         return sb.toString();

@@ -21,5 +21,11 @@ public interface CouponTemplateService {
     Call<List<CouponTemplate>> getCoupon(@Query("company_id") String id);
     @POST("/addCoupon")
     Call<Integer> generateCoupon(@Header("Authorization") String token, @Body CouponItem coupon);
+    @POST("/addCouponTemplate")
+    Call<Integer> createCouponTemplate(@Header("Authorization") String token,
+                                       @Body CouponTemplate template);
+    @POST("/deleteCouponTemplate")
+    Call<Integer> deleteCouponTemplate(@Header("Authorization") String token,
+                                       @Body CouponTemplate template);
 }
 

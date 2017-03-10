@@ -11,7 +11,7 @@ import com.nhahv.lovecoupon.databinding.FragmentNotificationBinding;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CouponFragment extends Fragment implements ICouponTemplate {
+public class CouponFragment extends Fragment {
     private FragmentNotificationBinding mBinding;
     private CouponViewModel mViewModel;
 
@@ -22,8 +22,12 @@ public class CouponFragment extends Fragment implements ICouponTemplate {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         mBinding = FragmentNotificationBinding.inflate(inflater, view, false);
-        mViewModel = new CouponViewModel(getActivity(), this);
+        mViewModel = new CouponViewModel(getActivity());
         mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
+    }
+
+    public void loadData() {
+        mViewModel.loadData();
     }
 }

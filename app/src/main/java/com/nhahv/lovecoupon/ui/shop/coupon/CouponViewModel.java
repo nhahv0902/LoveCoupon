@@ -6,9 +6,13 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
@@ -17,6 +21,7 @@ import com.nhahv.lovecoupon.data.source.remote.coupontemplate.CouponTemplateRepo
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.shop.couponcreation.CouponCreationActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
+import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
 import java.util.List;
 
@@ -29,23 +34,23 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
 public class CouponViewModel extends BaseObservable implements ViewModel {
     private final String TAG = getClass().getSimpleName();
     private final Context mContext;
-    private final ICouponTemplate mICoupon;
     private final ObservableList<CouponTemplate> mListCoupon = new ObservableArrayList<>();
-    private final ObservableField<ProfileShop> mProfile = new ObservableField<>();
     private final CouponTemplateRepository mRepository;
+    private final ProfileShop mProfile;
+    private PopupMenu mPopupMenu;
 
-    public CouponViewModel(Context context, ICouponTemplate iCoupon) {
+    public CouponViewModel(@NonNull Context context) {
         mContext = context;
-        mICoupon = iCoupon;
+        mProfile = SharePreferenceUtil.getInstance(context).profileShop();
         mRepository = CouponTemplateRepository.getInstance();
-        mAdapter.set(new CouponAdapter(mListCoupon, this));
+        mAdapter.set(new CouponAdapter(mListCoupon, this, mProfile));
         loadData();
     }
 
     @Override
     public void loadData() {
         if (mRepository == null) return;
-        mRepository.getCoupon(DATA_ID_SHOP, new Callback<List<CouponTemplate>>() {
+        mRepository.getCouponTemplate(DATA_ID_SHOP, new Callback<List<CouponTemplate>>() {
             @Override
             public void onSuccess(List<CouponTemplate> data) {
                 mListCoupon.clear();
@@ -63,9 +68,51 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     }
 
     public void clickGenerateCoupon(CouponTemplate template) {
-        Log.d(TAG, "generate");
         if (!ActivityUtil.isNetworkConnected(mContext)) return;
         mContext.startActivity(CouponCreationActivity.getCouponCreationIntent(mContext, template));
+    }
+
+    public void clickMoreTemplate(View view, CouponTemplate template) {
+        if (!ActivityUtil.isNetworkConnected(mContext)) return;
+        mPopupMenu = new PopupMenu(mContext, view);
+        mPopupMenu.getMenuInflater().inflate(R.menu.template_more, mPopupMenu.getMenu());
+        mPopupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_generate_coupon:
+                    clickGenerateCoupon(template);
+                    break;
+                case R.id.action_delete_notification:
+                    new MaterialDialog
+                        .Builder(mContext)
+                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_delete_grey_24dp))
+                        .title(R.string.title_delete_notification)
+                        .positiveText(R.string.agree)
+                        .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
+                        .onPositive((dialog, which) -> {
+                            dialog.dismiss();
+                            if (mRepository == null) return;
+                            mRepository.deleteCouponTemplate(mProfile.getToken(), template,
+                                new Callback<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean data) {
+                                        loadData();
+                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
+                                    }
+                                });
+                        })
+                        .show();
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        });
+        mPopupMenu.show();
     }
 
     @Override
@@ -81,10 +128,6 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     @Override
     public void setRefresh(boolean isRefresh) {
         mRefresh.set(isRefresh);
-    }
-
-    public ObservableField<ProfileShop> getProfile() {
-        return mProfile;
     }
 
     @Override

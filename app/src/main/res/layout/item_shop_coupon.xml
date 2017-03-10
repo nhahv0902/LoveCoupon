@@ -116,6 +116,7 @@
                         android:textSize="@dimen/sp_18"/>
 
                     <LinearLayout
+                        android:onClick="@{(view)->viewModel.clickMoreTemplate(view, template)}"
                         android:layout_width="@dimen/dp_60"
                         android:layout_height="wrap_content"
                         android:gravity="end|bottom"

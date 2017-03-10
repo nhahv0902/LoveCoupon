@@ -1,14 +1,14 @@
 package com.nhahv.lovecoupon.ui.shop.coupon;
 
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.databinding.ItemShopCouponBinding;
-
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -17,10 +17,14 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHolder> {
     private final ObservableList<CouponTemplate> mListCoupon;
     private final CouponViewModel mViewModel;
+    private final ProfileShop mProfile;
     private LayoutInflater mInflater;
 
-    public CouponAdapter(ObservableList<CouponTemplate> couponItems, CouponViewModel viewModel) {
+    public CouponAdapter(@NonNull ObservableList<CouponTemplate> couponItems,
+                         @NonNull CouponViewModel viewModel,
+                         @NonNull ProfileShop profile) {
         mListCoupon = couponItems;
+        mProfile = profile;
         mViewModel = viewModel;
     }
 
@@ -40,7 +44,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
     @Override
     public int getItemCount() {
-        return mListCoupon == null ? 0 : mListCoupon.size();
+        return mListCoupon.size();
     }
 
     public class CouponHolder extends RecyclerView.ViewHolder {
@@ -53,8 +57,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
         private void bind(CouponTemplate template) {
             mBinding.setTemplate(template);
-            mBinding.setShopName("Coffee Ha Noi");
-            mBinding.setImage(URL_IMAGE);
+            mBinding.setShopName(mProfile.getName());
+            mBinding.setImage(mProfile.getLogoLink());
             mBinding.executePendingBindings();
         }
     }
