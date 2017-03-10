@@ -93,7 +93,8 @@
     <string name="text_month_12">12 months</string>
     <string name="msg_content_error">Content not empty</string>
     <string name="msg_amount_error">Amount not empty</string>
-    <string name="msg_create_template_error">Create coupon template failed</string>
+    <string name="msg_create_error">Create  failed</string>
     <string name="action_generate_coupon">Generate coupon</string>
     <string name="msg_send_email_error">Reset password failed</string>
+    <string name="msg_title_error">Title not empty</string>
 </resources>

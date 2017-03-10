@@ -109,4 +109,23 @@ public class NotificationRemoteDataSource implements NotificationDataSource {
                 }
             });
     }
+
+    @Override
+    public void createNotification(@NonNull String token, @NonNull Notification notification,
+                                   @NonNull Callback<Boolean> callback) {
+        if (mService == null) return;
+        mService.createNotification(token, notification).enqueue(new retrofit2.Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response == null || response.body() == null || response.body() != SUCCESS) {
+                    callback.onError();
+                } else callback.onSuccess(true);
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                callback.onError();
+            }
+        });
+    }
 }

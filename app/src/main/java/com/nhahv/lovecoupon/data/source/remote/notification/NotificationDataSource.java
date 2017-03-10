@@ -21,4 +21,6 @@ public interface NotificationDataSource {
                                  @NonNull Callback<List<NotificationCustomer>> callback);
     void getOtherNotificationCustomer(@NonNull String id, @NonNull String city,
                                       @NonNull Callback<List<NotificationCustomer>> callback);
+    void createNotification(@NonNull String token, @NonNull Notification notification,
+                            @NonNull Callback<Boolean> callback);
 }

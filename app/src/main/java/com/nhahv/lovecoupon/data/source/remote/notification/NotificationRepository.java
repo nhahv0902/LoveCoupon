@@ -92,4 +92,21 @@ public class NotificationRepository implements NotificationDataSource {
                 }
             });
     }
+
+    @Override
+    public void createNotification(@NonNull String token, @NonNull Notification notification,
+                                   @NonNull Callback<Boolean> callback) {
+        if (mDataSource == null) return;
+        mDataSource.createNotification(token, notification, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
 }

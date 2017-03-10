@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -43,7 +46,9 @@
                     android:paddingBottom="@dimen/dp_8"
                     android:paddingTop="@dimen/dp_8"
                     android:text="@={viewModel.notification.title}"
-                    android:textColor="@drawable/cursor_edit_text"/>
+                    android:textColor="@drawable/cursor_edit_text"
+                    app:met_floatingLabel="highlight"
+                    app:met_maxCharacters="200"/>
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:layout_width="match_parent"
@@ -55,7 +60,7 @@
                     android:text="@={viewModel.notification.content}"
                     android:textColor="@drawable/cursor_edit_text"
                     app:met_floatingLabel="highlight"
-                    app:met_maxCharacters="150"
+                    app:met_maxCharacters="250"
                     app:met_primaryColor="@color/colorAccent"/>
 
                 <LinearLayout
@@ -82,7 +87,8 @@
                         android:enabled="false"
                         android:gravity="center"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/sp_18"/>
+                        android:textSize="@dimen/sp_18"
+                        bind:bindText="@{viewModel.notification.lastDate}"/>
 
                     <android.support.v7.widget.AppCompatImageView
                         android:layout_width="wrap_content"
@@ -102,12 +108,15 @@
                     android:paddingBottom="@dimen/dp_8"
                     android:paddingTop="@dimen/dp_8"
                     android:text="@={viewModel.notification.link}"
-                    android:textColor="@drawable/cursor_edit_text"/>
+                    android:textColor="@drawable/cursor_edit_text"
+                    app:met_floatingLabel="highlight"
+                    app:met_maxCharacters="100"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_150"
-                    android:visibility="gone"/>
+                    android:visibility="@{viewModel.listImage.size() == 0 ? View.GONE : View.VISIBLE}"
+                    bind:adapterLinear="@{viewModel.adapter}"/>
 
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="@dimen/dp_42"
@@ -122,17 +131,17 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:onClick="@{()-> viewModel.clickCreateNotification()}"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/dp_4"
                     app:cardElevation="@dimen/dp_6"
                     app:cardUseCompatPadding="true">
 
-                    <TextView
+                    <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:onClick="@{()-> viewModel.clickCreateNotification()}"
                         android:paddingBottom="@dimen/dp_12"
                         android:paddingTop="@dimen/dp_12"
                         android:text="@string/title_create"

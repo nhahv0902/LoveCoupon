@@ -50,7 +50,7 @@ public class TemplateCreationViewModel extends BaseObservable {
 
                         @Override
                         public void onError() {
-                            showMsg(R.string.msg_create_template_error);
+                            showMsg(R.string.msg_create_error);
                         }
                     });
             }

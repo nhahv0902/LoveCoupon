@@ -1,13 +1,19 @@
 package com.nhahv.lovecoupon.ui.shop.notification;
 
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.data.model.Notification;
+import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
+import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAdapter;
+
+import java.util.Collections;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -18,10 +24,13 @@ public class NotificationAdapter
     private LayoutInflater mInflater;
     private final ObservableList<Notification> mListNotification;
     private final NotificationViewModel mViewModel;
+    private final ProfileShop mProfile;
 
     public NotificationAdapter(@NonNull NotificationViewModel viewModel,
-                               @NonNull ObservableList<Notification> notification) {
+                               @NonNull ObservableList<Notification> notification,
+                               @NonNull ProfileShop profile) {
         mViewModel = viewModel;
+        mProfile = profile;
         mListNotification = notification;
     }
 
@@ -53,10 +62,18 @@ public class NotificationAdapter
         }
 
         private void bind(Notification item) {
+            Log.d("notification", item.getLinkImage() + "");
+            ObservableList<String> listImages = new ObservableArrayList<>();
+            if (item.getLinkImage() != null) {
+                String[] listStrImages = item.getLinkImage().split(";");
+                Collections.addAll(listImages, listStrImages);
+            }
+            NotificationCreationAdapter adapter =
+                new NotificationCreationAdapter(mViewModel, listImages, false);
+            mBinding.setAdapter(adapter);
             mBinding.setNotification(item);
-            mBinding.setUrl(
-                "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");
-            mBinding.setShopName("Coffee Ha Noi");
+            mBinding.setUrl(mProfile.getLogoLink());
+            mBinding.setShopName(mProfile.getName());
             mBinding.executePendingBindings();
         }
     }

@@ -18,6 +18,7 @@ import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.notification.NotificationRepository;
+import com.nhahv.lovecoupon.ui.INotificationViewModel;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
@@ -30,13 +31,12 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
-public class NotificationViewModel implements ViewModel {
+public class NotificationViewModel implements ViewModel, INotificationViewModel {
     private final Context mContext;
     private final IShopNotification mIShopNotification;
     private final NotificationRepository mRepository;
     private final ObservableList<Notification> mListNotification = new ObservableArrayList<>();
     private final ProfileShop mProfile;
-    private PopupMenu mPopupMenu;
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
@@ -45,7 +45,7 @@ public class NotificationViewModel implements ViewModel {
         mIShopNotification = iShopNotification;
         mProfile = SharePreferenceUtil.getInstance(mContext).profileShop();
         mRepository = NotificationRepository.getInstance();
-        mAdapter.set(new NotificationAdapter(this, mListNotification));
+        mAdapter.set(new NotificationAdapter(this, mListNotification, mProfile));
         loadData();
     }
 
@@ -70,9 +70,9 @@ public class NotificationViewModel implements ViewModel {
     }
 
     public void clickMore(View view, Notification notification) {
-        mPopupMenu = new PopupMenu(mContext, view);
-        mPopupMenu.getMenuInflater().inflate(R.menu.notification_more, mPopupMenu.getMenu());
-        mPopupMenu.setOnMenuItemClickListener(item -> {
+        PopupMenu popupMenu = new PopupMenu(mContext, view);
+        popupMenu.getMenuInflater().inflate(R.menu.notification_more, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_edit_notification:
                     mIShopNotification.editNotification(notification);
@@ -108,7 +108,7 @@ public class NotificationViewModel implements ViewModel {
             }
             return false;
         });
-        mPopupMenu.show();
+        popupMenu.show();
     }
 
     @Override
@@ -128,5 +128,13 @@ public class NotificationViewModel implements ViewModel {
     @Override
     public ObservableField<RecyclerView.Adapter> getAdapter() {
         return mAdapter;
+    }
+
+    @Override
+    public void preview(List<String> images, int position) {
+    }
+
+    @Override
+    public void clickDelete(int position) {
     }
 }

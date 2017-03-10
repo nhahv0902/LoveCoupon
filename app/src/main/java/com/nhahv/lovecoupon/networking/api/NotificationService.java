@@ -34,6 +34,9 @@ public interface NotificationService {
     @GET("/get_news_more_by_user_id")
     Call<List<NotificationCustomer>> getOtherNotificationCustomer(@Query("user_id") String id,
                                                                   @Query("city") String city);
+    @POST("/addMessage")
+    Call<Integer> createNotification(@Header("Authorization") String token,
+                                     @Body Notification notification);
     class NotificationDeletionBody {
         @SerializedName("message_id")
         private String mNotificationId;

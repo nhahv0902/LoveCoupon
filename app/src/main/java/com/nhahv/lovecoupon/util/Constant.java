@@ -13,6 +13,7 @@ public final class Constant {
         public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
         public static final String BUNDLE_TEMPLATE = "BUNDLE_TEMPLATE";
         public static final String BUNDLE_NOTIFICATION_TYPE = "BUNDLE_NOTIFICATION_TYPE";
+        public static final String BUNDLE_FOLDER_NAME = "BUNDLE_FOLDER_NAME";
     }
 
     public static final class RequestConstant {
@@ -49,5 +50,6 @@ public final class Constant {
         public static final String DATA_WEB_SITE = "http://www.lovecoupon.com";
         public static final String DATA_LINK_PHOTO = "http://188.166.199.25:4000/logo/love.jpg";
         public static final String DATA_PICK_LOGO = "LoveCoupon Pick Logo";
+        public static final String DATA_HTTP = "http";
     }
 }

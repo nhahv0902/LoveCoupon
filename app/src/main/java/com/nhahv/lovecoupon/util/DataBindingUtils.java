@@ -16,6 +16,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -97,6 +98,14 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:adapter"})
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        view.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @BindingAdapter({"bind:adapterLinear"})
+    public static void setAdapterLinear(RecyclerView view, RecyclerView.Adapter adapter) {
+        view.setLayoutManager(
+            new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         view.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -265,5 +274,19 @@ public final class DataBindingUtils {
     @InverseBindingAdapter(attribute = "bind:selectedValue", event = "bind:selectedValueChanged")
     public static int spinnerSelected(AppCompatSpinner view) {
         return view.getSelectedItemPosition();
+    }
+
+    /*
+    * bind date time of create notification
+    * */
+
+    @BindingAdapter({"bind:bindText"})
+    public static void bindTime(AppCompatTextView view, long time) {
+        view.setText(ActivityUtil.timeToString(time));
+    }
+
+    @BindingAdapter({"bind:bindDayLeft"})
+    public static void bindDayLeft(AppCompatTextView view, long time) {
+        view.setText(ActivityUtil.dayLeft(time));
     }
 }
