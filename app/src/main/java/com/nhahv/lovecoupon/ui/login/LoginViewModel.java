@@ -22,6 +22,7 @@ import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.authorization.AuthorizationRepository;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
+import com.nhahv.lovecoupon.ui.resetpassword.ResetPasswordActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
@@ -304,7 +305,7 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public void clickResetPassword() {
-        mILoginView.startUiShopMain();
+        mILoginView.startUiResetPassword();
     }
 
     public CallbackManager getCallbackManager() {

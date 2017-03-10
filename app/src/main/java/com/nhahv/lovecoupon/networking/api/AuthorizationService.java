@@ -21,6 +21,8 @@ public interface AuthorizationService {
         Call<List<ProfileShop>> loginShop(@Body LoginShopBody body);
         @POST("/get_user_profile")
         Call<Integer> loginCustomer(@Body LoginCustomerBody body);
+        @POST("/sendPassword")
+        Call<String> resetPassword(@Body ResetPasswordBody value);
     }
 
     class LoginShopBody {
@@ -62,6 +64,15 @@ public interface AuthorizationService {
             mPassword = password;
             mDeviceOS = DATA_ANDROID;
             mToken = token;
+        }
+    }
+
+    class ResetPasswordBody {
+        @SerializedName("value")
+        private String mEmail;
+
+        public ResetPasswordBody(String email) {
+            mEmail = email;
         }
     }
 }

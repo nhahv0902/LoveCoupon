@@ -11,4 +11,5 @@ public interface ILoginView {
     void startUiCustomer();
     void loginFacebook();
     void loginGoogle(GoogleApiClient client);
+    void startUiResetPassword();
 }

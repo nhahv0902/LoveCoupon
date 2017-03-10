@@ -7,5 +7,5 @@ package com.nhahv.lovecoupon.ui.resetpassword;
 public interface IResetPassword {
     void showProgressDialog(String msg);
     void hideProgressDialog();
-    void showDialogResult(String result);
+    void showDialogResult();
 }

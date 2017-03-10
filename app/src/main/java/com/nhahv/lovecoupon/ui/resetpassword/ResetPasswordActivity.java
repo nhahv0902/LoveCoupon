@@ -1,6 +1,8 @@
 package com.nhahv.lovecoupon.ui.resetpassword;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,10 @@ import com.nhahv.lovecoupon.databinding.ActivityResetPasswordBinding;
 public class ResetPasswordActivity extends AppCompatActivity implements IResetPassword {
     private ActivityResetPasswordBinding mBinding;
     private ProgressDialog mProgressDialog;
+
+    public static Intent getIntent(Context context) {
+        return new Intent(context, ResetPasswordActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +42,9 @@ public class ResetPasswordActivity extends AppCompatActivity implements IResetPa
     }
 
     @Override
-    public void showDialogResult(String result) {
-        String content = getString(
-            result != null ? R.string.action_send_email_success : R.string.send_email_fails);
+    public void showDialogResult() {
         new MaterialDialog.Builder(this)
-            .content(content)
+            .content(getString(R.string.action_send_email_success))
             .positiveText(R.string.agree)
             .positiveColor(getResources().getColor(R.color.color_blue_600))
             .show();

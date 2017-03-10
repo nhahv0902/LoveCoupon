@@ -90,6 +90,7 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
     @Override
     public void loginCustomer(@NonNull String name, String password, @NonNull String token,
                               @NonNull Callback<Integer> callback) {
+        if (mService == null) return;
         AuthorizationService.LoginCustomerBody body =
             new AuthorizationService.LoginCustomerBody(name, password, token);
         mService.loginCustomer(body).enqueue(new retrofit2.Callback<Integer>() {
@@ -104,5 +105,23 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
                 callback.onError();
             }
         });
+    }
+
+    @Override
+    public void resetPassword(@NonNull String email, @NonNull Callback<String> callback) {
+        if (mService == null) return;
+        mService.resetPassword(new AuthorizationService.ResetPasswordBody(email))
+            .enqueue(new retrofit2.Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response == null || response.body() == null) callback.onError();
+                    else callback.onSuccess(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    callback.onError();
+                }
+            });
     }
 }

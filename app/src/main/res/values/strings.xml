@@ -14,7 +14,7 @@
     <string name="title_google">Google</string>
     <string name="title_reset_password">Send Email</string>
     <string name="msg_email_error">Email is not correct</string>
-    <string name="action_send_email_success">Send email success</string>
+    <string name="action_send_email_success">Send email success, please check email!</string>
     <string name="send_email_fails">Send email failed</string>
     <string name="agree">AGREE</string>
     <string name="menu_coupon">Coupon</string>
@@ -74,7 +74,7 @@
     <string name="title_create_notification">Create News</string>
     <string name="title_edit_notification">Edit News</string>
     <string name="title_deadline">Deadline</string>
-    <string name="hint_description">Descriptioin</string>
+    <string name="hint_description">Description</string>
     <string name="hint_amount">Amount</string>
     <string name="text_duration">Duration</string>
     <string name="title_template_creation">Create Coupon Template</string>
@@ -95,4 +95,5 @@
     <string name="msg_amount_error">Amount not empty</string>
     <string name="msg_create_template_error">Create coupon template failed</string>
     <string name="action_generate_coupon">Generate coupon</string>
+    <string name="msg_send_email_error">Reset password failed</string>
 </resources>

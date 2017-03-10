@@ -14,6 +14,7 @@ import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityLoginBinding;
 import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
+import com.nhahv.lovecoupon.ui.resetpassword.ResetPasswordActivity;
 import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
 import java.util.Collections;
@@ -79,6 +80,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void startUiCustomer() {
         startActivity(CustomerMainActivity.getCustomerMainIntent(this));
+    }
+
+    @Override
+    public void startUiResetPassword() {
+        startActivity(ResetPasswordActivity.getIntent(this));
     }
 
     @Override

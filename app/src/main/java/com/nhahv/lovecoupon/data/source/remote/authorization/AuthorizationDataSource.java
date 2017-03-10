@@ -16,4 +16,5 @@ public interface AuthorizationDataSource {
                          @NonNull Callback<ProfileShop> callback);
     void loginCustomer(@NonNull String name, String password, @NonNull String token,
                        @NonNull Callback<Integer> callback);
+    void resetPassword(@NonNull String email, @NonNull Callback<String> callback);
 }
