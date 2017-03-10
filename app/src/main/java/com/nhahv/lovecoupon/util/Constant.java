@@ -12,12 +12,14 @@ public final class Constant {
         public static final String BUNDLE_IMAGE = "BUNDLE_IMAGE";
         public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
         public static final String BUNDLE_TEMPLATE = "BUNDLE_TEMPLATE";
+        public static final String BUNDLE_NOTIFICATION_TYPE = "BUNDLE_NOTIFICATION_TYPE";
     }
 
     public static final class RequestConstant {
         public static final int REQUEST_GOOGLE = 1;
         public static final int REQUEST_PICK_IMAGE = 2;
         public static final int REQUEST_OPEN_GALLERY = 3;
+        public static final int REQUEST_NOTIFICATION = 4;
     }
 
     public static final class PreferenceConstant {

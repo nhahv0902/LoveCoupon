@@ -42,6 +42,23 @@ public class NotificationRepository implements NotificationDataSource {
     }
 
     @Override
+    public void deleteNotification(@NonNull String token, @NonNull Notification notification,
+                                   @NonNull Callback<Boolean> callback) {
+        if (mDataSource == null) return;
+        mDataSource.deleteNotification(token, notification, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
     public void getNotificationCustomer(@NonNull String id,
                                         @NonNull Callback<List<NotificationCustomer>> callback) {
         if (mDataSource == null) return;

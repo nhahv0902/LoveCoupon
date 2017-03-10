@@ -1,12 +1,11 @@
 package com.nhahv.lovecoupon.ui.shop.notification;
 
-import android.databinding.DataBindingUtil;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 
@@ -17,17 +16,20 @@ import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 public class NotificationAdapter
     extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<Notification> mListNotification;
+    private final ObservableList<Notification> mListNotification;
+    private final NotificationViewModel mViewModel;
 
-    public NotificationAdapter(ObservableList<Notification> notification) {
+    public NotificationAdapter(@NonNull NotificationViewModel viewModel,
+                               @NonNull ObservableList<Notification> notification) {
+        mViewModel = viewModel;
         mListNotification = notification;
     }
 
     @Override
     public NotificationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
-        ItemNotificationBinding binding =
-            DataBindingUtil.inflate(mInflater, R.layout.item_notification, parent, false);
+        ItemNotificationBinding binding = ItemNotificationBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new NotificationHolder(binding);
     }
 
@@ -39,7 +41,7 @@ public class NotificationAdapter
 
     @Override
     public int getItemCount() {
-        return mListNotification == null ? 0 : mListNotification.size();
+        return mListNotification.size();
     }
 
     public class NotificationHolder extends RecyclerView.ViewHolder {

@@ -26,6 +26,7 @@ public class ShopMainViewModel {
             case 0:
                 break;
             case 1:
+                mHandler.createNotification();
                 break;
             case 2:
                 mHandler.clickUpdateProfile();

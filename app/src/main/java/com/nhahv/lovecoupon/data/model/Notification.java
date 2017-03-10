@@ -6,11 +6,13 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Nhahv0902 on 3/6/2017.
  * <.
  */
-public class Notification extends BaseObservable {
+public class Notification extends BaseObservable implements Serializable {
     @SerializedName("message_id")
     public String mNotificationId;
     @SerializedName("content")
@@ -27,6 +29,13 @@ public class Notification extends BaseObservable {
     public String mLink;
     @SerializedName("images_link")
     public String mLinkImage;
+
+    public Notification() {
+    }
+
+    public Notification(String notificationId) {
+        mNotificationId = notificationId;
+    }
 
     @Bindable
     public String getNotificationId() {

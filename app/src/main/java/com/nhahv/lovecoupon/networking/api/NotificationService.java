@@ -1,12 +1,16 @@
 package com.nhahv.lovecoupon.networking.api;
 
+import com.google.gson.annotations.SerializedName;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.NotificationCustomer;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -19,6 +23,9 @@ public interface NotificationService {
     * */
     @GET("/get_news_by_company_id")
     Call<List<Notification>> getNotificationShop(@Query("company_id") String id);
+    @POST("/deleteMessage")
+    Call<Integer> deleteNotification(@Header("Authorization") String token,
+                                     @Body Notification notification);
     /*
     * Notification Of Customer
     * */
@@ -27,4 +34,8 @@ public interface NotificationService {
     @GET("/get_news_more_by_user_id")
     Call<List<NotificationCustomer>> getOtherNotificationCustomer(@Query("user_id") String id,
                                                                   @Query("city") String city);
+    class NotificationDeletionBody {
+        @SerializedName("message_id")
+        private String mNotificationId;
+    }
 }

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.nhahv.lovecoupon.databinding.FragmentUseCreateBinding;
 import com.nhahv.lovecoupon.ui.shop.history.UseCreateType;
 
-import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_TYPE;
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_USE_CREATE_TYPE;
 
 /**
@@ -38,7 +37,7 @@ public class UseCreateFragment extends Fragment {
     private UseCreateType getDataFromActivity() {
         Bundle bundle = getArguments();
         if (bundle == null) return UseCreateType.CREATE;
-        return (UseCreateType) bundle.getSerializable(BUNDLE_ACCOUNT_TYPE);
+        return (UseCreateType) bundle.getSerializable(BUNDLE_USE_CREATE_TYPE);
     }
 
     public void onDateChange(long time) {

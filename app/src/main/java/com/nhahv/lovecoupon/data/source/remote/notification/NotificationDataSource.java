@@ -15,6 +15,8 @@ import java.util.List;
 public interface NotificationDataSource {
     void getNotificationShop(@NonNull String idShop,
                              @NonNull Callback<List<Notification>> callback);
+    void deleteNotification(@NonNull String token, @NonNull Notification notification,
+                            @NonNull Callback<Boolean> callback);
     void getNotificationCustomer(@NonNull String id,
                                  @NonNull Callback<List<NotificationCustomer>> callback);
     void getOtherNotificationCustomer(@NonNull String id, @NonNull String city,

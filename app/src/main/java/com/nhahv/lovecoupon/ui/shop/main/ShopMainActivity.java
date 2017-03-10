@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.ProfileShop;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
@@ -26,6 +27,8 @@ import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.ui.shop.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.shop.history.HistoryFragment;
 import com.nhahv.lovecoupon.ui.shop.notification.NotificationFragment;
+import com.nhahv.lovecoupon.ui.shop.notificationcreation.ActionNotificationType;
+import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationActivity;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGIN;
+import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_NOTIFICATION;
 
 public class ShopMainActivity extends AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, IShopMainHandler {
@@ -143,5 +147,12 @@ public class ShopMainActivity extends AppCompatActivity
         if (fragment instanceof SettingFragment) {
             ((SettingFragment) fragment).updateProfile();
         }
+    }
+
+    @Override
+    public void createNotification() {
+        startActivityForResult(NotificationCreationActivity
+                .getNotificationIntent(this, new Notification(), ActionNotificationType.CREATE),
+            REQUEST_NOTIFICATION);
     }
 }

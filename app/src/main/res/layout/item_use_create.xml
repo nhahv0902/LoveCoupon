@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.shop.history.usecoupon.UseCreateViewModel"/>
+
+        <variable
             name="coupon"
             type="com.nhahv.lovecoupon.data.model.CouponItem"/>
 
@@ -14,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:onClick="@{()->viewModel.clickViewUser(coupon)}"
         android:padding="@dimen/dp_10"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/dp_4"

@@ -13,6 +13,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.SUCCESS;
+
 /**
  * Created by Nhahv0902 on 3/8/2017.
  * <></>
@@ -44,6 +46,25 @@ public class NotificationRemoteDataSource implements NotificationDataSource {
 
             @Override
             public void onFailure(Call<List<Notification>> call, Throwable t) {
+                callback.onError();
+            }
+        });
+    }
+
+    @Override
+    public void deleteNotification(@NonNull String token, @NonNull Notification notification,
+                                   @NonNull Callback<Boolean> callback) {
+        if (mService == null) return;
+        mService.deleteNotification(token, notification).enqueue(new retrofit2.Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response == null || response.body() == null || response.body() != SUCCESS) {
+                    callback.onError();
+                } else callback.onSuccess(true);
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
                 callback.onError();
             }
         });

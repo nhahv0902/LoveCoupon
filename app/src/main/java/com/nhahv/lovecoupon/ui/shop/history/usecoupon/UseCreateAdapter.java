@@ -1,6 +1,7 @@
 package com.nhahv.lovecoupon.ui.shop.history.usecoupon;
 
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import com.nhahv.lovecoupon.databinding.ItemUseCreateBinding;
  */
 public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseCreateHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<CouponItem> mListCoupon;
+    private final ObservableList<CouponItem> mListCoupon;
+    private final UseCreateViewModel mViewModel;
 
-    public UseCreateAdapter(ObservableList<CouponItem> listCoupon) {
+    public UseCreateAdapter(@NonNull UseCreateViewModel viewModel,
+                            @NonNull ObservableList<CouponItem> listCoupon) {
+        mViewModel = viewModel;
         mListCoupon = listCoupon;
     }
 
@@ -24,6 +28,7 @@ public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseC
     public UseCreateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemUseCreateBinding binding = ItemUseCreateBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new UseCreateHolder(binding);
     }
 
