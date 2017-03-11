@@ -2,7 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.coupontemplate;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.source.Callback;
 
@@ -17,7 +17,7 @@ public interface CouponTemplateDataSource {
                            @NonNull Callback<List<CouponTemplate>> callback);
     void createCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
                               @NonNull Callback<Boolean> callback);
-    void generateCoupon(@NonNull String token, @NonNull CouponItem coupon,
+    void generateCoupon(@NonNull String token, @NonNull Coupon coupon,
                         @NonNull Callback<Boolean> callback);
     void deleteCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
                               @NonNull Callback<Boolean> callback);

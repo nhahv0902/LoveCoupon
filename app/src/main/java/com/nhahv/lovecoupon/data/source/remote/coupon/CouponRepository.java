@@ -3,7 +3,7 @@ package com.nhahv.lovecoupon.data.source.remote.coupon;
 import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.source.Callback;
 
 import java.util.List;
@@ -27,10 +27,10 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void getCreateCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                                @NonNull Callback<List<CouponItem>> callback) {
-        mDataSource.getCreateCoupon(header, id, utc1, utc2, new Callback<List<CouponItem>>() {
+                                @NonNull Callback<List<Coupon>> callback) {
+        mDataSource.getCreateCoupon(header, id, utc1, utc2, new Callback<List<Coupon>>() {
             @Override
-            public void onSuccess(List<CouponItem> data) {
+            public void onSuccess(List<Coupon> data) {
                 callback.onSuccess(data);
             }
 
@@ -43,10 +43,10 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void getUsedCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                              @NonNull Callback<List<CouponItem>> callback) {
-        mDataSource.getUsedCoupon(header, id, utc1, utc2, new Callback<List<CouponItem>>() {
+                              @NonNull Callback<List<Coupon>> callback) {
+        mDataSource.getUsedCoupon(header, id, utc1, utc2, new Callback<List<Coupon>>() {
             @Override
-            public void onSuccess(List<CouponItem> data) {
+            public void onSuccess(List<Coupon> data) {
                 callback.onSuccess(data);
             }
 

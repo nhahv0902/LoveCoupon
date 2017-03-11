@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.data.model.Notification;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAdapter;
 
@@ -24,11 +24,11 @@ public class NotificationAdapter
     private LayoutInflater mInflater;
     private final ObservableList<Notification> mListNotification;
     private final NotificationViewModel mViewModel;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
 
     public NotificationAdapter(@NonNull NotificationViewModel viewModel,
                                @NonNull ObservableList<Notification> notification,
-                               @NonNull ProfileShop profile) {
+                               @NonNull ShopProfile profile) {
         mViewModel = viewModel;
         mProfile = profile;
         mListNotification = notification;

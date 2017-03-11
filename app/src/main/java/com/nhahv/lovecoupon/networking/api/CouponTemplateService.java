@@ -1,6 +1,6 @@
 package com.nhahv.lovecoupon.networking.api;
 
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface CouponTemplateService {
     @GET("get_coupon_template_by_company_id")
     Call<List<CouponTemplate>> getCoupon(@Query("company_id") String id);
     @POST("/addCoupon")
-    Call<Integer> generateCoupon(@Header("Authorization") String token, @Body CouponItem coupon);
+    Call<Integer> generateCoupon(@Header("Authorization") String token, @Body Coupon coupon);
     @POST("/addCouponTemplate")
     Call<Integer> createCouponTemplate(@Header("Authorization") String token,
                                        @Body CouponTemplate template);

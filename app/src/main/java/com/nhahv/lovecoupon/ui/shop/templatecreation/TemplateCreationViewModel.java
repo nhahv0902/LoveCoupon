@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupontemplate.CouponTemplateRepository;
 import com.nhahv.lovecoupon.util.ActivityUtil;
@@ -19,7 +19,7 @@ public class TemplateCreationViewModel extends BaseObservable {
     private final CouponTemplateRepository mRepository;
     private final ObservableField<CouponTemplate> mTemplate = new ObservableField<>();
     private final ITemplateCreationHandler mHandler;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
 
     public TemplateCreationViewModel(@NonNull Context context,
                                      @NonNull ITemplateCreationHandler handler) {

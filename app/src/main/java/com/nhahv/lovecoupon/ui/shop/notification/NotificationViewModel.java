@@ -15,7 +15,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.notification.NotificationRepository;
 import com.nhahv.lovecoupon.ui.INotificationViewModel;
@@ -36,7 +36,7 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
     private final IShopNotification mIShopNotification;
     private final NotificationRepository mRepository;
     private final ObservableList<Notification> mListNotification = new ObservableArrayList<>();
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }

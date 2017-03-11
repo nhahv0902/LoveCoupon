@@ -23,7 +23,7 @@ public class CouponCustomer extends BaseObservable {
     @SerializedName("address")
     public String mAddress;
     @SerializedName("coupon")
-    public List<CouponItem> mListCoupon = new ArrayList<>();
+    public List<Coupon> mListCoupon = new ArrayList<>();
 
     public void setShopId(String shopId) {
         mShopId = shopId;
@@ -45,7 +45,7 @@ public class CouponCustomer extends BaseObservable {
         notifyPropertyChanged(BR.address);
     }
 
-    public void setListCoupon(List<CouponItem> listCoupon) {
+    public void setListCoupon(List<Coupon> listCoupon) {
         mListCoupon = listCoupon;
         notifyPropertyChanged(BR.listCoupon);
     }
@@ -71,7 +71,7 @@ public class CouponCustomer extends BaseObservable {
     }
 
     @Bindable
-    public List<CouponItem> getListCoupon() {
+    public List<Coupon> getListCoupon() {
         return mListCoupon;
     }
 }

@@ -15,7 +15,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupontemplate.CouponTemplateRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
@@ -36,7 +36,7 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
     private final ObservableList<CouponTemplate> mListCoupon = new ObservableArrayList<>();
     private final CouponTemplateRepository mRepository;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
     private PopupMenu mPopupMenu;
 
     public CouponViewModel(@NonNull Context context) {

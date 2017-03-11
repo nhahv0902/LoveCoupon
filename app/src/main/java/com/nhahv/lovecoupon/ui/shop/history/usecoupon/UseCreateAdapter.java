@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.databinding.ItemUseCreateBinding;
 
 /**
@@ -15,11 +15,11 @@ import com.nhahv.lovecoupon.databinding.ItemUseCreateBinding;
  */
 public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseCreateHolder> {
     private LayoutInflater mInflater;
-    private final ObservableList<CouponItem> mListCoupon;
+    private final ObservableList<Coupon> mListCoupon;
     private final UseCreateViewModel mViewModel;
 
     public UseCreateAdapter(@NonNull UseCreateViewModel viewModel,
-                            @NonNull ObservableList<CouponItem> listCoupon) {
+                            @NonNull ObservableList<Coupon> listCoupon) {
         mViewModel = viewModel;
         mListCoupon = listCoupon;
     }
@@ -34,8 +34,8 @@ public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseC
 
     @Override
     public void onBindViewHolder(UseCreateHolder holder, int position) {
-        CouponItem couponItem = mListCoupon.get(position);
-        if (couponItem != null) holder.bind(couponItem);
+        Coupon coupon = mListCoupon.get(position);
+        if (coupon != null) holder.bind(coupon);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseC
             mBinding = binding;
         }
 
-        private void bind(CouponItem item) {
+        private void bind(Coupon item) {
             mBinding.setCoupon(item);
             mBinding.executePendingBindings();
         }

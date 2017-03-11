@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import com.facebook.login.LoginManager;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
 import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
@@ -84,7 +84,7 @@ public class ShopMainActivity extends AppCompatActivity
                 R.string.action_open, R.string.action_close);
         mBinding.drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        ProfileShop profile = mPreference.profileShop();
+        ShopProfile profile = mPreference.profileShop();
         mBinding.navView.setNavigationItemSelectedListener(this);
         NavHeaderShopMainBinding bindHeader =
             NavHeaderShopMainBinding.inflate(LayoutInflater.from(mBinding.navView.getContext()));

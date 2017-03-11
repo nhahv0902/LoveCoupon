@@ -1,32 +1,23 @@
 package com.nhahv.lovecoupon.ui.login;
 
-import android.content.Context;
+import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.ProfileCustomer;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.CustomerProfile;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.authorization.AuthorizationRepository;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
-import com.nhahv.lovecoupon.ui.resetpassword.ResetPasswordActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_FACEBOOK;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_GOOGLE;
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_ACCOUNT_TYPE;
@@ -39,76 +30,48 @@ import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_TOKEN;
  */
 public class LoginViewModel extends BaseObservable {
     private final String TAG = getClass().getSimpleName();
-    private Context mContext;
-    private ILoginView mILoginView;
-    private ObservableField<String> mEmail = new ObservableField<>();
-    private ObservableField<String> mPassword = new ObservableField<>();
-    private LCGoogleClient mClient;
-    private CallbackManager mCallbackManager;
-    private AuthorizationRepository mRepository;
-    private AccountType mType;
-    private SharePreferenceUtil mPreference;
-    private ProfileTracker mProfileTracker;
+    private final Activity mContext;
+    private final LoginHandler mLoginHandler;
+    private final ObservableField<String> mEmail = new ObservableField<>();
+    private final ObservableField<String> mPassword = new ObservableField<>();
+    private final LCGoogle mLCGoogle;
+    private final LCFacebook mFacebook;
+    private final AuthorizationRepository mRepository;
+    private final AccountType mType;
+    private final SharePreferenceUtil mPreference;
 
-    public LoginViewModel(Context context, ILoginView iLoginView, AccountType type) {
+    public LoginViewModel(Activity context, LoginHandler loginHandler, AccountType type) {
         mContext = context;
-        mILoginView = iLoginView;
+        mLoginHandler = loginHandler;
         mType = type;
         mPreference = SharePreferenceUtil.getInstance(mContext);
         mRepository = AuthorizationRepository.getInstance();
-        mClient = LCGoogleClient.getInstance(mContext);
-        initFacebook();
-    }
-
-    private void initFacebook() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        mCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallbackManager,
-            new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    handlerFacebook(loginResult.getAccessToken());
-                }
-
-                @Override
-                public void onCancel() {
-                    loginError();
-                }
-
-                @Override
-                public void onError(FacebookException exception) {
-                    loginError();
-                    exception.printStackTrace();
-                }
-            });
-        mProfileTracker = new ProfileTracker() {
+        mLCGoogle = LCGoogle.getInstance(mContext);
+        LCFacebook.FacebookCallback callback = new LCFacebook.FacebookCallback() {
             @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                this.stopTracking();
-                Profile.setCurrentProfile(currentProfile);
-                if (currentProfile == null) return;
-                String name = currentProfile.getName();
-                String id = currentProfile.getId();
-                String avatar = currentProfile.getProfilePictureUri(200, 200).toString();
-                Log.d(TAG, "avatar = " + avatar);
-                mPreference.writeProfileCustomer(new ProfileCustomer(id, name, avatar));
+            public void onSuccess(AccessToken token, Profile profile) {
+                handlerFacebook(token, profile);
+            }
+
+            @Override
+            public void onError() {
+                loginError();
             }
         };
-        mProfileTracker.startTracking();
+        mFacebook = LCFacebook.getInstance(mContext, callback);
     }
 
     public void stopTracker() {
-        mProfileTracker.stopTracking();
+        mFacebook.stopTracker();
     }
 
-    private void handlerFacebook(AccessToken result) {
-        Log.d(TAG, "id = " + result.getUserId());
+    private void handlerFacebook(AccessToken result, Profile profile) {
         switch (mType) {
             case SHOP:
                 mRepository.loginSocialShop(result.getUserId(), DATA_FACEBOOK, result.getToken(),
-                    new Callback<ProfileShop>() {
+                    new Callback<ShopProfile>() {
                         @Override
-                        public void onSuccess(ProfileShop data) {
+                        public void onSuccess(ShopProfile data) {
                             checkStartUiMain();
                             mPreference.writeProfileShop(data);
                         }
@@ -124,13 +87,11 @@ public class LoginViewModel extends BaseObservable {
                 mRepository.loginCustomer(result.getUserId(), null, token, new Callback<Integer>() {
                     @Override
                     public void onSuccess(Integer data) {
-                        Profile profile = Profile.getCurrentProfile();
-                        if (profile == null) return;
                         String name = profile.getName();
                         String id = profile.getId();
-                        String avatar = profile.getProfilePictureUri(200, 200).toString();
-                        Log.d(TAG, "avatar = " + avatar);
-                        mPreference.writeProfileCustomer(new ProfileCustomer(id, name, avatar));
+                        String avatar =
+                            mContext.getString(R.string.facebook_avatar, profile.getId());
+                        mPreference.writeProfileCustomer(new CustomerProfile(id, name, avatar));
                         checkStartUiMain();
                     }
 
@@ -146,39 +107,37 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public void handlerGoogle(GoogleSignInResult result) {
-        if (!result.isSuccess()) {
-            loginError();
-            return;
-        }
         GoogleSignInAccount account = result.getSignInAccount();
-        if (account == null) {
+        if (!result.isSuccess() || account == null) {
             loginError();
             return;
         }
         switch (mType) {
             case SHOP:
-                requestGoogleToken(result.getSignInAccount().getId(),
-                    result.getSignInAccount().getEmail());
+                requestGoogleToken(account.getId(), account.getEmail());
                 break;
             case CUSTOMER:
-                if (result.getSignInAccount().getId() == null) return;
+                if (account.getId() == null) return;
                 String token = mPreference.getString(PREF_TOKEN);
-                mRepository.loginCustomer(result.getSignInAccount().getId(), null, token,
-                    new Callback<Integer>() {
-                        @Override
-                        public void onSuccess(Integer data) {
-                            String avatar = account.getPhotoUrl() == null ? null :
-                                account.getPhotoUrl().toString();
-                            mPreference.writeProfileCustomer(
-                                new ProfileCustomer(account.getId(), account.getDisplayName(),
-                                    avatar));
+                mRepository.loginCustomer(account.getId(), null, token, new Callback<Integer>() {
+                    @Override
+                    public void onSuccess(Integer data) {
+                        String name = account.getDisplayName();
+                        if (name == null) name = "";
+                        String avatar = "";
+                        if (account.getPhotoUrl() != null) {
+                            avatar = account.getPhotoUrl().toString();
                         }
+                        mPreference.writeProfileCustomer(
+                            new CustomerProfile(account.getId(), name, avatar));
+                        checkStartUiMain();
+                    }
 
-                        @Override
-                        public void onError() {
-                            loginError();
-                        }
-                    });
+                    @Override
+                    public void onError() {
+                        loginError();
+                    }
+                });
                 break;
             default:
                 break;
@@ -186,12 +145,12 @@ public class LoginViewModel extends BaseObservable {
     }
 
     private void requestGoogleToken(String id, String email) {
-        mClient.requestToken(email, new LCGoogleClient.CallBack() {
+        mLCGoogle.requestToken(email, new LCGoogle.CallBack() {
             @Override
             public void getTokenSuccess(String token) {
-                mRepository.loginSocialShop(id, DATA_GOOGLE, token, new Callback<ProfileShop>() {
+                mRepository.loginSocialShop(id, DATA_GOOGLE, token, new Callback<ShopProfile>() {
                     @Override
-                    public void onSuccess(ProfileShop data) {
+                    public void onSuccess(ShopProfile data) {
                         mPreference.writeProfileShop(data);
                         checkStartUiMain();
                     }
@@ -211,16 +170,16 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public void clickLogin(LoginType type) {
-        if (mILoginView == null) return;
+        if (mLoginHandler == null) return;
         switch (type) {
             case NORMAL:
                 loginNormal();
                 break;
             case FACEBOOK:
-                mILoginView.loginFacebook();
+                mFacebook.login();
                 break;
             case GOOGLE:
-                mILoginView.loginGoogle(mClient.getClient());
+                mLCGoogle.login();
                 break;
             default:
                 break;
@@ -235,9 +194,9 @@ public class LoginViewModel extends BaseObservable {
                 switch (mType) {
                     case SHOP:
                         mRepository.loginNormalShop(mEmail.get(), mPassword.get(),
-                            new Callback<ProfileShop>() {
+                            new Callback<ShopProfile>() {
                                 @Override
-                                public void onSuccess(ProfileShop data) {
+                                public void onSuccess(ShopProfile data) {
                                     checkStartUiMain();
                                     mPreference.writeProfileShop(data);
                                 }
@@ -254,7 +213,7 @@ public class LoginViewModel extends BaseObservable {
                                 @Override
                                 public void onSuccess(Integer data) {
                                     mPreference.writeProfileCustomer(
-                                        new ProfileCustomer(mEmail.get(), mPassword.get(), null));
+                                        new CustomerProfile(mEmail.get(), mPassword.get(), null));
                                     checkStartUiMain();
                                 }
 
@@ -290,10 +249,10 @@ public class LoginViewModel extends BaseObservable {
         mPreference.writePreference(PREF_ACCOUNT_TYPE, mType.toString());
         switch (mType) {
             case SHOP:
-                mILoginView.startUiShopMain();
+                mLoginHandler.startUiShopMain();
                 break;
             case CUSTOMER:
-                mILoginView.startUiCustomer();
+                mLoginHandler.startUiCustomer();
                 break;
             default:
                 break;
@@ -305,11 +264,11 @@ public class LoginViewModel extends BaseObservable {
     }
 
     public void clickResetPassword() {
-        mILoginView.startUiResetPassword();
+        mLoginHandler.startUiResetPassword();
     }
 
     public CallbackManager getCallbackManager() {
-        return mCallbackManager;
+        return mFacebook.getCallbackManager();
     }
 
     public ObservableField<String> getEmail() {

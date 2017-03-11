@@ -2,8 +2,8 @@ package com.nhahv.lovecoupon.data.source.remote.coupon;
 
 import android.support.annotation.NonNull;
 
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
-import com.nhahv.lovecoupon.data.model.CouponItem;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
 import com.nhahv.lovecoupon.networking.api.CouponService;
@@ -32,18 +32,18 @@ public class CouponRemoteDataSource implements CouponDataSource {
 
     @Override
     public void getCreateCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                                @NonNull Callback<List<CouponItem>> callback) {
+                                @NonNull Callback<List<Coupon>> callback) {
         mService.getCreatedCoupon(header, id, utc1, utc2).enqueue(
-            new retrofit2.Callback<List<CouponItem>>() {
+            new retrofit2.Callback<List<Coupon>>() {
                 @Override
-                public void onResponse(Call<List<CouponItem>> call,
-                                       Response<List<CouponItem>> response) {
+                public void onResponse(Call<List<Coupon>> call,
+                                       Response<List<Coupon>> response) {
                     if (response.body() != null) callback.onSuccess(response.body());
                     else callback.onError();
                 }
 
                 @Override
-                public void onFailure(Call<List<CouponItem>> call, Throwable t) {
+                public void onFailure(Call<List<Coupon>> call, Throwable t) {
                     callback.onError();
                 }
             });
@@ -51,18 +51,18 @@ public class CouponRemoteDataSource implements CouponDataSource {
 
     @Override
     public void getUsedCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                              @NonNull Callback<List<CouponItem>> callback) {
+                              @NonNull Callback<List<Coupon>> callback) {
         mService.getUsedCoupon(header, id, utc1, utc2).enqueue(
-            new retrofit2.Callback<List<CouponItem>>() {
+            new retrofit2.Callback<List<Coupon>>() {
                 @Override
-                public void onResponse(Call<List<CouponItem>> call,
-                                       Response<List<CouponItem>> response) {
+                public void onResponse(Call<List<Coupon>> call,
+                                       Response<List<Coupon>> response) {
                     if (response.body() != null) callback.onSuccess(response.body());
                     else callback.onError();
                 }
 
                 @Override
-                public void onFailure(Call<List<CouponItem>> call, Throwable t) {
+                public void onFailure(Call<List<Coupon>> call, Throwable t) {
                     callback.onError();
                 }
             });

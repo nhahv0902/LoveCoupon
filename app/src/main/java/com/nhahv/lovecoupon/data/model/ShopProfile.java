@@ -10,7 +10,7 @@ import com.nhahv.lovecoupon.BR;
  * Created by Nhahv0902 on 3/7/2017.
  * <></>
  */
-public class ProfileShop extends BaseObservable {
+public class ShopProfile extends BaseObservable {
     @SerializedName("company_id")
     private String mShopId;
     @SerializedName("name")

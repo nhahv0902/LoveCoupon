@@ -10,15 +10,12 @@ import com.nhahv.lovecoupon.BR;
  * Created by Nhahv0902 on 3/8/2017.
  * <></>
  */
-public class ProfileCustomer extends BaseObservable {
+public class CustomerProfile extends BaseObservable {
     private String mId;
     private String mName;
     private String mAvatar;
 
-    public ProfileCustomer() {
-    }
-
-    public ProfileCustomer(String id, String name, @NonNull String avatar) {
+    public CustomerProfile(@NonNull String id, @NonNull String name, @NonNull String avatar) {
         mId = id;
         mName = name;
         mAvatar = avatar;
@@ -51,7 +48,6 @@ public class ProfileCustomer extends BaseObservable {
 
     @Bindable
     public String getAvatar() {
-        mAvatar = mAvatar == null ? "" : mAvatar;
         return mAvatar;
     }
 }

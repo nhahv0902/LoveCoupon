@@ -6,10 +6,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityLoginBinding;
 import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
@@ -17,13 +15,10 @@ import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
 import com.nhahv.lovecoupon.ui.resetpassword.ResetPasswordActivity;
 import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
-import java.util.Collections;
-
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_TYPE;
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PUBLIC_PROFILE;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 
-public class LoginActivity extends AppCompatActivity implements ILoginView {
+public class LoginActivity extends AppCompatActivity implements LoginHandler {
     private ActivityLoginBinding mBinding;
     private LoginViewModel mViewModel;
 
@@ -45,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        mViewModel = new LoginViewModel(getApplicationContext(), this, getDataFromIntent());
+        mViewModel = new LoginViewModel(this, this, getDataFromIntent());
         mBinding.setViewModel(mViewModel);
     }
 
@@ -58,18 +53,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
             return;
         }
         mViewModel.getCallbackManager().onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void loginFacebook() {
-        LoginManager.getInstance()
-            .logInWithReadPermissions(this, Collections.singletonList(DATA_PUBLIC_PROFILE));
-    }
-
-    @Override
-    public void loginGoogle(GoogleApiClient client) {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(client);
-        startActivityForResult(signInIntent, REQUEST_GOOGLE);
     }
 
     @Override

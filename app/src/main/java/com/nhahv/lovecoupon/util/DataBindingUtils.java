@@ -31,7 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
@@ -143,7 +143,7 @@ public final class DataBindingUtils {
     * check admin setting fragment
     * */
     @BindingAdapter({"bind:profile", "bind:type"})
-    public static void onCheckedAdmin(AppCompatCheckBox view, ProfileShop profile, UserType type) {
+    public static void onCheckedAdmin(AppCompatCheckBox view, ShopProfile profile, UserType type) {
         switch (type) {
             case USER1:
                 if (profile.getUserAdmin1() == null) view.setChecked(false);

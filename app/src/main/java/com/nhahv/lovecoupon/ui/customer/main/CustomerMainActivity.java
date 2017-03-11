@@ -14,20 +14,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
-import com.facebook.login.LoginManager;
+import com.facebook.AccessToken;
+import com.facebook.Profile;
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.ProfileCustomer;
+import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.databinding.ActivityCustomerMainBinding;
 import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
 import com.nhahv.lovecoupon.ui.customer.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.customer.notification.NotificationFragment;
 import com.nhahv.lovecoupon.ui.customer.notification.NotificationType;
 import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
+import com.nhahv.lovecoupon.ui.login.LCFacebook;
+import com.nhahv.lovecoupon.ui.login.LCGoogle;
 import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
-import static com.nhahv.lovecoupon.util.Constant.DataConstant.URL_IMAGE;
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGIN;
 
 public class CustomerMainActivity extends AppCompatActivity
@@ -60,13 +62,13 @@ public class CustomerMainActivity extends AppCompatActivity
             R.string.action_close);
         mBinding.drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-        ProfileCustomer profile = mPreference.profileCustomer();
+        CustomerProfile profile = mPreference.profileCustomer();
         mBinding.navView.setNavigationItemSelectedListener(this);
         NavHeaderShopMainBinding bindHeader =
             NavHeaderShopMainBinding.inflate(LayoutInflater.from(mBinding.navView.getContext()));
         mBinding.navView.addHeaderView(bindHeader.getRoot());
-        bindHeader.setImage(URL_IMAGE);
-        bindHeader.setName("Hoang Van Nha");
+        bindHeader.setImage(profile.getAvatar());
+        bindHeader.setName(profile.getName());
         bindHeader.executePendingBindings();
         addFragment(CouponFragment.newInstance(), R.string.menu_coupon);
     }
@@ -102,9 +104,18 @@ public class CustomerMainActivity extends AppCompatActivity
                 mViewModel.setShowImagePlus(false);
                 break;
             case R.id.action_exit:
-                LoginManager.getInstance().logOut();
+                LCFacebook.getInstance(this, new LCFacebook.FacebookCallback() {
+                    @Override
+                    public void onSuccess(AccessToken token, Profile profile) {
+                    }
+
+                    @Override
+                    public void onError() {
+                    }
+                }).logout();
+                LCGoogle.getInstance(this).logout();
                 mViewModel.setShowImagePlus(false);
-                SharePreferenceUtil.getInstance(this).writePreference(PREF_IS_LOGIN, false);
+                mPreference.writePreference(PREF_IS_LOGIN, false);
                 startActivity(FirstScreenActivity.getFirstIntent(this, 0));
                 break;
             default:

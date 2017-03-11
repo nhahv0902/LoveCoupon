@@ -10,7 +10,7 @@
 
         <variable
             name="coupon"
-            type="com.nhahv.lovecoupon.data.model.CouponItem"/>
+            type="com.nhahv.lovecoupon.data.model.Coupon"/>
 
     </data>
 

@@ -1,6 +1,6 @@
 package com.nhahv.lovecoupon.networking.api;
 
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,5 +18,5 @@ public interface UpdateService {
     Call<Integer> isUserExists(@Query("company_id") String company_id,
                                @Query("username") String username);
     @POST("/updateCompany")
-    Call<Integer> updateProfile(@Header("Authorization") String token, @Body ProfileShop template);
+    Call<Integer> updateProfile(@Header("Authorization") String token, @Body ShopProfile template);
 }

@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
-public class CouponItem extends BaseObservable {
+public class Coupon extends BaseObservable {
     @SerializedName("coupon_id")
     public String mCouponId;
     @SerializedName("user_id")

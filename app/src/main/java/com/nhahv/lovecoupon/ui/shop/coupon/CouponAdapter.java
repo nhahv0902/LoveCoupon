@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ItemShopCouponBinding;
 
 /**
@@ -17,12 +17,12 @@ import com.nhahv.lovecoupon.databinding.ItemShopCouponBinding;
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHolder> {
     private final ObservableList<CouponTemplate> mListCoupon;
     private final CouponViewModel mViewModel;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
     private LayoutInflater mInflater;
 
     public CouponAdapter(@NonNull ObservableList<CouponTemplate> couponItems,
                          @NonNull CouponViewModel viewModel,
-                         @NonNull ProfileShop profile) {
+                         @NonNull ShopProfile profile) {
         mListCoupon = couponItems;
         mProfile = profile;
         mViewModel = viewModel;

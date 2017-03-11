@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.nhahv.lovecoupon.data.model.ProfileCustomer;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.CustomerProfile;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
@@ -36,21 +36,21 @@ public class SharePreferenceUtil {
         mPreferences.edit().putBoolean(key, value).apply();
     }
 
-    public void writeProfileShop(@NonNull ProfileShop profile) {
+    public void writeProfileShop(@NonNull ShopProfile profile) {
         mPreferences.edit().putString(PREF_PROFILE_SHOP, new Gson().toJson(profile)).apply();
     }
 
-    public ProfileShop profileShop() {
+    public ShopProfile profileShop() {
         return new Gson()
-            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ProfileShop.class);
+            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ShopProfile.class);
     }
 
-    public ProfileCustomer profileCustomer() {
+    public CustomerProfile profileCustomer() {
         return new Gson()
-            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ProfileCustomer.class);
+            .fromJson(mPreferences.getString(PREF_PROFILE_CUSTOMER, ""), CustomerProfile.class);
     }
 
-    public void writeProfileCustomer(@NonNull ProfileCustomer profile) {
+    public void writeProfileCustomer(@NonNull CustomerProfile profile) {
         mPreferences.edit().putString(PREF_PROFILE_CUSTOMER, new Gson().toJson(profile)).apply();
     }
 

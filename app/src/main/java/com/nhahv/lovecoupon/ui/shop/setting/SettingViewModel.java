@@ -11,7 +11,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.updateprofile.UpdateRepository;
 import com.nhahv.lovecoupon.util.ActivityUtil;
@@ -33,7 +33,7 @@ public class SettingViewModel extends BaseObservable {
     private final ObservableBoolean mShopNoData = new ObservableBoolean();
     private final ObservableBoolean mUserTrue = new ObservableBoolean(true);
     private final ISettingFragment mListener;
-    private ProfileShop mProfile;
+    private ShopProfile mProfile;
     private final SharePreferenceUtil mPreference;
     private final UpdateRepository mRepository;
 
@@ -89,7 +89,7 @@ public class SettingViewModel extends BaseObservable {
         mProfile.setLogoLink(resultUri.getPath());
     }
 
-    public ProfileShop getProfile() {
+    public ShopProfile getProfile() {
         return mProfile;
     }
 

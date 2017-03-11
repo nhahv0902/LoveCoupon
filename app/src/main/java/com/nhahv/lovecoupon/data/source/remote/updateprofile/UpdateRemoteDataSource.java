@@ -2,7 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.updateprofile;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
 import com.nhahv.lovecoupon.networking.api.UpdateService;
@@ -47,7 +47,7 @@ public class UpdateRemoteDataSource implements UpdateDataSource {
     }
 
     @Override
-    public void updateProfile(@NonNull String token, @NonNull ProfileShop profile,
+    public void updateProfile(@NonNull String token, @NonNull ShopProfile profile,
                               @NonNull Callback<Boolean> callback) {
         mService.updateProfile(token, profile).enqueue(new retrofit2.Callback<Integer>() {
             @Override

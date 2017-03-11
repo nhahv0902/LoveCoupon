@@ -1,7 +1,7 @@
 package com.nhahv.lovecoupon.networking.api;
 
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 
 import java.util.List;
 
@@ -19,13 +19,13 @@ public interface CouponService {
     * Coupon of shop
     * */
     @GET("/get_created_coupon_by_company_id")
-    Call<List<CouponItem>> getCreatedCoupon(@Header("Authorization") String token,
-                                            @Query("company_id") String company_id,
-                                            @Query("utc1") long utc1, @Query("utc2") long utc2);
+    Call<List<Coupon>> getCreatedCoupon(@Header("Authorization") String token,
+                                        @Query("company_id") String company_id,
+                                        @Query("utc1") long utc1, @Query("utc2") long utc2);
     @GET("/get_used_coupon_by_company_id")
-    Call<List<CouponItem>> getUsedCoupon(@Header("Authorization") String token,
-                                         @Query("company_id") String company_id,
-                                         @Query("utc1") long utc1, @Query("utc2") long utc2);
+    Call<List<Coupon>> getUsedCoupon(@Header("Authorization") String token,
+                                     @Query("company_id") String company_id,
+                                     @Query("utc1") long utc1, @Query("utc2") long utc2);
     /*
     * coupon of customer
     * */

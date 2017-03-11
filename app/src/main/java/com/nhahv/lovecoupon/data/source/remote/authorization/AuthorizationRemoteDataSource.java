@@ -2,7 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
 import com.nhahv.lovecoupon.networking.api.AuthorizationService;
@@ -33,18 +33,18 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
 
     @Override
     public void loginNormalShop(@NonNull String user, @NonNull String password,
-                                @NonNull Callback<ProfileShop> callback) {
+                                @NonNull Callback<ShopProfile> callback) {
         AuthorizationService.LoginShopBody body = new AuthorizationService.LoginShopBody();
         body.setNormal(user, password);
-        mService.loginShop(body).enqueue(new retrofit2.Callback<List<ProfileShop>>() {
+        mService.loginShop(body).enqueue(new retrofit2.Callback<List<ShopProfile>>() {
             @Override
-            public void onResponse(Call<List<ProfileShop>> call,
-                                   Response<List<ProfileShop>> response) {
+            public void onResponse(Call<List<ShopProfile>> call,
+                                   Response<List<ShopProfile>> response) {
                 if (response == null) {
                     callback.onError();
                     return;
                 }
-                ProfileShop profile = response.body().get(0);
+                ShopProfile profile = response.body().get(0);
                 if (profile == null) {
                     callback.onError();
                     return;
@@ -53,7 +53,7 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
             }
 
             @Override
-            public void onFailure(Call<List<ProfileShop>> call, Throwable t) {
+            public void onFailure(Call<List<ShopProfile>> call, Throwable t) {
                 callback.onError();
             }
         });
@@ -61,18 +61,18 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
 
     @Override
     public void loginSocialShop(@NonNull String id, @NonNull String social, @NonNull String token,
-                                @NonNull Callback<ProfileShop> callback) {
+                                @NonNull Callback<ShopProfile> callback) {
         AuthorizationService.LoginShopBody body = new AuthorizationService.LoginShopBody();
         body.setSocial(id, social, token);
-        mService.loginShop(body).enqueue(new retrofit2.Callback<List<ProfileShop>>() {
+        mService.loginShop(body).enqueue(new retrofit2.Callback<List<ShopProfile>>() {
             @Override
-            public void onResponse(Call<List<ProfileShop>> call,
-                                   Response<List<ProfileShop>> response) {
+            public void onResponse(Call<List<ShopProfile>> call,
+                                   Response<List<ShopProfile>> response) {
                 if (response == null) {
                     callback.onError();
                     return;
                 }
-                ProfileShop profile = response.body().get(0);
+                ShopProfile profile = response.body().get(0);
                 if (profile == null) {
                     callback.onError();
                     return;
@@ -81,7 +81,7 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
             }
 
             @Override
-            public void onFailure(Call<List<ProfileShop>> call, Throwable t) {
+            public void onFailure(Call<List<ShopProfile>> call, Throwable t) {
                 callback.onError();
             }
         });

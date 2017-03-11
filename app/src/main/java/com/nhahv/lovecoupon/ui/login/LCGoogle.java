@@ -1,6 +1,7 @@
 package com.nhahv.lovecoupon.ui.login;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -15,24 +16,25 @@ import com.nhahv.lovecoupon.R;
 import java.io.IOException;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_SCOPE;
+import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
  * <></>
  */
-public class LCGoogleClient {
-    private static LCGoogleClient sInstance;
-    private Context mContext;
+public class LCGoogle {
+    private static LCGoogle sInstance;
+    private Activity mContext;
     private GoogleApiClient mClient;
 
-    private LCGoogleClient(Context context) {
+    private LCGoogle(@NonNull Activity context) {
         mContext = context;
         FacebookSdk.sdkInitialize(mContext.getApplicationContext());
         initGoogle();
     }
 
-    public static LCGoogleClient getInstance(Context context) {
-        if (sInstance == null) sInstance = new LCGoogleClient(context);
+    public static LCGoogle getInstance(@NonNull Activity context) {
+        if (sInstance == null) sInstance = new LCGoogle(context);
         return sInstance;
     }
 
@@ -48,12 +50,15 @@ public class LCGoogleClient {
         mClient.connect();
     }
 
-    public void logout(@NonNull SignOutCallback callback) {
+    public void logout() {
         Auth.GoogleSignInApi.signOut(mClient).setResultCallback(
             status -> {
-                if (status.isSuccess()) callback.onSuccess();
-                else callback.onError();
             });
+    }
+
+    public void login() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mClient);
+        mContext.startActivityForResult(signInIntent, REQUEST_GOOGLE);
     }
 
     public void requestToken(String email, CallBack callBack) {
@@ -94,10 +99,5 @@ public class LCGoogleClient {
     public interface CallBack {
         void getTokenSuccess(String token);
         void getTokenError();
-    }
-
-    public interface SignOutCallback {
-        void onSuccess();
-        void onError();
     }
 }

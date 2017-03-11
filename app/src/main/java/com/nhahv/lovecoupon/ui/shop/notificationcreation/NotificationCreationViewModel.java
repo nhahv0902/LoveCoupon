@@ -11,7 +11,7 @@ import android.util.Log;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.Notification;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.notification.NotificationRepository;
 import com.nhahv.lovecoupon.data.source.remote.upload.UpLoadRepository;
@@ -38,7 +38,7 @@ public class NotificationCreationViewModel extends BaseObservable
     private final ObservableField<NotificationCreationAdapter> mAdapter = new ObservableField<>();
     private final UpLoadRepository mUpLoadRepository;
     private final NotificationRepository mRepository;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
 
     public NotificationCreationViewModel(@NonNull Context context,
                                          @NonNull NotificationCreationHandler handler,

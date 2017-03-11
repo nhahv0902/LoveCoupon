@@ -2,7 +2,7 @@ package com.nhahv.lovecoupon.data.source.remote.coupontemplate;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
@@ -71,7 +71,7 @@ public class CouponTemplateRemoteDataSource implements CouponTemplateDataSource 
     }
 
     @Override
-    public void generateCoupon(@NonNull String token, @NonNull CouponItem coupon,
+    public void generateCoupon(@NonNull String token, @NonNull Coupon coupon,
                                @NonNull Callback<Boolean> callback) {
         if (mService == null) return;
         mService.generateCoupon(token, coupon).enqueue(new retrofit2.Callback<Integer>() {

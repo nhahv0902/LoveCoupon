@@ -6,9 +6,9 @@ import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.CouponItem;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupontemplate.CouponTemplateRepository;
 import com.nhahv.lovecoupon.util.ActivityUtil;
@@ -21,7 +21,7 @@ import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 public class CouponCreationViewModel extends BaseObservable {
     private final Context mContext;
     private final CouponTemplate mCouponTemplate;
-    private final ProfileShop mProfile;
+    private final ShopProfile mProfile;
     private final CouponTemplateRepository mRepository;
     private final ObservableField<String> mCouponId = new ObservableField<>();
 
@@ -36,7 +36,7 @@ public class CouponCreationViewModel extends BaseObservable {
 
     private void generateCoupon() {
         if (mRepository == null || !ActivityUtil.isNetworkConnected(mContext)) return;
-        CouponItem coupon = new CouponItem();
+        Coupon coupon = new Coupon();
         coupon.setShopId(mProfile.getShopId());
         String couponId = ActivityUtil.randomId();
         coupon.setCouponId(couponId);

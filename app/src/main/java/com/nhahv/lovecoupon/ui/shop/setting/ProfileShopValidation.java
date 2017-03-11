@@ -2,16 +2,16 @@ package com.nhahv.lovecoupon.ui.shop.setting;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.ProfileShop;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 /**
  * Created by Nhahv0902 on 3/9/2017.
  * <></>
  */
 public class ProfileShopValidation {
-    private ProfileShop mProfile;
+    private ShopProfile mProfile;
 
-    public ProfileShopValidation(@NonNull ProfileShop profile) {
+    public ProfileShopValidation(@NonNull ShopProfile profile) {
         mProfile = profile;
     }
 
