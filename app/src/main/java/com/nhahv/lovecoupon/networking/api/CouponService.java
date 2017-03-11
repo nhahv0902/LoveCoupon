@@ -1,13 +1,15 @@
 package com.nhahv.lovecoupon.networking.api;
 
-import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.model.Coupon;
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -31,4 +33,6 @@ public interface CouponService {
     * */
     @GET("/get_companies_by_user_id")
     Call<List<CouponCustomer>> getCouponOfCustomer(@Query("user_id") String id);
+    @POST("/useCoupon")
+    Call<Integer> useCoupon(@Body Coupon coupon);
 }

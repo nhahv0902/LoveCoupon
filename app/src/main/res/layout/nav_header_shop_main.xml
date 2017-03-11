@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel"/>
+
+        <variable
             name="image"
             type="java.lang.String"/>
 
@@ -23,10 +27,11 @@
         android:padding="@dimen/dp_8"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <com.nhahv.lovecoupon.ui.view.CircleImageView
+        <com.nhahv.lovecoupon.ui.widget.CircleImageView
             android:layout_width="@dimen/size_82"
             android:layout_height="@dimen/size_82"
             android:layout_marginTop="@dimen/dp_20"
+            android:onClick="@{()->viewModel.clickPickLogo()}"
             app:srcCompat="@drawable/ic_logo"
             bind:circleImage="@{image}"
             bind:error="@{@drawable/ic_logo}"/>

@@ -1,4 +1,4 @@
-package com.nhahv.lovecoupon.ui.view;
+package com.nhahv.lovecoupon.ui.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -2,8 +2,8 @@ package com.nhahv.lovecoupon.data.source.remote.coupon;
 
 import android.support.annotation.NonNull;
 
-import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.model.Coupon;
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
 
 import java.util.List;
@@ -20,9 +20,10 @@ public interface CouponDataSource {
                          @NonNull Callback<List<Coupon>> callback);
     void getUsedCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
                        @NonNull Callback<List<Coupon>> callback);
-
     /*
     * method of customer
     * */
-    void getCouponCustomer(@NonNull String idUser, @NonNull Callback<List<CouponCustomer>> callback);
+    void getCouponCustomer(@NonNull String idUser,
+                           @NonNull Callback<List<CouponCustomer>> callback);
+    void useCoupon(@NonNull Coupon coupon, @NonNull Callback<Boolean> callback);
 }

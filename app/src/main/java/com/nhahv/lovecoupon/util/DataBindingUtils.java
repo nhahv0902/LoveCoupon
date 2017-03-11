@@ -36,6 +36,7 @@ import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
+import com.nhahv.lovecoupon.ui.widget.RecyclerViewHeader;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import net.glxn.qrgen.android.QRCode;
@@ -288,5 +289,17 @@ public final class DataBindingUtils {
     @BindingAdapter({"bind:bindDayLeft"})
     public static void bindDayLeft(AppCompatTextView view, long time) {
         view.setText(ActivityUtil.dayLeft(time));
+    }
+
+    /*
+    * bind  bind:attackToHeader ItemCouponOfShop
+    * */
+    @BindingAdapter({"bind:adapterHeader", "bind:header"})
+    public static void attackToHeader(RecyclerView view, RecyclerView.Adapter adapter,
+                                      RecyclerViewHeader header) {
+        view.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        view.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        header.attachTo(view);
     }
 }

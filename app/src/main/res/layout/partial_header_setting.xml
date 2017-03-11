@@ -3,12 +3,9 @@
         xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
-
         <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel"/>
-
         <variable
             name="image"
             type="java.lang.String"/>
@@ -31,7 +28,7 @@
         android:padding="@dimen/dp_8"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <com.nhahv.lovecoupon.ui.view.CircleImageView
+        <com.nhahv.lovecoupon.ui.widget.CircleImageView
             android:layout_width="@dimen/dp_92"
             android:layout_height="@dimen/dp_92"
             android:layout_marginTop="@dimen/dp_10"
@@ -47,7 +44,6 @@
             android:gravity="center"
             android:paddingTop="@dimen/dp_8"
             android:text="@{shopName}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"/>

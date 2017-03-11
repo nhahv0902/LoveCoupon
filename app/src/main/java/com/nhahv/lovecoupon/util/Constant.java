@@ -14,6 +14,7 @@ public final class Constant {
         public static final String BUNDLE_TEMPLATE = "BUNDLE_TEMPLATE";
         public static final String BUNDLE_NOTIFICATION_TYPE = "BUNDLE_NOTIFICATION_TYPE";
         public static final String BUNDLE_FOLDER_NAME = "BUNDLE_FOLDER_NAME";
+        public static final String BUNDLE_COUPON = "BUNDLE_COUPON";
     }
 
     public static final class RequestConstant {

@@ -6,6 +6,8 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
  * Created by Nhahv0902 on 3/7/2017.
  * <></>
  */
+@Parcel
 public class CouponCustomer extends BaseObservable {
     @SerializedName("company_id")
     public String mShopId;
@@ -24,6 +27,9 @@ public class CouponCustomer extends BaseObservable {
     public String mAddress;
     @SerializedName("coupon")
     public List<Coupon> mListCoupon = new ArrayList<>();
+
+    public CouponCustomer() {
+    }
 
     public void setShopId(String shopId) {
         mShopId = shopId;

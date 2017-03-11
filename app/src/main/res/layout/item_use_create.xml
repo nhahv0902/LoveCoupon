@@ -33,7 +33,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/dp_10">
 
-            <com.nhahv.lovecoupon.ui.view.CircleImageView
+            <com.nhahv.lovecoupon.ui.widget.CircleImageView
                 android:id="@+id/img_logo_coupon"
                 android:layout_width="@dimen/size_82"
                 android:layout_height="@dimen/size_82"

@@ -1,4 +1,4 @@
-package com.nhahv.lovecoupon.ui.view;
+package com.nhahv.lovecoupon.ui.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;

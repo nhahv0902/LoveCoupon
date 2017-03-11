@@ -13,6 +13,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.SUCCESS;
+
 /**
  * Created by Nhahv0902 on 3/8/2017.
  * <></>
@@ -33,6 +35,7 @@ public class CouponRemoteDataSource implements CouponDataSource {
     @Override
     public void getCreateCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
                                 @NonNull Callback<List<Coupon>> callback) {
+        if (mService == null) return;
         mService.getCreatedCoupon(header, id, utc1, utc2).enqueue(
             new retrofit2.Callback<List<Coupon>>() {
                 @Override
@@ -52,6 +55,7 @@ public class CouponRemoteDataSource implements CouponDataSource {
     @Override
     public void getUsedCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
                               @NonNull Callback<List<Coupon>> callback) {
+        if (mService == null) return;
         mService.getUsedCoupon(header, id, utc1, utc2).enqueue(
             new retrofit2.Callback<List<Coupon>>() {
                 @Override
@@ -71,6 +75,7 @@ public class CouponRemoteDataSource implements CouponDataSource {
     @Override
     public void getCouponCustomer(@NonNull String idUser,
                                   @NonNull final Callback<List<CouponCustomer>> callback) {
+        if (mService == null) return;
         mService.getCouponOfCustomer(idUser).enqueue(
             new retrofit2.Callback<List<CouponCustomer>>() {
                 @Override
@@ -86,5 +91,23 @@ public class CouponRemoteDataSource implements CouponDataSource {
                     callback.onError();
                 }
             });
+    }
+
+    @Override
+    public void useCoupon(@NonNull Coupon coupon, @NonNull Callback<Boolean> callback) {
+        if (mService == null) return;
+        mService.useCoupon(coupon).enqueue(new retrofit2.Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response == null || response.body() == null || response.body() != SUCCESS) {
+                    callback.onError();
+                } else callback.onSuccess(true);
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                callback.onError();
+            }
+        });
     }
 }

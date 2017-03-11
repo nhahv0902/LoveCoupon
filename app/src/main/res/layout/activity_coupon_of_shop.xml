@@ -1,10 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopActivity">
+<?xml version='1.0' encoding='utf-8' ?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:bind="http://schemas.android.com/tools">
 
-</android.support.constraint.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopViewModel"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                bind:adapterHeader="@{viewModel.adapter}"
+                bind:header="@{layoutHeader}"/>
+
+            <com.nhahv.lovecoupon.ui.widget.RecyclerViewHeader
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:background="@color/colorPrimary">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_16">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->viewModel.clickBackPress()}"
+                            android:padding="@dimen/dp_8"
+                            app:srcCompat="@drawable/ic_arrow_back_white_24dp"/>
+
+                        <com.nhahv.lovecoupon.ui.widget.CircleImageView
+                            android:layout_width="@dimen/dp_92"
+                            android:layout_height="@dimen/dp_92"
+                            android:layout_gravity="center_horizontal|bottom"
+                            android:src="@drawable/ic_logo"
+                            bind:circleImage="@{viewModel.couponCustomer.logoLink}"
+                            bind:error="@{@drawable/ic_logo}"/>
+                    </FrameLayout>
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp_8"
+                        android:text="@{viewModel.couponCustomer.name}"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp_24"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text="@{viewModel.couponCustomer.address}"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp_17"/>
+                </LinearLayout>
+            </com.nhahv.lovecoupon.ui.widget.RecyclerViewHeader>
+        </FrameLayout>
+    </LinearLayout>
+</layout>

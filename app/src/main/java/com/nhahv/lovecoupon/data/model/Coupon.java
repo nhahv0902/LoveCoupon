@@ -5,11 +5,14 @@ import android.databinding.Bindable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
-public class Coupon extends BaseObservable {
+@Parcel
+public class Coupon extends BaseObservable  {
     @SerializedName("coupon_id")
     public String mCouponId;
     @SerializedName("user_id")
@@ -34,6 +37,9 @@ public class Coupon extends BaseObservable {
     public String mLogoLink;
     @SerializedName("content")
     public String mContent;
+
+    public Coupon() {
+    }
 
     public void setCouponId(String couponId) {
         mCouponId = couponId;

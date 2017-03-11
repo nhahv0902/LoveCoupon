@@ -13,6 +13,7 @@ import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
+import com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
@@ -53,6 +54,10 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
                     loadError();
                 }
             });
+    }
+
+    public void clickDetail(CouponCustomer coupon) {
+        mContext.startActivity(CouponOfShopActivity.getIntent(mContext, coupon));
     }
 
     @Override

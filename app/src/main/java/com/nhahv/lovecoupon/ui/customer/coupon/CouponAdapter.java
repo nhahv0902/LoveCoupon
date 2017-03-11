@@ -1,6 +1,7 @@
 package com.nhahv.lovecoupon.ui.customer.coupon;
 
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,7 +18,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
     private final CouponViewModel mViewModel;
     private LayoutInflater mInflater;
 
-    public CouponAdapter(ObservableList<CouponCustomer> couponItems, CouponViewModel viewModel) {
+    public CouponAdapter(@NonNull ObservableList<CouponCustomer> couponItems,
+                         @NonNull CouponViewModel viewModel) {
         mListCoupon = couponItems;
         mViewModel = viewModel;
     }
@@ -27,6 +29,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemCustomerCouponBinding binding =
             ItemCustomerCouponBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new CouponHolder(binding);
     }
 
@@ -38,7 +41,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
     @Override
     public int getItemCount() {
-        return mListCoupon == null ? 0 : mListCoupon.size();
+        return mListCoupon.size();
     }
 
     public class CouponHolder extends RecyclerView.ViewHolder {
