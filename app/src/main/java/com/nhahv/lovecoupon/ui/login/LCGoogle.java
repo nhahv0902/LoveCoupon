@@ -24,7 +24,7 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
  */
 public class LCGoogle {
     private static LCGoogle sInstance;
-    private Activity mContext;
+    private final Activity mContext;
     private GoogleApiClient mClient;
 
     private LCGoogle(@NonNull Activity context) {
@@ -51,9 +51,16 @@ public class LCGoogle {
     }
 
     public void logout() {
-        Auth.GoogleSignInApi.signOut(mClient).setResultCallback(
-            status -> {
-            });
+        GoogleSignInOptions gso =
+            new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mClient = new GoogleApiClient.Builder(mContext)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+            .build();
+        mClient.connect();
+        Auth.GoogleSignInApi.signOut(mClient).setResultCallback(status -> {
+        });
     }
 
     public void login() {

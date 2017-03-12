@@ -24,12 +24,13 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PUBLIC_PROFIL
  */
 public class LCFacebook {
     private static LCFacebook sInstance;
+    private final static int TIME_DELAY = 1000;
     private final String TAG = getClass().getSimpleName();
     private final Activity mContext;
     private final CallbackManager mCallbackManager;
     private final ProfileTracker mProfileTracker;
     private final AccessTokenTracker mTokenTracker;
-    private FacebookCallback mCallback;
+    private final FacebookCallback mCallback;
 
     private LCFacebook(@NonNull Activity context, @NonNull FacebookCallback callback) {
         mContext = context;
@@ -42,7 +43,7 @@ public class LCFacebook {
                     new Handler().postDelayed(() -> {
                         Profile profile = Profile.getCurrentProfile();
                         mCallback.onSuccess(result.getAccessToken(), profile);
-                    }, 1000);
+                    }, TIME_DELAY);
                 }
 
                 @Override
@@ -60,7 +61,6 @@ public class LCFacebook {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
                 oldProfile = newProfile;
-                if (mCallback == null) return;
                 AccessToken token = AccessToken.getCurrentAccessToken();
                 if (newProfile != null && token != null) {
                     mCallback.onSuccess(token, newProfile);

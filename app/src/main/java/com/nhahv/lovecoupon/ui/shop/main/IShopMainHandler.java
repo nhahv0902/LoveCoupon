@@ -8,4 +8,6 @@ public interface IShopMainHandler {
     void clickUpdateProfile();
     void createNotification();
     void createCouponTemplate();
+    void startUiFirstScreen();
+    void addFragment(int position);
 }

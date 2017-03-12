@@ -8,9 +8,12 @@
         <import type="android.view.View"/>
 
         <variable
+            name="view"
+            type="android.support.v7.app.AppCompatActivity"/>
+
+        <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.customer.main.CustomerMainViewModel"/>
-
 
     </data>
 
@@ -19,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        tools:activity="@{view}"
+        tools:drawerLayout="@{toolbar}"
         tools:openDrawer="start">
 
         <android.support.design.widget.CoordinatorLayout
@@ -62,7 +67,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:menu="@menu/activity_customer_main"/>
+            app:menu="@menu/activity_customer_main"
+            tools:avatar="@{viewModel.profile.avatar}"
+            tools:drawerLayout="@{drawerLayout}"
+            tools:name="@{viewModel.profile.name}"
+            tools:viewModelCustomer="@{viewModel}"/>
 
     </android.support.v4.widget.DrawerLayout>
 </layout>

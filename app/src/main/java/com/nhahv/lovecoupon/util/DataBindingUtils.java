@@ -7,10 +7,15 @@ import android.databinding.ObservableBoolean;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
@@ -20,9 +25,11 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -32,8 +39,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
+import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
 import com.nhahv.lovecoupon.ui.ViewModel;
+import com.nhahv.lovecoupon.ui.customer.main.CustomerMainViewModel;
 import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
+import com.nhahv.lovecoupon.ui.shop.main.ShopMainViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.nhahv.lovecoupon.ui.widget.RecyclerViewHeader;
@@ -301,5 +311,105 @@ public final class DataBindingUtils {
         view.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         header.attachTo(view);
+    }
+
+    /*
+    * binding navigation view in main shop and customer
+    * */
+    @BindingAdapter({"bind:avatar", "bind:name"})
+    public static void bindNavigationView(NavigationView view, String avatar, String name) {
+        NavHeaderShopMainBinding bindHeader =
+            NavHeaderShopMainBinding.inflate(LayoutInflater.from(view.getContext()));
+        bindHeader.setImage(avatar);
+        bindHeader.setName(name);
+        bindHeader.executePendingBindings();
+        view.addHeaderView(bindHeader.getRoot());
+    }
+
+    /*
+    * bind drawerLayout
+    * */
+    @BindingAdapter({"bind:drawerLayout", "bind:activity"})
+    public static void drawerLayout(DrawerLayout view, Toolbar toolbar,
+                                    AppCompatActivity activity) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,
+            view,
+            toolbar,
+            R.string.action_open,
+            R.string.action_close);
+        view.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    @BindingAdapter({"bind:viewModelCustomer", "bind:drawerLayout"})
+    public static void eventNavigationCustomer(NavigationView view,
+                                               CustomerMainViewModel viewModel,
+                                               DrawerLayout drawerLayout) {
+        view.setNavigationItemSelectedListener(
+            item -> {
+                int position = 0;
+                switch (item.getItemId()) {
+                    case R.id.action_coupon:
+                        position = 0;
+                        viewModel.setShowImagePlus(true);
+                        break;
+                    case R.id.action_notification:
+                        position = 1;
+                        viewModel.setShowImagePlus(false);
+                        break;
+                    case R.id.action_other_notification:
+                        position = 1;
+                        viewModel.setShowImagePlus(false);
+                        break;
+                    case R.id.action_share:
+                        position = 3;
+                        viewModel.setShowImagePlus(false);
+                        break;
+                    case R.id.action_exit:
+                        viewModel.logout();
+                        break;
+                    default:
+                        break;
+                }
+                viewModel.addFragment(position);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            });
+    }
+
+    @BindingAdapter({"bind:viewModelShop", "bind:drawerLayout"})
+    public static void eventNavigationShop(NavigationView view,
+                                           ShopMainViewModel viewModel,
+                                           DrawerLayout drawerLayout) {
+        view.setNavigationItemSelectedListener(
+            item -> {
+                int position = 0;
+                switch (item.getItemId()) {
+                    case R.id.action_coupon:
+                        position = 0;
+                        break;
+                    case R.id.action_notification:
+                        position = 1;
+                        break;
+                    case R.id.action_settings:
+                        position = 2;
+                        break;
+                    case R.id.action_history:
+                        position = 3;
+                        break;
+                    case R.id.action_share:
+                        position = 4;
+                        break;
+                    case R.id.action_exit:
+                        viewModel.logout();
+                        break;
+                    default:
+                        break;
+                }
+                viewModel.setPosition(position);
+                viewModel.startFragment(position);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            });
     }
 }

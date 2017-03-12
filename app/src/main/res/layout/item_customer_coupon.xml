@@ -12,7 +12,6 @@
         <variable
             name="coupon"
             type="com.nhahv.lovecoupon.data.model.CouponCustomer"/>
-
     </data>
 
     <android.support.v7.widget.CardView
@@ -32,6 +31,7 @@
             android:padding="@dimen/dp_12">
 
             <com.nhahv.lovecoupon.ui.widget.CircleImageView
+                android:id="@+id/circleImageView"
                 android:layout_width="@dimen/dp_82"
                 android:layout_height="@dimen/dp_82"
                 android:scaleType="centerCrop"
@@ -54,14 +54,29 @@
                     android:textColor="@color/color_blue_71"
                     android:textSize="@dimen/sp_20"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/appCompatTextView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_8"
-                    android:text="@{coupon.address}"
-                    android:textColor="@color/color_grey_700"
-                    android:textSize="@dimen/sp_16"/>
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_8">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{coupon.address}"
+                        android:textColor="@color/color_grey_700"
+                        android:textSize="@dimen/sp_16"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="@{@string/bind_number_coupon(coupon.listCoupon.size())}"
+                        android:textColor="@color/color_red_f2"
+                        android:textSize="@dimen/sp_16"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

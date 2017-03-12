@@ -69,6 +69,7 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
         });
     }
 
+    @Override
     public void clickMore(View view, Notification notification) {
         PopupMenu popupMenu = new PopupMenu(mContext, view);
         popupMenu.getMenuInflater().inflate(R.menu.notification_more, popupMenu.getMenu());
@@ -109,6 +110,10 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
             return false;
         });
         popupMenu.show();
+    }
+
+    @Override
+    public void clickShare(Notification notification) {
     }
 
     @Override

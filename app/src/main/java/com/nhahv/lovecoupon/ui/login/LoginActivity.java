@@ -1,5 +1,6 @@
 package com.nhahv.lovecoupon.ui.login;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -21,6 +22,7 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 public class LoginActivity extends AppCompatActivity implements LoginHandler {
     private ActivityLoginBinding mBinding;
     private LoginViewModel mViewModel;
+    private ProgressDialog mProgressDialog;
 
     public static Intent getLoginIntent(Context context, AccountType type) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -42,6 +44,20 @@ public class LoginActivity extends AppCompatActivity implements LoginHandler {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         mViewModel = new LoginViewModel(this, this, getDataFromIntent());
         mBinding.setViewModel(mViewModel);
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getApplicationContext());
+            mProgressDialog.setMessage(getString(R.string.msg_loading));
+        }
+        if (!mProgressDialog.isShowing()) mProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) mProgressDialog.hide();
     }
 
     @Override

@@ -1,14 +1,17 @@
 package com.nhahv.lovecoupon.ui.customer.notification;
 
-import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.Notification;
+import com.nhahv.lovecoupon.data.model.NotificationCustomer;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
+import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAdapter;
+
+import java.util.Collections;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -17,29 +20,32 @@ import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 public class NotificationAdapter
     extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private LayoutInflater mInflater;
-    private ObservableList<Notification> mListNotification;
+    private final ObservableList<NotificationCustomer> mListNotification;
+    private final NotificationViewModel mViewModel;
 
-    public NotificationAdapter(ObservableList<Notification> notification) {
+    public NotificationAdapter(@NonNull NotificationViewModel viewModel,
+                               @NonNull ObservableList<NotificationCustomer> notification) {
         mListNotification = notification;
+        mViewModel = viewModel;
     }
 
     @Override
     public NotificationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
-        ItemNotificationBinding binding =
-            DataBindingUtil.inflate(mInflater, R.layout.item_notification, parent, false);
+        ItemNotificationBinding binding = ItemNotificationBinding.inflate(mInflater, parent, false);
+        binding.setViewModel(mViewModel);
         return new NotificationHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(NotificationHolder holder, int position) {
-        Notification item = mListNotification.get(position);
+        NotificationCustomer item = mListNotification.get(position);
         if (item != null) holder.bind(item);
     }
 
     @Override
     public int getItemCount() {
-        return mListNotification == null ? 0 : mListNotification.size();
+        return mListNotification.size();
     }
 
     public class NotificationHolder extends RecyclerView.ViewHolder {
@@ -50,11 +56,18 @@ public class NotificationAdapter
             mBinding = binding;
         }
 
-        private void bind(Notification item) {
+        private void bind(NotificationCustomer item) {
+            ObservableList<String> listImages = new ObservableArrayList<>();
+            if (item.getLinkImage() != null) {
+                String[] listStrImages = item.getLinkImage().split(";");
+                Collections.addAll(listImages, listStrImages);
+            }
+            NotificationCreationAdapter adapter =
+                new NotificationCreationAdapter(mViewModel, listImages, false);
+            mBinding.setAdapter(adapter);
             mBinding.setNotification(item);
-            mBinding.setUrl(
-                "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg");
-            mBinding.setShopName("Coffee Ha Noi");
+            mBinding.setUrl(item.getLogo());
+            mBinding.setShopName(item.getName());
             mBinding.executePendingBindings();
         }
     }

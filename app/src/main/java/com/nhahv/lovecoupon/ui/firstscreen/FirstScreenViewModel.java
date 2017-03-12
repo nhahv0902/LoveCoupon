@@ -2,6 +2,7 @@ package com.nhahv.lovecoupon.ui.firstscreen;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.support.annotation.NonNull;
 
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
@@ -13,26 +14,28 @@ import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGI
  * <></>
  */
 public class FirstScreenViewModel extends BaseObservable {
-    private Context mContext;
-    private IFirstScreen mIFirstScreen;
+    private final Context mContext;
+    private final FirstScreenHandler mFirstScreenHandler;
 
-    public FirstScreenViewModel(Context context, IFirstScreen iFirstScreen) {
+    public FirstScreenViewModel(@NonNull Context context,
+                                @NonNull FirstScreenHandler firstScreenHandler) {
         mContext = context;
-        mIFirstScreen = iFirstScreen;
+        mFirstScreenHandler = firstScreenHandler;
         start();
     }
 
     private void start() {
+        if (mFirstScreenHandler == null) return;
         SharePreferenceUtil preference = SharePreferenceUtil.getInstance(mContext);
         boolean isLogin = preference.getBoolean(PREF_IS_LOGIN);
         if (isLogin) {
             AccountType type = AccountType.toAccountType(preference.getString(PREF_ACCOUNT_TYPE));
             switch (type) {
                 case SHOP:
-                    mIFirstScreen.startUiMainShop();
+                    mFirstScreenHandler.startUiMainShop();
                     break;
                 case CUSTOMER:
-                    mIFirstScreen.startUiMainCustomer();
+                    mFirstScreenHandler.startUiMainCustomer();
                     break;
                 case NORMAL:
                 default:
@@ -42,13 +45,13 @@ public class FirstScreenViewModel extends BaseObservable {
     }
 
     public void clickStartUiLogin(AccountType type) {
-        if (mIFirstScreen == null) return;
+        if (mFirstScreenHandler == null) return;
         switch (type) {
             case SHOP:
-                mIFirstScreen.startUiLogin(AccountType.SHOP);
+                mFirstScreenHandler.startUiLogin(AccountType.SHOP);
                 break;
             case CUSTOMER:
-                mIFirstScreen.startUiLogin(AccountType.CUSTOMER);
+                mFirstScreenHandler.startUiLogin(AccountType.CUSTOMER);
                 break;
             default:
                 break;

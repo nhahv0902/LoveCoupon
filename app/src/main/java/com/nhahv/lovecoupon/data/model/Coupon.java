@@ -12,7 +12,7 @@ import org.parceler.Parcel;
  * <></>
  */
 @Parcel
-public class Coupon extends BaseObservable  {
+public class Coupon extends BaseObservable {
     @SerializedName("coupon_id")
     public String mCouponId;
     @SerializedName("user_id")
@@ -39,6 +39,23 @@ public class Coupon extends BaseObservable  {
     public String mContent;
 
     public Coupon() {
+    }
+
+    public Coupon(String couponId, String userId, String couponTemplateId, long createDate,
+                  long useDate, String shopId, String value, int duration, String userName,
+                  String userSocial, String logoLink, String content) {
+        mCouponId = couponId;
+        mUserId = userId;
+        mCouponTemplateId = couponTemplateId;
+        mCreateDate = createDate;
+        mUseDate = useDate;
+        mShopId = shopId;
+        mValue = value;
+        mDuration = duration;
+        mUserName = userName;
+        mUserSocial = userSocial;
+        mLogoLink = logoLink;
+        mContent = content;
     }
 
     public void setCouponId(String couponId) {

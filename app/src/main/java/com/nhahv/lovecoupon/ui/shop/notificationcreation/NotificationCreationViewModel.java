@@ -7,6 +7,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
@@ -143,6 +144,14 @@ public class NotificationCreationViewModel extends BaseObservable
     public void clickDelete(int position) {
         mListImage.remove(position);
         mAdapter.get().notifyDataSetChanged();
+    }
+
+    @Override
+    public void clickMore(View view, Notification notification) {
+    }
+
+    @Override
+    public void clickShare(Notification notification) {
     }
 
     @Override

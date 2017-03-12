@@ -5,8 +5,6 @@
 
     <data>
 
-
-
         <import type="android.view.View"/>
 
         <variable
@@ -15,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.nhahv.lovecoupon.ui.shop.notification.NotificationViewModel"/>
+            type="com.nhahv.lovecoupon.ui.INotificationViewModel"/>
 
         <variable
             name="shopName"
@@ -189,7 +187,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                bind:adapter="@{adapter}"
+                bind:adapterLinear="@{adapter}"
                 android:layout_height="match_parent"
                 android:visibility="@{notification.linkImage != null ? View.VISIBLE : View.GONE}"/>
 

@@ -8,12 +8,14 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.NotificationCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.notification.NotificationRepository;
+import com.nhahv.lovecoupon.ui.INotificationViewModel;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 
@@ -23,17 +25,19 @@ import java.util.List;
  * Created by Nhahv0902 on 3/6/2017.
  * <></>
  */
-public class NotificationViewModel extends BaseObservable implements ViewModel {
+public class NotificationViewModel extends BaseObservable
+    implements ViewModel, INotificationViewModel {
     private final Context mContext;
-    private ObservableList<Notification> mListNotification = new ObservableArrayList<>();
-    private NotificationType mType;
-    private NotificationRepository mRepository;
+    private final ObservableList<NotificationCustomer> mListNotification =
+        new ObservableArrayList<>();
+    private final NotificationType mType;
+    private final NotificationRepository mRepository;
 
     public NotificationViewModel(@NonNull Context context, @NonNull NotificationType type) {
         mContext = context;
         mType = type;
         mRepository = NotificationRepository.getInstance();
-        mAdapter.set(new NotificationAdapter(mListNotification));
+        mAdapter.set(new NotificationAdapter(this, mListNotification));
         loadData();
     }
 
@@ -98,5 +102,21 @@ public class NotificationViewModel extends BaseObservable implements ViewModel {
     @Override
     public ObservableField<RecyclerView.Adapter> getAdapter() {
         return mAdapter;
+    }
+
+    @Override
+    public void preview(List<String> images, int position) {
+    }
+
+    @Override
+    public void clickDelete(int position) {
+    }
+
+    @Override
+    public void clickMore(View view, Notification notification) {
+    }
+
+    @Override
+    public void clickShare(Notification notification) {
     }
 }

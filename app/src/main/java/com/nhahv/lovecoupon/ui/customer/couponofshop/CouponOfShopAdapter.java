@@ -49,10 +49,10 @@ public class CouponOfShopAdapter extends RecyclerView.Adapter<CouponOfShopAdapte
         return mListCoupon.size();
     }
 
-    public class CouponHolder extends RecyclerView.ViewHolder {
+    class CouponHolder extends RecyclerView.ViewHolder {
         private final ItemCouponOfShopBinding mBinding;
 
-        public CouponHolder(ItemCouponOfShopBinding binding) {
+        CouponHolder(ItemCouponOfShopBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

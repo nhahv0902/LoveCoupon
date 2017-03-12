@@ -12,6 +12,14 @@
         <item>@string/menu_share</item>
         <item>@string/menu_log_out</item>
     </string-array>
+    <string-array name="activity_main_customer">
+        <item>@string/menu_coupon</item>
+        <item>@string/menu_notification</item>
+        <item>@string/menu_other_notification</item>
+        <item>@string/menu_history</item>
+        <item>@string/menu_share</item>
+        <item>@string/menu_log_out</item>
+    </string-array>
     <string-array name="spinner_month">
         <item>@string/text_month_1</item>
         <item>@string/text_month_2</item>

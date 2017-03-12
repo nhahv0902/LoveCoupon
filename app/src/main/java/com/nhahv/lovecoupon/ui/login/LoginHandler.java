@@ -8,4 +8,6 @@ public interface LoginHandler {
     void startUiShopMain();
     void startUiCustomer();
     void startUiResetPassword();
+    void showProgressDialog();
+    void hideProgressDialog();
 }

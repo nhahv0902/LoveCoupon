@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="activity"
+            type="android.support.v7.app.AppCompatActivity"/>
+
         <import type="android.view.View"/>
 
         <variable
@@ -18,6 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        tools:activity="@{activity}"
+        tools:drawerLayout="@{toolbar}"
         tools:openDrawer="start">
 
         <android.support.design.widget.CoordinatorLayout
@@ -62,7 +68,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            app:menu="@menu/activity_main_drawer"/>
+            app:menu="@menu/activity_main_drawer"
+            tools:avatar="@{viewModel.profile.logoLink}"
+            tools:drawerLayout="@{drawerLayout}"
+            tools:name="@{viewModel.profile.name}"
+            tools:viewModelShop="@{viewModel}"/>
 
     </android.support.v4.widget.DrawerLayout>
 </layout>

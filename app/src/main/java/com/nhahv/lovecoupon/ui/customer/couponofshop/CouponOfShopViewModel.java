@@ -7,7 +7,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Coupon;
@@ -38,11 +37,8 @@ public class CouponOfShopViewModel extends BaseObservable {
         mHandler = handler;
         mCouponCustomer = couponCustomer;
         mRepository = CouponRepository.getInstance();
-        mAdapter.set(
-            new CouponOfShopAdapter(this,
-                mListCoupon,
-                mCouponCustomer.getLogoLink(),
-                mCouponCustomer.getName()));
+        mAdapter.set(new CouponOfShopAdapter(this, mListCoupon, mCouponCustomer.getLogoLink(),
+            mCouponCustomer.getName()));
         mListCoupon.addAll(mCouponCustomer.getListCoupon());
     }
 
@@ -52,7 +48,6 @@ public class CouponOfShopViewModel extends BaseObservable {
 
     public void clickUseCoupon(Coupon coupon, int position) {
         if (mRepository == null || !ActivityUtil.isNetworkConnected(mContext)) return;
-        Log.d(TAG, "position = " + position);
         mHandler.showDialog(coupon, position);
     }
 

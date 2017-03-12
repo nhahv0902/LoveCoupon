@@ -6,10 +6,12 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
+import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
@@ -26,14 +28,14 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
     private final ObservableList<CouponCustomer> mListCoupon = new ObservableArrayList<>();
     private final CouponRepository mRepository;
-    private final SharePreferenceUtil mPreference;
+    private final CustomerProfile mProfile;
     private final CouponHandler mHandler;
 
-    public CouponViewModel(Context context, CouponHandler  handler) {
+    public CouponViewModel(@NonNull Context context, @NonNull CouponHandler handler) {
         mContext = context;
         mHandler = handler;
         mRepository = CouponRepository.getInstance();
-        mPreference = SharePreferenceUtil.getInstance(context);
+        mProfile = SharePreferenceUtil.getInstance(context).profileCustomer();
         mAdapter.set(new CouponAdapter(mListCoupon, this));
         loadData();
     }
@@ -41,25 +43,25 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     @Override
     public void loadData() {
         if (mRepository == null) return;
-        mRepository.getCouponCustomer("nhahv0902@gmail.com",
-            new Callback<List<CouponCustomer>>() {
-                @Override
-                public void onSuccess(List<CouponCustomer> data) {
-                    mListCoupon.clear();
-                    mListCoupon.addAll(data);
-                    mAdapter.get().notifyDataSetChanged();
-                    setRefresh(false);
-                }
+        mRepository.getCouponCustomer(mProfile.getId(), new Callback<List<CouponCustomer>>() {
+            //        mRepository.getCouponCustomer("nhahv0902@gmail.com", new Callback<List<CouponCustomer>>() {
+            @Override
+            public void onSuccess(List<CouponCustomer> data) {
+                mListCoupon.clear();
+                mListCoupon.addAll(data);
+                mAdapter.get().notifyDataSetChanged();
+                setRefresh(false);
+            }
 
-                @Override
-                public void onError() {
-                    loadError();
-                }
-            });
+            @Override
+            public void onError() {
+                loadError();
+            }
+        });
     }
 
     public void clickDetail(CouponCustomer coupon) {
-     mHandler.startUiCouponOfShop(coupon);
+        mHandler.startUiCouponOfShop(coupon);
     }
 
     @Override

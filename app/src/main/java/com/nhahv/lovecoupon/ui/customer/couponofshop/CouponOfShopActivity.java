@@ -54,7 +54,8 @@ public class CouponOfShopActivity extends AppCompatActivity implements CouponOfS
     public void showDialog(Coupon coupon, int position) {
         new MaterialDialog
             .Builder(this)
-            .title(R.string.title_delete_cooupon)
+            .content(R.string.title_delete_cooupon)
+            .contentColor(ContextCompat.getColor(this, R.color.color_grey_700))
             .positiveText(R.string.agree)
             .positiveColor(ContextCompat.getColor(this, R.color.color_blue_600))
             .onPositive((dialog, which) -> mViewModel.deleteCoupon(coupon, position))

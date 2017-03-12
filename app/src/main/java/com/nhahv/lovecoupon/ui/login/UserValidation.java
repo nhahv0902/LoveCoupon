@@ -7,10 +7,10 @@ import android.support.annotation.NonNull;
  * <></>
  */
 public class UserValidation {
-    private String mEmail;
+    private final String mEmail;
     private String mPassword;
 
-    public UserValidation(String email, String password) {
+    public UserValidation(@NonNull String email, @NonNull String password) {
         mEmail = email;
         mPassword = password;
     }

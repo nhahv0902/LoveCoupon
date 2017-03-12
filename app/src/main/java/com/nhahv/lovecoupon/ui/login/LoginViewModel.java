@@ -3,6 +3,7 @@ package com.nhahv.lovecoupon.ui.login;
 import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -40,7 +41,8 @@ public class LoginViewModel extends BaseObservable {
     private final AccountType mType;
     private final SharePreferenceUtil mPreference;
 
-    public LoginViewModel(Activity context, LoginHandler loginHandler, AccountType type) {
+    public LoginViewModel(@NonNull Activity context, @NonNull LoginHandler loginHandler,
+                          @NonNull AccountType type) {
         mContext = context;
         mLoginHandler = loginHandler;
         mType = type;
@@ -171,6 +173,7 @@ public class LoginViewModel extends BaseObservable {
 
     public void clickLogin(LoginType type) {
         if (mLoginHandler == null) return;
+        mLoginHandler.showProgressDialog();
         switch (type) {
             case NORMAL:
                 loginNormal();
@@ -213,7 +216,7 @@ public class LoginViewModel extends BaseObservable {
                                 @Override
                                 public void onSuccess(Integer data) {
                                     mPreference.writeProfileCustomer(
-                                        new CustomerProfile(mEmail.get(), mPassword.get(), null));
+                                        new CustomerProfile(mEmail.get(), mEmail.get(), null));
                                     checkStartUiMain();
                                 }
 
@@ -247,6 +250,7 @@ public class LoginViewModel extends BaseObservable {
     private void checkStartUiMain() {
         mPreference.writePreference(PREF_IS_LOGIN, true);
         mPreference.writePreference(PREF_ACCOUNT_TYPE, mType.toString());
+        mLoginHandler.hideProgressDialog();
         switch (mType) {
             case SHOP:
                 mLoginHandler.startUiShopMain();

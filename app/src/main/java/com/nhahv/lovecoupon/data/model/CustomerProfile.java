@@ -15,7 +15,7 @@ public class CustomerProfile extends BaseObservable {
     private String mName;
     private String mAvatar;
 
-    public CustomerProfile(@NonNull String id, @NonNull String name, @NonNull String avatar) {
+    public CustomerProfile(@NonNull String id, @NonNull String name, String avatar) {
         mId = id;
         mName = name;
         mAvatar = avatar;

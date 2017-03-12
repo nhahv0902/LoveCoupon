@@ -27,7 +27,9 @@ public class NotificationFragment extends Fragment {
 
     private NotificationType getDataFromActivity() {
         Bundle bundle = getArguments();
-        if (bundle == null) return NotificationType.NOTIFICATION;
+        if (bundle == null || bundle.getSerializable(BUNDLE_NOTIFICATION) == null) {
+            return NotificationType.NOTIFICATION;
+        }
         return (NotificationType) bundle.getSerializable(BUNDLE_NOTIFICATION);
     }
 

@@ -46,7 +46,7 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="120dp">
+                        android:layout_height="@dimen/dp_120">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"

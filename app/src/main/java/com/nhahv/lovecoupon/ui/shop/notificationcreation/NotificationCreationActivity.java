@@ -1,5 +1,6 @@
 package com.nhahv.lovecoupon.ui.shop.notificationcreation;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -19,12 +20,16 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.util.Calendar;
 import java.util.List;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
+
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_IMAGE;
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_NOTIFICATION;
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_NOTIFICATION_TYPE;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_DATE_PICKER;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_PICK_IMAGE;
 
+@RuntimePermissions
 public class NotificationCreationActivity extends BaseActivity
     implements NotificationCreationHandler {
     private ActivityNotificationCreationBinding mBinding;
@@ -98,27 +103,6 @@ public class NotificationCreationActivity extends BaseActivity
                 List<ImagePickerItem> images = bundle.getParcelableArrayList(BUNDLE_IMAGE);
                 if (images == null) return;
                 mViewModel.updateListImage(images);
-
-               /* mRepository.upLoadImage(images.get(0).getPathImage(), new Callback<String>() {
-                    @Override
-                    public void onSuccess(String data) {
-                        Log.d("TAG", data);
-                    }
-
-                    @Override
-                    public void onError() {
-                    }
-                });*//*
-
-               mRepository.upLoadMultiple(imageList, new Callback<List<String>>() {
-                   @Override
-                   public void onSuccess(List<String> data) {
-                   }
-
-                   @Override
-                   public void onError() {
-                   }
-               });*/
                 break;
             default:
                 break;
@@ -143,8 +127,17 @@ public class NotificationCreationActivity extends BaseActivity
     }
 
     @Override
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     public void openPickImage() {
         startActivityForResult(ImageFolderActivity.getIntent(this), REQUEST_PICK_IMAGE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        NotificationCreationActivityPermissionsDispatcher
+            .onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
