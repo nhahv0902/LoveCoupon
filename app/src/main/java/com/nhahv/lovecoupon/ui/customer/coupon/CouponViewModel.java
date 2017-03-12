@@ -13,7 +13,6 @@ import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
-import com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
@@ -28,10 +27,12 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     private final ObservableList<CouponCustomer> mListCoupon = new ObservableArrayList<>();
     private final CouponRepository mRepository;
     private final SharePreferenceUtil mPreference;
+    private final CouponHandler mHandler;
 
-    public CouponViewModel(Context context, CouponRepository repository) {
+    public CouponViewModel(Context context, CouponHandler  handler) {
         mContext = context;
-        mRepository = repository;
+        mHandler = handler;
+        mRepository = CouponRepository.getInstance();
         mPreference = SharePreferenceUtil.getInstance(context);
         mAdapter.set(new CouponAdapter(mListCoupon, this));
         loadData();
@@ -47,6 +48,7 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
                     mListCoupon.clear();
                     mListCoupon.addAll(data);
                     mAdapter.get().notifyDataSetChanged();
+                    setRefresh(false);
                 }
 
                 @Override
@@ -57,7 +59,7 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     }
 
     public void clickDetail(CouponCustomer coupon) {
-        mContext.startActivity(CouponOfShopActivity.getIntent(mContext, coupon));
+     mHandler.startUiCouponOfShop(coupon);
     }
 
     @Override

@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
+import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
+import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 
@@ -51,26 +53,23 @@ public class CouponOfShopViewModel extends BaseObservable {
     public void clickUseCoupon(Coupon coupon, int position) {
         if (mRepository == null || !ActivityUtil.isNetworkConnected(mContext)) return;
         Log.d(TAG, "position = " + position);
-      /*  new MaterialDialog
-            .Builder(mContext)
-            .title(R.string.title_delete_cooupon)
-            .positiveText(R.string.agree)
-            .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
-            .onPositive((dialog, which) ->
-                mRepository.useCoupon(coupon, new Callback<Boolean>() {
-                    @Override
-                    public void onSuccess(Boolean data) {
-                        mListCoupon.remove(position);
-                        dialog.dismiss();
-                        ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
-                    }
+        mHandler.showDialog(coupon, position);
+    }
 
-                    @Override
-                    public void onError() {
-                        ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
-                    }
-                }))
-            .show();*/
+    public void deleteCoupon(Coupon coupon, int position) {
+        mRepository.useCoupon(coupon, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                mListCoupon.remove(position);
+                ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
+                mAdapter.get().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError() {
+                ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
+            }
+        });
     }
 
     public CouponCustomer getCouponCustomer() {

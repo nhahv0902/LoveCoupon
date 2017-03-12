@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.ActivityCouponOfShopBinding;
 
@@ -45,5 +48,22 @@ public class CouponOfShopActivity extends AppCompatActivity implements CouponOfS
     @Override
     public void backPress() {
         onBackPressed();
+    }
+
+    @Override
+    public void showDialog(Coupon coupon, int position) {
+        new MaterialDialog
+            .Builder(this)
+            .title(R.string.title_delete_cooupon)
+            .positiveText(R.string.agree)
+            .positiveColor(ContextCompat.getColor(this, R.color.color_blue_600))
+            .onPositive((dialog, which) -> mViewModel.deleteCoupon(coupon, position))
+            .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

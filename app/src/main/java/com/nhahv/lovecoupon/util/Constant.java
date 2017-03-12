@@ -23,6 +23,7 @@ public final class Constant {
         public static final int REQUEST_OPEN_GALLERY = 3;
         public static final int REQUEST_NOTIFICATION = 4;
         public static final int REQUEST_TEMPLATE = 5;
+        public static final int REQUEST_UI_COUPON_OF_SHOP = 6;
     }
 
     public static final class PreferenceConstant {
