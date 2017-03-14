@@ -96,6 +96,7 @@ public final class DataBindingUtils {
         * true is show refresh
         * false is hide refresh
         * */
+        view.setColorSchemeResources(R.color.colorPrimary);
         view.setRefreshing(isShow.get());
         view.setOnRefreshListener(() -> {
             isShow.set(true);
@@ -110,7 +111,6 @@ public final class DataBindingUtils {
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     @BindingAdapter({"bind:adapterLinear"})
@@ -118,7 +118,6 @@ public final class DataBindingUtils {
         view.setLayoutManager(
             new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         view.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     /*
@@ -128,7 +127,6 @@ public final class DataBindingUtils {
     public static void setGridAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new GridLayoutManager(view.getContext(), DATA_SPAN));
         view.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     /*
@@ -309,7 +307,6 @@ public final class DataBindingUtils {
                                       RecyclerViewHeader header) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
         header.attachTo(view);
     }
 
@@ -411,5 +408,21 @@ public final class DataBindingUtils {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });
+    }
+
+    /*
+    * bind time item coupon of shop in item_coupon_of_shop
+    * */
+    @BindingAdapter({"bind:timeCouponOfShop", "bind:duration"})
+    public static void bindTime(AppCompatTextView view, long dateCreated, int duration) {
+        view.setText(ActivityUtil.convertDateCouponOfShop(dateCreated, duration));
+    }
+
+    /*
+    * bind date left item coupon of shop in item_coupon_of_shop
+    * */
+    @BindingAdapter({"bind:timeDateLeft", "bind:duration"})
+    public static void bindDateLeft(AppCompatTextView view, long dateCreated, int duration) {
+        view.setText(ActivityUtil.dayLeft(dateCreated, duration));
     }
 }

@@ -98,6 +98,26 @@ public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        if (fragment == null) return;
+        switch (requestCode) {
+            case REQUEST_TEMPLATE:
+                if (fragment instanceof CouponFragment) ((CouponFragment) fragment).loadData();
+                break;
+            case REQUEST_NOTIFICATION:
+                if (fragment instanceof NotificationFragment) {
+                    ((NotificationFragment) fragment).loadData();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void clickUpdateProfile() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
         if (fragment instanceof SettingFragment) {

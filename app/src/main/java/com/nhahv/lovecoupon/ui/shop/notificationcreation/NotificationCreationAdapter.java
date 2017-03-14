@@ -22,7 +22,7 @@ public class NotificationCreationAdapter
 
     public NotificationCreationAdapter(@NonNull INotificationViewModel viewModel,
                                        @NonNull ObservableList<String> listFolder,
-                                       boolean showDelete) {
+                                       @NonNull boolean showDelete) {
         mListFolder = listFolder;
         mViewModel = viewModel;
         mShowDelete = showDelete;

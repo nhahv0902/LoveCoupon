@@ -8,4 +8,5 @@ import com.nhahv.lovecoupon.data.model.Notification;
  */
 public interface IShopNotification {
     void editNotification(Notification notification);
+    void showDialogDeleteNotification(Notification notification);
 }

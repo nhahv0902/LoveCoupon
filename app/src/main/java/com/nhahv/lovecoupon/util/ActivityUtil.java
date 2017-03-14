@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
@@ -72,6 +73,24 @@ public final class ActivityUtil {
         Date last_date = new Date(time);
         long diff = last_date.getTime() - new Date().getTime();
         return String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1);
+    }
+
+    public static String dayLeft(long dateCreated, int duration) {
+        Date date = new Date(dateCreated);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, duration);
+        Date lastDate = calendar.getTime();
+        long diff = lastDate.getTime() - new Date().getTime();
+        return String.valueOf(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + 1);
+    }
+
+    public static String convertDateCouponOfShop(long dateCreated, int duration) {
+        Date date = new Date(dateCreated);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, duration);
+        return timeToString(calendar.getTimeInMillis());
     }
 
     public static String timeToString(long time) {

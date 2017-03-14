@@ -3,9 +3,13 @@
         xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="org.apache.commons.lang3.StringUtils"/>
+
         <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel"/>
+
         <variable
             name="image"
             type="java.lang.String"/>
@@ -17,6 +21,7 @@
         <variable
             name="address"
             type="java.lang.String"/>
+
     </data>
 
     <LinearLayout
@@ -43,7 +48,7 @@
             android:layout_marginTop="@dimen/dp_8"
             android:gravity="center"
             android:paddingTop="@dimen/dp_8"
-            android:text="@{shopName}"
+            android:text="@{StringUtils.capitalize(shopName)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_24"
             android:textStyle="bold"/>
@@ -53,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"
             android:gravity="center"
-            android:text="@{address}"
+            android:text="@{StringUtils.capitalize(address)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_17"/>
     </LinearLayout>

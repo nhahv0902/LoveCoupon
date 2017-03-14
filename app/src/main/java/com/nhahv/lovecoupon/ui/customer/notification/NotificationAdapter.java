@@ -40,7 +40,7 @@ public class NotificationAdapter
     @Override
     public void onBindViewHolder(NotificationHolder holder, int position) {
         NotificationCustomer item = mListNotification.get(position);
-        if (item != null) holder.bind(item);
+        if (item != null) holder.bind(item, position);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class NotificationAdapter
             mBinding = binding;
         }
 
-        private void bind(NotificationCustomer item) {
+        private void bind(NotificationCustomer item, int position) {
             ObservableList<String> listImages = new ObservableArrayList<>();
             if (item.getLinkImage() != null) {
                 String[] listStrImages = item.getLinkImage().split(";");
@@ -65,6 +65,7 @@ public class NotificationAdapter
             NotificationCreationAdapter adapter =
                 new NotificationCreationAdapter(mViewModel, listImages, false);
             mBinding.setAdapter(adapter);
+            mBinding.setPosition(position);
             mBinding.setNotification(item);
             mBinding.setUrl(item.getLogo());
             mBinding.setShopName(item.getName());

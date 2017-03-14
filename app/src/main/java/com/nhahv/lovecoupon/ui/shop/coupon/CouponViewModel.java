@@ -84,8 +84,8 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
                 case R.id.action_delete_notification:
                     new MaterialDialog
                         .Builder(mContext)
-                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_delete_grey_24dp))
-                        .title(R.string.title_delete_notification)
+                        .content(R.string.title_delete_notification)
+                        .contentColor(ContextCompat.getColor(mContext, R.color.color_grey_700))
                         .positiveText(R.string.agree)
                         .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
                         .onPositive((dialog, which) -> {

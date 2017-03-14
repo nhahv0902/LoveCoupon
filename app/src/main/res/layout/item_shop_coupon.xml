@@ -98,34 +98,48 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="end|bottom"
                     android:orientation="horizontal">
 
-                    <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_date_range_red_24px"/>
-
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="bottom"
-                        android:paddingLeft="@dimen/dp_8"
-                        android:paddingRight="@dimen/dp_8"
-                        android:text="@{@string/bind_coupon_template_day(template.duration)}"
-                        android:textSize="@dimen/sp_18"/>
+                        android:layout_weight="1"/>
 
                     <LinearLayout
-                        android:onClick="@{(view)->viewModel.clickMoreTemplate(view, template)}"
-                        android:layout_width="@dimen/dp_60"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
                         android:gravity="end|bottom"
                         android:orientation="horizontal">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/ic_more_vert"/>
+                            app:srcCompat="@drawable/ic_date_range_red_24px"/>
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="bottom"
+                            android:paddingLeft="@dimen/dp_8"
+                            android:paddingRight="@dimen/dp_8"
+                            android:text="@{@string/bind_coupon_template_day(template.duration)}"
+                            android:textSize="@dimen/sp_18"/>
+
+                        <LinearLayout
+                            android:layout_width="@dimen/dp_60"
+                            android:layout_height="wrap_content"
+                            android:gravity="end|bottom"
+                            android:onClick="@{(view)->viewModel.clickMoreTemplate(view, template)}"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/ic_more_vert"/>
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -78,6 +78,7 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
     @Override
     public void startUiFirstScreen() {
         startActivity(FirstScreenHandlerActivity.getFirstIntent(this, 0));
+        finish();
     }
 
     @Override

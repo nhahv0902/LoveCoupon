@@ -36,7 +36,7 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         mBinding = FragmentNotificationBinding.inflate(inflater, container, false);
-        mViewModel = new NotificationViewModel(getActivity(), getDataFromActivity());
+        mViewModel = new NotificationViewModel(getActivity(), this, getDataFromActivity());
         mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }

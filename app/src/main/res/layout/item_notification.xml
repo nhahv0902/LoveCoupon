@@ -7,6 +7,8 @@
 
         <import type="android.view.View"/>
 
+        <import type="org.apache.commons.lang3.StringUtils"/>
+
         <variable
             name="adapter"
             type="com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAdapter"/>
@@ -18,6 +20,10 @@
         <variable
             name="shopName"
             type="java.lang.String"/>
+
+        <variable
+            name="position"
+            type="java.lang.Integer"/>
 
         <variable
             name="url"
@@ -77,7 +83,7 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
                         android:scrollHorizontally="true"
-                        android:text="@{shopName}"
+                        android:text="@{StringUtils.capitalize(shopName)}"
                         android:textColor="@color/color_grey_8787"
                         android:textSize="@dimen/sp_20"
                         android:textStyle="bold"/>
@@ -107,7 +113,7 @@
                     android:layout_gravity="start"
                     android:paddingBottom="@dimen/dp_6"
                     android:paddingTop="@dimen/dp_6"
-                    android:text="@{notification.title}"
+                    android:text="@{StringUtils.capitalize(notification.title)}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/color_blue_600"
                     android:textSize="@dimen/sp_18"/>
@@ -119,7 +125,7 @@
                     android:layout_gravity="start"
                     android:paddingBottom="@dimen/dp_6"
                     android:paddingTop="@dimen/dp_6"
-                    android:text="@{notification.content}"
+                    android:text="@{StringUtils.capitalize(notification.content)}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="?android:textColorSecondary"
                     android:textSize="@dimen/sp_16"/>
@@ -135,7 +141,7 @@
                     android:paddingTop="@dimen/dp_6"
                     android:text="@{notification.link}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="@color/color_blue_600"
+                    android:textColorLink="@color/color_blue_71"
                     android:textSize="@dimen/sp_16"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -187,9 +193,9 @@
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                bind:adapterLinear="@{adapter}"
                 android:layout_height="match_parent"
-                android:visibility="@{notification.linkImage != null ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{notification.linkImage != null ? View.VISIBLE : View.GONE}"
+                bind:adapterLinear="@{adapter}"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -199,6 +205,7 @@
                 android:background="@color/color_grey_300"/>
 
             <LinearLayout
+                android:onClick="@{()->viewModel.clickShare(notification)}"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:baselineAligned="false"
@@ -230,6 +237,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="bottom|center_horizontal"
+                    android:onClick="@{()->viewModel.clickShare(notification)}"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatImageView
@@ -250,7 +258,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:onClick="@{(view)->viewModel.clickMore(view, notification)}"
+                    android:onClick="@{(view)->viewModel.clickMore(view, notification, position)}"
                     android:orientation="horizontal"
                     app:srcCompat="@drawable/ic_more_horiz_grey_24px"/>
             </LinearLayout>

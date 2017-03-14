@@ -108,6 +108,8 @@
                         android:paddingBottom="@dimen/dp_2"
                         android:paddingLeft="@dimen/dp_8"
                         android:paddingRight="@dimen/dp_8"
+                        bind:duration="@{coupon.duration}"
+                        bind:timeCouponOfShop="@{coupon.createDate}"
                         android:textColor="@color/color_red_f2"/>
 
                     <android.support.v7.widget.AppCompatImageView
@@ -124,7 +126,8 @@
                         android:paddingLeft="@dimen/dp_8"
                         android:paddingRight="@dimen/dp_8"
                         android:paddingTop="@dimen/dp_2"
-                        android:text="30"
+                        bind:duration="@{coupon.duration}"
+                        bind:timeDateLeft="@{coupon.createDate}"
                         android:textColor="@color/color_red_f2"/>
                 </LinearLayout>
             </LinearLayout>

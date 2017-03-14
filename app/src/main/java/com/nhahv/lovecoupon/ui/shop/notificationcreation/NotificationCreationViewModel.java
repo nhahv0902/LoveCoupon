@@ -147,7 +147,7 @@ public class NotificationCreationViewModel extends BaseObservable
     }
 
     @Override
-    public void clickMore(View view, Notification notification) {
+    public void clickFavorite(Notification notification) {
     }
 
     @Override
@@ -156,6 +156,10 @@ public class NotificationCreationViewModel extends BaseObservable
 
     @Override
     public void preview(List<String> images, int position) {
+    }
+
+    @Override
+    public void clickMore(View view, Notification notification, int position) {
     }
 
     @Override

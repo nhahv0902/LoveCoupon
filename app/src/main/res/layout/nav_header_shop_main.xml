@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="org.apache.commons.lang3.StringUtils"/>
+
         <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel"/>
@@ -41,7 +43,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="@dimen/dp_8"
-            android:text="@{name}"
+            android:text="@{StringUtils.capitalize(name)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_17"/>
     </LinearLayout>

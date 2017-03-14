@@ -6,11 +6,18 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.NotificationCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
@@ -18,8 +25,12 @@ import com.nhahv.lovecoupon.data.source.remote.notification.NotificationReposito
 import com.nhahv.lovecoupon.ui.INotificationViewModel;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
+import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
 import java.util.List;
+
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_LINK_PHOTO;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_WEB_SITE;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -28,14 +39,18 @@ import java.util.List;
 public class NotificationViewModel extends BaseObservable
     implements ViewModel, INotificationViewModel {
     private final Context mContext;
-    private final ObservableList<NotificationCustomer> mListNotification =
-        new ObservableArrayList<>();
+    private final Fragment mFragment;
+    private ObservableList<NotificationCustomer> mListNotification = new ObservableArrayList<>();
     private final NotificationType mType;
     private final NotificationRepository mRepository;
+    private final CustomerProfile mProfile;
 
-    public NotificationViewModel(@NonNull Context context, @NonNull NotificationType type) {
+    public NotificationViewModel(@NonNull Context context, @NonNull Fragment fragment,
+                                 @NonNull NotificationType type) {
         mContext = context;
+        mFragment = fragment;
         mType = type;
+        mProfile = SharePreferenceUtil.getInstance(context).profileCustomer();
         mRepository = NotificationRepository.getInstance();
         mAdapter.set(new NotificationAdapter(this, mListNotification));
         loadData();
@@ -46,7 +61,7 @@ public class NotificationViewModel extends BaseObservable
         if (mRepository == null) return;
         switch (mType) {
             case NOTIFICATION:
-                mRepository.getNotificationCustomer("nhahv0902@gmail.com",
+                mRepository.getNotificationCustomer(mProfile.getId(),
                     new Callback<List<NotificationCustomer>>() {
                         @Override
                         public void onSuccess(List<NotificationCustomer> data) {
@@ -63,7 +78,7 @@ public class NotificationViewModel extends BaseObservable
                     });
                 break;
             case NOTIFICATION_OTHER:
-                mRepository.getOtherNotificationCustomer("nhahv0902@gmail.com", "HaNoi",
+                mRepository.getOtherNotificationCustomer(mProfile.getId(), "HaNoi",
                     new Callback<List<NotificationCustomer>>() {
                         @Override
                         public void onSuccess(List<NotificationCustomer> data) {
@@ -109,14 +124,38 @@ public class NotificationViewModel extends BaseObservable
     }
 
     @Override
-    public void clickDelete(int position) {
+    public void clickMore(View view, Notification notification, int position) {
+        new MaterialDialog.Builder(mContext)
+            .content(R.string.title_delete_notification)
+            .positiveText(R.string.agree)
+            .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
+            .onPositive((dialog, which) -> {
+                mListNotification.remove(position);
+                mAdapter.get().notifyDataSetChanged();
+            }).show();
     }
 
     @Override
-    public void clickMore(View view, Notification notification) {
+    public void clickFavorite(Notification notification) {
     }
 
     @Override
     public void clickShare(Notification notification) {
+        String logo = ((NotificationCustomer) notification).getLogo() != null ?
+            ((NotificationCustomer) notification).getLogo() : DATA_LINK_PHOTO;
+        Uri uriLink =
+            Uri.parse(notification.getLink() != null ? notification.getLink() : DATA_WEB_SITE);
+        ShareLinkContent content = new ShareLinkContent.Builder()
+            .setContentUrl(uriLink)
+            .setContentTitle(notification.getTitle())
+            .setContentDescription(notification.getContent())
+            .setImageUrl(Uri.parse(logo))
+            .build();
+        ShareDialog shareDialog = new ShareDialog(mFragment);
+        shareDialog.show(content);
+    }
+
+    @Override
+    public void clickDelete(int position) {
     }
 }

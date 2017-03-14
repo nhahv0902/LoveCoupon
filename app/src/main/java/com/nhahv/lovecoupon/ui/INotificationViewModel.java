@@ -12,7 +12,8 @@ import java.util.List;
  */
 public interface INotificationViewModel {
     void preview(List<String> images, int position);
-    void clickDelete(int position);
-    void clickMore(View view, Notification notification);
+    void clickMore(View view, Notification notification, int position);
     void clickShare(Notification notification);
+    void clickDelete(int position);
+    void clickFavorite(Notification notification);
 }

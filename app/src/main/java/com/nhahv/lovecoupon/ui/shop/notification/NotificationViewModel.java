@@ -5,14 +5,16 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
@@ -26,6 +28,8 @@ import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_LINK_PHOTO;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_WEB_SITE;
 
 /**
  * Created by Nhahv0902 on 3/6/2017.
@@ -33,6 +37,7 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
  */
 public class NotificationViewModel implements ViewModel, INotificationViewModel {
     private final Context mContext;
+    private final Fragment mFragment;
     private final IShopNotification mIShopNotification;
     private final NotificationRepository mRepository;
     private final ObservableList<Notification> mListNotification = new ObservableArrayList<>();
@@ -40,8 +45,10 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-    public NotificationViewModel(@NonNull Context context, IShopNotification iShopNotification) {
+    public NotificationViewModel(@NonNull Context context, @NonNull Fragment fragment,
+                                 @NonNull IShopNotification iShopNotification) {
         mContext = context;
+        mFragment = fragment;
         mIShopNotification = iShopNotification;
         mProfile = SharePreferenceUtil.getInstance(mContext).profileShop();
         mRepository = NotificationRepository.getInstance();
@@ -70,7 +77,27 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
     }
 
     @Override
-    public void clickMore(View view, Notification notification) {
+    public void clickFavorite(Notification notification) {
+    }
+
+    @Override
+    public void clickShare(Notification notification) {
+        Uri uriLink =
+            Uri.parse(notification.getLink() != null ? notification.getLink() : DATA_WEB_SITE);
+        ShareLinkContent content = new ShareLinkContent.Builder()
+            .setContentUrl(uriLink)
+            .setContentTitle(notification.getTitle())
+            .setContentDescription(notification.getContent())
+            .setImageUrl(Uri.parse(
+                mProfile.getLogoLink() != null ? mProfile.getLogoLink() : DATA_LINK_PHOTO))
+            .build();
+        ShareDialog shareDialog = new ShareDialog(mFragment);
+        shareDialog.show(content);
+    }
+
+    @Override
+    public void clickMore(View view, Notification notification, int position) {
+        if (mIShopNotification == null) return;
         PopupMenu popupMenu = new PopupMenu(mContext, view);
         popupMenu.getMenuInflater().inflate(R.menu.notification_more, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
@@ -79,30 +106,7 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
                     mIShopNotification.editNotification(notification);
                     break;
                 case R.id.action_delete_notification:
-                    new MaterialDialog
-                        .Builder(mContext)
-                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_delete_grey_24dp))
-                        .title(R.string.title_delete_notification)
-                        .positiveText(R.string.agree)
-                        .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
-                        .onPositive((dialog, which) -> {
-                            dialog.dismiss();
-                            if (mRepository == null) return;
-                            mRepository.deleteNotification(mProfile.getToken(), notification,
-                                new Callback<Boolean>() {
-                                    @Override
-                                    public void onSuccess(Boolean data) {
-                                        loadData();
-                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
-                                    }
-
-                                    @Override
-                                    public void onError() {
-                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
-                                    }
-                                });
-                        })
-                        .show();
+                    mIShopNotification.showDialogDeleteNotification(notification);
                     break;
                 default:
                     break;
@@ -110,10 +114,6 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
             return false;
         });
         popupMenu.show();
-    }
-
-    @Override
-    public void clickShare(Notification notification) {
     }
 
     @Override
@@ -141,5 +141,22 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
 
     @Override
     public void clickDelete(int position) {
+    }
+
+    public void deleteNotification(Notification notification) {
+        if (mRepository == null || mProfile == null) return;
+        mRepository.deleteNotification(mProfile.getToken(), notification,
+            new Callback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean data) {
+                    loadData();
+                    ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
+                }
+
+                @Override
+                public void onError() {
+                    ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
+                }
+            });
     }
 }

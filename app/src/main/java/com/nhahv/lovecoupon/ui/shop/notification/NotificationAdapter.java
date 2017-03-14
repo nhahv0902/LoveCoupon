@@ -4,7 +4,6 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -45,7 +44,7 @@ public class NotificationAdapter
     @Override
     public void onBindViewHolder(NotificationHolder holder, int position) {
         Notification item = mListNotification.get(position);
-        if (item != null) holder.bind(item);
+        if (item != null) holder.bind(item, position);
     }
 
     @Override
@@ -61,8 +60,7 @@ public class NotificationAdapter
             mBinding = binding;
         }
 
-        private void bind(Notification item) {
-            Log.d("notification", item.getLinkImage() + "");
+        private void bind(Notification item, int position) {
             ObservableList<String> listImages = new ObservableArrayList<>();
             if (item.getLinkImage() != null) {
                 String[] listStrImages = item.getLinkImage().split(";");
@@ -72,6 +70,7 @@ public class NotificationAdapter
                 new NotificationCreationAdapter(mViewModel, listImages, false);
             mBinding.setAdapter(adapter);
             mBinding.setNotification(item);
+            mBinding.setPosition(position);
             mBinding.setUrl(mProfile.getLogoLink());
             mBinding.setShopName(mProfile.getName());
             mBinding.executePendingBindings();
