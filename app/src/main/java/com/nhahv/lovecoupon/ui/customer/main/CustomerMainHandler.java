@@ -7,4 +7,5 @@ package com.nhahv.lovecoupon.ui.customer.main;
 public interface CustomerMainHandler {
     void addFragment(int position);
     void startUiFirstScreen();
+    void startUiCouponAddition();
 }

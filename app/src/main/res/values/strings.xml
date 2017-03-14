@@ -100,4 +100,6 @@
     <string name="title_delete_cooupon">Do you want to delete this Coupon</string>
     <string name="bind_number_coupon">%d  coupon</string>
     <string name="msg_loading">Loading…</string>
+    <string name="msg_create_success">Add coupon success.</string>
+    <string name="msg_add_coupon_error">The code is not valid or already used</string>
 </resources>

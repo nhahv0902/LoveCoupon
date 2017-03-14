@@ -91,4 +91,21 @@ public class CouponRepository implements CouponDataSource {
             }
         });
     }
+
+    @Override
+    public void addCoupon(@NonNull String city, @NonNull Coupon coupon,
+                          @NonNull Callback<List<CouponCustomer>> callback) {
+        if (mDataSource == null) return;
+        mDataSource.addCoupon(city, coupon, new Callback<List<CouponCustomer>>() {
+            @Override
+            public void onSuccess(List<CouponCustomer> data) {
+                callback.onSuccess(data);
+            }
+
+            @Override
+            public void onError() {
+                callback.onError();
+            }
+        });
+    }
 }

@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoginHandler {
     @Override
     public void showProgressDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getApplicationContext());
+            mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(getString(R.string.msg_loading));
         }
         if (!mProgressDialog.isShowing()) mProgressDialog.show();

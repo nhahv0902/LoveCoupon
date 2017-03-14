@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 
+import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_CITY;
+
 /**
  * Created by Nhahv0902 on 3/7/2017.
  * <></>
@@ -60,5 +62,13 @@ public class SharePreferenceUtil {
 
     public boolean getBoolean(String key) {
         return mPreferences.getBoolean(key, false);
+    }
+
+    public void writeCity(String city) {
+        mPreferences.edit().putString(PREF_CITY, city).apply();
+    }
+
+    public String getCity() {
+        return mPreferences.getString(PREF_CITY, null);
     }
 }

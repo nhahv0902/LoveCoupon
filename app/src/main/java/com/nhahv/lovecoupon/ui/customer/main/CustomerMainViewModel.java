@@ -16,7 +16,7 @@ import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_IS_LOGI
  */
 public class CustomerMainViewModel extends BaseObservable {
     private final Activity mContext;
-    private final ObservableBoolean mShopImagePlus = new ObservableBoolean();
+    private final ObservableBoolean mShopImagePlus = new ObservableBoolean(true);
     private final CustomerProfile mProfile;
     private final CustomerMainHandler mHandler;
     private final SharePreferenceUtil mPreference;
@@ -29,6 +29,8 @@ public class CustomerMainViewModel extends BaseObservable {
     }
 
     public void clickImagePlus() {
+        if (mHandler == null) return;
+        mHandler.startUiCouponAddition();
     }
 
     public void setShowImagePlus(boolean showImagePlus) {

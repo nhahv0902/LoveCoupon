@@ -35,4 +35,6 @@ public interface CouponService {
     Call<List<CouponCustomer>> getCouponOfCustomer(@Query("user_id") String id);
     @POST("/useCoupon")
     Call<Integer> useCoupon(@Body Coupon coupon);
+    @POST("/update_user_coupon")
+    Call<List<CouponCustomer>> addCoupon(@Header("city") String city, @Body Coupon coupon);
 }

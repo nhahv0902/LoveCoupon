@@ -14,6 +14,7 @@ public class CustomerProfile extends BaseObservable {
     private String mId;
     private String mName;
     private String mAvatar;
+    private String mSocial;
 
     public CustomerProfile(@NonNull String id, @NonNull String name, String avatar) {
         mId = id;
@@ -34,6 +35,16 @@ public class CustomerProfile extends BaseObservable {
     public void setAvatar(String avatar) {
         mAvatar = avatar;
         notifyPropertyChanged(BR.avatar);
+    }
+
+    @Bindable
+    public String getSocial() {
+        return mSocial;
+    }
+
+    public void setSocial(String social) {
+        mSocial = social;
+        notifyPropertyChanged(BR.social);
     }
 
     @Bindable

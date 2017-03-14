@@ -110,4 +110,24 @@ public class CouponRemoteDataSource implements CouponDataSource {
             }
         });
     }
+
+    @Override
+    public void addCoupon(@NonNull String city, @NonNull Coupon coupon,
+                          @NonNull Callback<List<CouponCustomer>> callback) {
+        if (mService == null) return;
+        mService.addCoupon(city, coupon).enqueue(new retrofit2.Callback<List<CouponCustomer>>() {
+            @Override
+            public void onResponse(Call<List<CouponCustomer>> call,
+                                   Response<List<CouponCustomer>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else callback.onError();
+            }
+
+            @Override
+            public void onFailure(Call<List<CouponCustomer>> call, Throwable t) {
+                callback.onError();
+            }
+        });
+    }
 }

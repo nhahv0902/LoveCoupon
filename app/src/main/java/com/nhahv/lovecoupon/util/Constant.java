@@ -24,15 +24,19 @@ public final class Constant {
         public static final int REQUEST_NOTIFICATION = 4;
         public static final int REQUEST_TEMPLATE = 5;
         public static final int REQUEST_UI_COUPON_OF_SHOP = 6;
+        public static final int REQUEST_ADDITION_COUPON = 7;
     }
 
     public static final class PreferenceConstant {
         public static final String PREF_TOKEN = "PREF_TOKEN";
         public static final String PREF_IS_LOGIN = "PREF_IS_LOGIN";
         public static final String PREF_ACCOUNT_TYPE = "PREF_ACCOUNT_TYPE";
+        public static final String PREF_CITY = "PREF_CITY";
     }
 
     public static final class DataConstant {
+        public static final long TIME_DELAY_ADD_COUPON = 500;
+        public static final String TAG = "LoveCouponTAG";
         public static final String DATA_SCOPE =
             "oauth2:https://www.googleapis.com/auth/userinfo.profile";
         public static final String DATA_PUBLIC_PROFILE = "public_profile";
@@ -40,7 +44,6 @@ public final class Constant {
         public static final String DATA_ADMIN = "1";
         public static final int DATA_SPAN = 3;
         public static final String FIRST_BASE64 = "data:image/jpeg;base64,";
-        public static final int DATA_PREVIEW_PICTURE = 6;
         public static final String DATA_FACEBOOK = "facebook";
         public static final String DATA_GOOGLE = "google";
         public static final int SUCCESS = 1;
