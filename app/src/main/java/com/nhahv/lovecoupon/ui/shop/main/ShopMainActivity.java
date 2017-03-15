@@ -12,7 +12,7 @@ import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
-import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenHandlerActivity;
+import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
 import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.ui.shop.coupon.CouponFragment;
 import com.nhahv.lovecoupon.ui.shop.history.HistoryFragment;
@@ -94,7 +94,8 @@ public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
 
     @Override
     public void startUiFirstScreen() {
-        startActivity(FirstScreenHandlerActivity.getFirstIntent(this, 0));
+        startActivity(FirstScreenActivity.getFirstIntent(this, 0));
+        finish();
     }
 
     @Override

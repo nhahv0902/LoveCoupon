@@ -5,6 +5,9 @@
 
     <data>
 
+
+        <import type="org.apache.commons.lang3.StringUtils"/>
+
         <variable
             name="viewModel"
             type="com.nhahv.lovecoupon.ui.customer.coupon.CouponViewModel"/>
@@ -50,7 +53,7 @@
                     android:layout_gravity="start"
                     android:ellipsize="marquee"
                     android:padding="@dimen/dp_8"
-                    android:text="@{coupon.name}"
+                    android:text="@{StringUtils.capitalize(coupon.name)}"
                     android:textColor="@color/color_blue_71"
                     android:textSize="@dimen/sp_20"/>
 
@@ -65,7 +68,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@{coupon.address}"
+                        android:text="@{StringUtils.capitalize(coupon.address)}"
                         android:textColor="@color/color_grey_700"
                         android:textSize="@dimen/sp_16"/>
 

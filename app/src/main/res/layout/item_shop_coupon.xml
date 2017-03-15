@@ -108,7 +108,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1.2"
+                        android:layout_weight="4"
                         android:gravity="end|bottom"
                         android:orientation="horizontal">
 
@@ -125,10 +125,10 @@
                             android:paddingLeft="@dimen/dp_8"
                             android:paddingRight="@dimen/dp_8"
                             android:text="@{@string/bind_coupon_template_day(template.duration)}"
-                            android:textSize="@dimen/sp_18"/>
+                            android:textSize="@dimen/sp_16"/>
 
                         <LinearLayout
-                            android:layout_width="@dimen/dp_60"
+                            android:layout_width="@dimen/dp_50"
                             android:layout_height="wrap_content"
                             android:gravity="end|bottom"
                             android:onClick="@{(view)->viewModel.clickMoreTemplate(view, template)}"

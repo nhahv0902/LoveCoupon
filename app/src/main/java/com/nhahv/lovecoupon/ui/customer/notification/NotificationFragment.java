@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.nhahv.lovecoupon.databinding.FragmentNotificationBinding;
 
+import org.parceler.Parcels;
+
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_NOTIFICATION;
 
 /**
@@ -20,17 +22,17 @@ public class NotificationFragment extends Fragment {
     public static NotificationFragment newInstance(NotificationType type) {
         NotificationFragment fragment = new NotificationFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(BUNDLE_NOTIFICATION, type);
+        bundle.putParcelable(BUNDLE_NOTIFICATION, Parcels.wrap(type));
         fragment.setArguments(bundle);
         return fragment;
     }
 
     private NotificationType getDataFromActivity() {
         Bundle bundle = getArguments();
-        if (bundle == null || bundle.getSerializable(BUNDLE_NOTIFICATION) == null) {
+        if (bundle == null || bundle.getParcelable(BUNDLE_NOTIFICATION) == null) {
             return NotificationType.NOTIFICATION;
         }
-        return (NotificationType) bundle.getSerializable(BUNDLE_NOTIFICATION);
+        return Parcels.unwrap(bundle.getParcelable(BUNDLE_NOTIFICATION));
     }
 
     @Override

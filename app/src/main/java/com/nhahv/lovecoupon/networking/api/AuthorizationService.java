@@ -38,7 +38,7 @@ public interface AuthorizationService {
         private String mPassword;
 
         public void setNormal(String email, String password) {
-            mUserId = email;
+            mUserName = email;
             mPassword = password;
         }
 

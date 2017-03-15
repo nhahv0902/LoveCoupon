@@ -5,16 +5,19 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.zxing.Result;
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.ActivityCouponAdditionBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
 
+import org.parceler.Parcels;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_COUPON;
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.TIME_DELAY_ADD_COUPON;
 
 public class CouponAdditionActivity extends BaseActivity
@@ -65,7 +68,13 @@ public class CouponAdditionActivity extends BaseActivity
     }
 
     @Override
-    public void addCouponSuccess() {
+    public void addCouponSuccess(CouponCustomer couponCustomer) {
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BUNDLE_COUPON, Parcels.wrap(couponCustomer));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override

@@ -46,4 +46,9 @@ public class CouponFragment extends Fragment implements CouponHandler {
             mViewModel.loadData();
         }
     }
+
+    @Override
+    public void loadData() {
+        mViewModel.loadData();
+    }
 }

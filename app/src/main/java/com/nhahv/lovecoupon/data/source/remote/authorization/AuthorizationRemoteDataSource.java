@@ -1,6 +1,7 @@
 package com.nhahv.lovecoupon.data.source.remote.authorization;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
@@ -40,10 +41,11 @@ public class AuthorizationRemoteDataSource implements AuthorizationDataSource {
             @Override
             public void onResponse(Call<List<ShopProfile>> call,
                                    Response<List<ShopProfile>> response) {
-                if (response == null) {
+                if (response == null || response.body() == null || response.body().size() == 0) {
                     callback.onError();
                     return;
                 }
+                Log.d("TAG", "data " + response.body().toString());
                 ShopProfile profile = response.body().get(0);
                 if (profile == null) {
                     callback.onError();

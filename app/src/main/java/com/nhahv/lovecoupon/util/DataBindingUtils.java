@@ -355,7 +355,7 @@ public final class DataBindingUtils {
                         viewModel.setShowImagePlus(false);
                         break;
                     case R.id.action_other_notification:
-                        position = 1;
+                        position = 2;
                         viewModel.setShowImagePlus(false);
                         break;
                     case R.id.action_share:

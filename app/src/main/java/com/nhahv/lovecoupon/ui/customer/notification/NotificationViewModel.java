@@ -38,11 +38,13 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_WEB_SITE;
  */
 public class NotificationViewModel extends BaseObservable
     implements ViewModel, INotificationViewModel {
+    private final String TAG = getClass().getSimpleName();
     private final Context mContext;
     private final Fragment mFragment;
     private ObservableList<NotificationCustomer> mListNotification = new ObservableArrayList<>();
     private final NotificationType mType;
     private final NotificationRepository mRepository;
+    private final SharePreferenceUtil mPreference;
     private final CustomerProfile mProfile;
 
     public NotificationViewModel(@NonNull Context context, @NonNull Fragment fragment,
@@ -50,7 +52,8 @@ public class NotificationViewModel extends BaseObservable
         mContext = context;
         mFragment = fragment;
         mType = type;
-        mProfile = SharePreferenceUtil.getInstance(context).profileCustomer();
+        mPreference = SharePreferenceUtil.getInstance(context);
+        mProfile = mPreference.profileCustomer();
         mRepository = NotificationRepository.getInstance();
         mAdapter.set(new NotificationAdapter(this, mListNotification));
         loadData();
@@ -78,7 +81,7 @@ public class NotificationViewModel extends BaseObservable
                     });
                 break;
             case NOTIFICATION_OTHER:
-                mRepository.getOtherNotificationCustomer(mProfile.getId(), "HaNoi",
+                mRepository.getOtherNotificationCustomer(mProfile.getId(), mPreference.getCity(),
                     new Callback<List<NotificationCustomer>>() {
                         @Override
                         public void onSuccess(List<NotificationCustomer> data) {

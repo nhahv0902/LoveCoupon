@@ -16,10 +16,11 @@ public class CustomerProfile extends BaseObservable {
     private String mAvatar;
     private String mSocial;
 
-    public CustomerProfile(@NonNull String id, @NonNull String name, String avatar) {
+    public CustomerProfile(@NonNull String id, @NonNull String name, String avatar, String social) {
         mId = id;
         mName = name;
         mAvatar = avatar;
+        mSocial = social;
     }
 
     public void setId(String id) {

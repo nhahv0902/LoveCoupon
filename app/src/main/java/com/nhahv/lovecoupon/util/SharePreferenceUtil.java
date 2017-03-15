@@ -9,6 +9,8 @@ import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_CITY;
+import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_EMAIL;
+import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_PASSWORD;
 
 /**
  * Created by Nhahv0902 on 3/7/2017.
@@ -70,5 +72,17 @@ public class SharePreferenceUtil {
 
     public String getCity() {
         return mPreferences.getString(PREF_CITY, null);
+    }
+
+    public void writeEmailPassword(String email, String password) {
+        mPreferences.edit().putString(PREF_EMAIL, email).putString(PREF_PASSWORD, password).apply();
+    }
+
+    public String getEmail() {
+        return mPreferences.getString(PREF_EMAIL, null);
+    }
+
+    public String getPassword() {
+        return mPreferences.getString(PREF_PASSWORD, null);
     }
 }

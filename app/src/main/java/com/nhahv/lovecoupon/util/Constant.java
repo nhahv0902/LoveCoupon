@@ -32,6 +32,8 @@ public final class Constant {
         public static final String PREF_IS_LOGIN = "PREF_IS_LOGIN";
         public static final String PREF_ACCOUNT_TYPE = "PREF_ACCOUNT_TYPE";
         public static final String PREF_CITY = "PREF_CITY";
+        public static final String PREF_EMAIL = "PREF_EMAIL";
+        public static final String PREF_PASSWORD = "PREF_PASSWORD";
     }
 
     public static final class DataConstant {
@@ -47,6 +49,7 @@ public final class Constant {
         public static final String DATA_FACEBOOK = "facebook";
         public static final String DATA_GOOGLE = "google";
         public static final int SUCCESS = 1;
+        public static final int DATA_NOTIFICATION = 3;
         public static final String URL_IMAGE =
             "http://tophinhanhdep.net/wp-content/uploads/2015/12/anh-dep-mua-xuan-5.jpg";
         public static final String DATA_ID_SHOP = "0EW720whM80m8fe";
@@ -56,5 +59,15 @@ public final class Constant {
         public static final String DATA_LINK_PHOTO = "http://188.166.199.25:4000/logo/love.jpg";
         public static final String DATA_PICK_LOGO = "LoveCoupon Pick Logo";
         public static final String DATA_HTTP = "http";
+    }
+
+    public static final class LocationAddress {
+        public static final int SUCCESS_RESULT = 0;
+        public static final int FAILURE_RESULT = 1;
+        public static final String PACKAGE_NAME =
+            "com.google.android.gms.location.sample.locationaddress";
+        public static final String RECEIVER = PACKAGE_NAME + ".RECEIVER";
+        public static final String RESULT_DATA_KEY = PACKAGE_NAME + ".RESULT_DATA_KEY";
+        public static final String LOCATION_DATA_EXTRA = PACKAGE_NAME + ".LOCATION_DATA_EXTRA";
     }
 }

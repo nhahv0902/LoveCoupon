@@ -94,11 +94,11 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void addCoupon(@NonNull String city, @NonNull Coupon coupon,
-                          @NonNull Callback<List<CouponCustomer>> callback) {
+                          @NonNull Callback<CouponCustomer> callback) {
         if (mDataSource == null) return;
-        mDataSource.addCoupon(city, coupon, new Callback<List<CouponCustomer>>() {
+        mDataSource.addCoupon(city, coupon, new Callback<CouponCustomer>() {
             @Override
-            public void onSuccess(List<CouponCustomer> data) {
+            public void onSuccess(CouponCustomer data) {
                 callback.onSuccess(data);
             }
 

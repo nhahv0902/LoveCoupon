@@ -10,15 +10,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 
 import com.nhahv.lovecoupon.R;
+import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.ActivityCustomerMainBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
 import com.nhahv.lovecoupon.ui.customer.addition.CouponAdditionActivity;
 import com.nhahv.lovecoupon.ui.customer.coupon.CouponFragment;
+import com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopActivity;
 import com.nhahv.lovecoupon.ui.customer.notification.NotificationFragment;
 import com.nhahv.lovecoupon.ui.customer.notification.NotificationType;
-import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenHandlerActivity;
+import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
 import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,9 @@ import java.util.List;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
+import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_COUPON;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_ADDITION_COUPON;
+import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_UI_COUPON_OF_SHOP;
 
 @RuntimePermissions
 public class CustomerMainActivity extends BaseActivity implements CustomerMainHandler {
@@ -77,7 +83,7 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
 
     @Override
     public void startUiFirstScreen() {
-        startActivity(FirstScreenHandlerActivity.getFirstIntent(this, 0));
+        startActivity(FirstScreenActivity.getFirstIntent(this, 0));
         finish();
     }
 
@@ -95,7 +101,22 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_ADDITION_COUPON) {
+        if (resultCode != RESULT_OK) return;
+        switch (requestCode) {
+            case REQUEST_ADDITION_COUPON:
+                if (data == null || data.getExtras() == null) return;
+                CouponCustomer coupon =
+                    Parcels.unwrap(data.getExtras().getParcelable(BUNDLE_COUPON));
+                startActivityForResult(CouponOfShopActivity.getIntent(this, coupon),
+                    REQUEST_UI_COUPON_OF_SHOP);
+                break;
+            case REQUEST_UI_COUPON_OF_SHOP:
+                if (mListFragment.get(0) != null) {
+                    ((CouponFragment) mListFragment.get(0)).loadData();
+                }
+                break;
+            default:
+                break;
         }
     }
 

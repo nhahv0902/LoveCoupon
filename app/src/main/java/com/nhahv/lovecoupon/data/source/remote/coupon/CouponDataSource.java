@@ -27,5 +27,5 @@ public interface CouponDataSource {
                            @NonNull Callback<List<CouponCustomer>> callback);
     void useCoupon(@NonNull Coupon coupon, @NonNull Callback<Boolean> callback);
     void addCoupon(@NonNull String city, @NonNull Coupon coupon,
-                   @NonNull Callback<List<CouponCustomer>> callback);
+                   @NonNull Callback<CouponCustomer> callback);
 }

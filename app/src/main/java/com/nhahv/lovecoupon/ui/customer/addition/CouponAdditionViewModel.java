@@ -3,7 +3,6 @@ package com.nhahv.lovecoupon.ui.customer.addition;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
@@ -11,8 +10,6 @@ import com.nhahv.lovecoupon.data.model.CustomerProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
-
-import java.util.List;
 
 /**
  * Created by Nhahv0902 on 3/14/2017.
@@ -35,7 +32,6 @@ public class CouponAdditionViewModel extends BaseObservable {
 
     public void addCoupon(@NonNull String text) {
         if (mRepository == null) return;
-        Log.d(TAG, "token = " + text);
         Coupon coupon = new Coupon();
         coupon.setCouponId(text);
         coupon.setUserId(mProfile.getId());
@@ -43,16 +39,16 @@ public class CouponAdditionViewModel extends BaseObservable {
         coupon.setUserName(mProfile.getName());
         coupon.setUserSocial(mProfile.getSocial());
         String city = SharePreferenceUtil.getInstance(mContext).getCity();
-        city = "HaNoi";
-        mRepository.addCoupon(city, coupon, new Callback<List<CouponCustomer>>() {
+        mRepository.addCoupon(city, coupon, new Callback<CouponCustomer>() {
             @Override
-            public void onSuccess(List<CouponCustomer> data) {
-                if (mHandler != null) mHandler.addCouponSuccess();
+            public void onSuccess(CouponCustomer data) {
+                if (mHandler == null) return;
+                mHandler.addCouponSuccess(data);
             }
 
             @Override
             public void onError() {
-                if (mHandler != null) mHandler.addCouponError();
+                mHandler.addCouponError();
             }
         });
     }
