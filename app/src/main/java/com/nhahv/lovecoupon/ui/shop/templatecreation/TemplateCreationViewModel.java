@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
@@ -22,7 +21,7 @@ public class TemplateCreationViewModel extends BaseObservable {
     private final ShopProfile mProfile;
 
     public TemplateCreationViewModel(@NonNull Context context,
-                                     @NonNull ITemplateCreationHandler handler) {
+            @NonNull ITemplateCreationHandler handler) {
         mContext = context;
         mHandler = handler;
         mProfile = SharePreferenceUtil.getInstance(context).profileShop();
@@ -36,23 +35,23 @@ public class TemplateCreationViewModel extends BaseObservable {
         }
         int duration = mHandler.getDuration();
         mTemplate.get().setDuration(duration);
-        mTemplate.get().setShopId(mProfile.getShopId());
+        mTemplate.get().setShopId(mProfile.getId());
         mTemplate.get().setCouponTemplateId(ActivityUtil.randomTemplateId());
         new TemplateValidation(mTemplate.get()).validation(new TemplateValidation.Callback() {
             @Override
             public void onSuccess() {
                 mRepository.createCouponTemplate(mProfile.getToken(), mTemplate.get(),
-                    new Callback<Boolean>() {
-                        @Override
-                        public void onSuccess(Boolean data) {
-                            mHandler.createTemplateSuccess();
-                        }
+                        new Callback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean data) {
+                                mHandler.createTemplateSuccess();
+                            }
 
-                        @Override
-                        public void onError() {
-                            showMsg(R.string.msg_create_error);
-                        }
-                    });
+                            @Override
+                            public void onError() {
+                                showMsg(R.string.msg_create_error);
+                            }
+                        });
             }
 
             @Override

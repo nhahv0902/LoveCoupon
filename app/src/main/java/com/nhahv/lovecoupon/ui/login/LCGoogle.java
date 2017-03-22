@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-
 import com.facebook.FacebookSdk;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -12,8 +11,8 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.nhahv.lovecoupon.R;
-
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_SCOPE;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
@@ -24,12 +23,12 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
  */
 public class LCGoogle {
     private static LCGoogle sInstance;
-    private final Activity mContext;
+    private final WeakReference<Activity> mReference;
     private GoogleApiClient mClient;
 
-    private LCGoogle(@NonNull Activity context) {
-        mContext = context;
-        FacebookSdk.sdkInitialize(mContext.getApplicationContext());
+    private LCGoogle(@NonNull Activity activity) {
+        mReference = new WeakReference<>(activity);
+        FacebookSdk.sdkInitialize(activity.getApplicationContext());
         initGoogle();
     }
 
@@ -39,33 +38,34 @@ public class LCGoogle {
     }
 
     private void initGoogle() {
+        Activity activity = mReference.get();
+        if (activity == null) return;
         GoogleSignInOptions gso =
-            new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(mContext.getString(R.string.key_google_server))
-                .requestEmail()
-                .build();
-        mClient = new GoogleApiClient.Builder(mContext)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-            .build();
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(
+                        activity.getString(R.string.key_google_server)).requestEmail().build();
+        mClient =
+                new GoogleApiClient.Builder(activity).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
         mClient.connect();
     }
 
     public void logout() {
+        Activity activity = mReference.get();
+        if (activity == null) return;
         GoogleSignInOptions gso =
-            new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mClient = new GoogleApiClient.Builder(mContext)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-            .build();
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+                        .build();
+        mClient =
+                new GoogleApiClient.Builder(activity).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
         mClient.connect();
         Auth.GoogleSignInApi.signOut(mClient).setResultCallback(status -> {
         });
     }
 
     public void login() {
+        Activity activity = mReference.get();
+        if (activity == null) return;
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mClient);
-        mContext.startActivityForResult(signInIntent, REQUEST_GOOGLE);
+        activity.startActivityForResult(signInIntent, REQUEST_GOOGLE);
     }
 
     public void requestToken(String email, CallBack callBack) {
@@ -74,6 +74,12 @@ public class LCGoogle {
 
     public GoogleApiClient getClient() {
         return mClient;
+    }
+
+    public interface CallBack {
+        void getTokenSuccess(String token);
+
+        void getTokenError();
     }
 
     public class GetGoogleTokenAsync extends AsyncTask<String, Void, String> {
@@ -85,9 +91,11 @@ public class LCGoogle {
 
         @Override
         protected String doInBackground(String... strs) {
+            Activity activity = mReference.get();
+            if (activity == null) return null;
             try {
                 String email = strs[0];
-                return GoogleAuthUtil.getToken(mContext, email, DATA_SCOPE);
+                return GoogleAuthUtil.getToken(activity, email, DATA_SCOPE);
             } catch (IOException | GoogleAuthException e) {
                 e.printStackTrace();
                 return null;
@@ -98,13 +106,11 @@ public class LCGoogle {
         protected void onPostExecute(String token) {
             super.onPostExecute(token);
             if (mCallBack == null) return;
-            if (token != null) mCallBack.getTokenSuccess(token);
-            else mCallBack.getTokenError();
+            if (token != null) {
+                mCallBack.getTokenSuccess(token);
+            } else {
+                mCallBack.getTokenError();
+            }
         }
-    }
-
-    public interface CallBack {
-        void getTokenSuccess(String token);
-        void getTokenError();
     }
 }

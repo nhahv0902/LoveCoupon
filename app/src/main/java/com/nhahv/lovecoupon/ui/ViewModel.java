@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
  * <></>
  */
 public interface ViewModel {
-    ObservableBoolean mRefresh = new ObservableBoolean(false);
-    ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     void loadData();
+
     void loadError();
+
     ObservableBoolean getRefresh();
+
     void setRefresh(boolean isRefresh);
+
     ObservableField<RecyclerView.Adapter> getAdapter();
 }

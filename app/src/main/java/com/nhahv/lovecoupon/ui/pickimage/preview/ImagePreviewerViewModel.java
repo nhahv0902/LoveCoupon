@@ -5,9 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.v4.app.FragmentManager;
-
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
-
 import java.util.List;
 
 /**

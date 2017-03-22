@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.nhahv.lovecoupon.R;
@@ -27,7 +26,7 @@ public class ShareFragment extends Fragment implements IShareFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         mBinding = FragmentShareBinding.inflate(inflater, container, false);
         mBinding.setViewModel(new ShareViewModel(getActivity(), this));
         return mBinding.getRoot();
@@ -35,12 +34,12 @@ public class ShareFragment extends Fragment implements IShareFragment {
 
     @Override
     public void shareFacebook() {
-        ShareLinkContent content = new ShareLinkContent.Builder()
-            .setContentUrl(Uri.parse(DATA_WEB_SITE))
-            .setImageUrl(Uri.parse(DATA_LINK_PHOTO))
-            .setContentTitle(getString(R.string.msg_share_facebook))
-            .setContentDescription(getString(R.string.msg_description_share_facebook))
-            .build();
+        ShareLinkContent content =
+                new ShareLinkContent.Builder().setContentUrl(Uri.parse(DATA_WEB_SITE))
+                        .setImageUrl(Uri.parse(DATA_LINK_PHOTO))
+                        .setContentTitle(getString(R.string.msg_share_facebook))
+                        .setContentDescription(getString(R.string.msg_description_share_facebook))
+                        .build();
         ShareDialog shareDialog = new ShareDialog(this);
         shareDialog.show(content);
     }

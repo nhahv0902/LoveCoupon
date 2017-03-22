@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.networking.api;
 
 import java.util.List;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -18,9 +17,10 @@ public interface UpLoadService {
     @Multipart
     @POST("upload")
     Call<ResponseBody> upload(@Part("upload") RequestBody description,
-                              @Part MultipartBody.Part file);
+            @Part MultipartBody.Part file);
+
     @Multipart
     @POST("upload")
     Call<ResponseBody> upLoadMultiple(@Part("upload") RequestBody description,
-                                      @Part List<MultipartBody.Part> file);
+            @Part List<MultipartBody.Part> file);
 }

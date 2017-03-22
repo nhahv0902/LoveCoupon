@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.FragmentNotificationBinding;
 import com.nhahv.lovecoupon.ui.customer.couponofshop.CouponOfShopActivity;
@@ -36,7 +35,7 @@ public class CouponFragment extends Fragment implements CouponHandler {
     @Override
     public void startUiCouponOfShop(CouponCustomer coupon) {
         startActivityForResult(CouponOfShopActivity.getIntent(getActivity(), coupon),
-            REQUEST_UI_COUPON_OF_SHOP);
+                REQUEST_UI_COUPON_OF_SHOP);
     }
 
     @Override

@@ -77,7 +77,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
     public void setScaleType(ScaleType scaleType) {
         if (scaleType != SCALE_TYPE) {
             throw new IllegalArgumentException(
-                String.format("ScaleType %s not supported.", scaleType));
+                    String.format("ScaleType %s not supported.", scaleType));
         }
     }
 
@@ -93,13 +93,13 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         if (mBitmap == null) return;
         if (mFillColor != Color.TRANSPARENT) {
             canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius,
-                mFillPaint);
+                    mFillPaint);
         }
         canvas.drawCircle(mDrawableRect.centerX(), mDrawableRect.centerY(), mDrawableRadius,
-            mBitmapPaint);
+                mBitmapPaint);
         if (mBorderWidth > 0) {
             canvas.drawCircle(mBorderRect.centerX(), mBorderRect.centerY(), mBorderRadius,
-                mBorderPaint);
+                    mBorderPaint);
         }
     }
 
@@ -168,6 +168,11 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
     }
 
     @Override
+    public ColorFilter getColorFilter() {
+        return mColorFilter;
+    }
+
+    @Override
     public void setColorFilter(ColorFilter cf) {
         if (cf == mColorFilter) {
             return;
@@ -175,11 +180,6 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         mColorFilter = cf;
         applyColorFilter();
         invalidate();
-    }
-
-    @Override
-    public ColorFilter getColorFilter() {
-        return mColorFilter;
     }
 
     private void applyColorFilter() {
@@ -193,12 +193,11 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         try {
             Bitmap bitmap;
             if (drawable instanceof ColorDrawable) {
-                bitmap = Bitmap
-                    .createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION, BITMAP_CONFIG);
-            } else {
-                bitmap = Bitmap
-                    .createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION,
                         BITMAP_CONFIG);
+            } else {
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                        drawable.getIntrinsicHeight(), BITMAP_CONFIG);
             }
             Canvas canvas = new Canvas(bitmap);
             drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -239,7 +238,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         mBitmapWidth = mBitmap.getWidth();
         mBorderRect.set(calculateBounds());
         mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f,
-            (mBorderRect.width() - mBorderWidth) / 2.0f);
+                (mBorderRect.width() - mBorderWidth) / 2.0f);
         mDrawableRect.set(mBorderRect);
         mDrawableRadius = Math.min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f);
         applyColorFilter();
@@ -270,7 +269,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
         }
         mShaderMatrix.setScale(scale, scale);
         mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left,
-            (int) (dy + 0.5f) + mDrawableRect.top);
+                (int) (dy + 0.5f) + mDrawableRect.top);
         mBitmapShader.setLocalMatrix(mShaderMatrix);
     }
 }

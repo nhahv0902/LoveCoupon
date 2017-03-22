@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.nhahv.lovecoupon.BR;
 
 /**
@@ -12,6 +11,17 @@ import com.nhahv.lovecoupon.BR;
  * <></>
  */
 public class ImagePickerItem extends BaseObservable implements Parcelable {
+    public static final Creator<ImagePickerItem> CREATOR = new Creator<ImagePickerItem>() {
+        @Override
+        public ImagePickerItem createFromParcel(Parcel in) {
+            return new ImagePickerItem(in);
+        }
+
+        @Override
+        public ImagePickerItem[] newArray(int size) {
+            return new ImagePickerItem[size];
+        }
+    };
     private String mPathImage;
     private boolean mChecked;
 
@@ -44,18 +54,6 @@ public class ImagePickerItem extends BaseObservable implements Parcelable {
         mChecked = checked;
         notifyPropertyChanged(BR.checked);
     }
-
-    public static final Creator<ImagePickerItem> CREATOR = new Creator<ImagePickerItem>() {
-        @Override
-        public ImagePickerItem createFromParcel(Parcel in) {
-            return new ImagePickerItem(in);
-        }
-
-        @Override
-        public ImagePickerItem[] newArray(int size) {
-            return new ImagePickerItem[size];
-        }
-    };
 
     @Override
     public int describeContents() {

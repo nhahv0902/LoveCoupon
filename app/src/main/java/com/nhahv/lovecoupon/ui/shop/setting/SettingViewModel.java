@@ -9,15 +9,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.updateprofile.UpdateRepository;
+import com.nhahv.lovecoupon.ui.shop.main.IShopMainHandler;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 import com.yalantis.ucrop.UCrop;
-
 import java.io.File;
 
 import static com.facebook.FacebookSdk.getCacheDir;
@@ -33,15 +32,17 @@ public class SettingViewModel extends BaseObservable {
     private final ObservableBoolean mShopNoData = new ObservableBoolean();
     private final ObservableBoolean mUserTrue = new ObservableBoolean(true);
     private final ISettingFragment mListener;
-    private ShopProfile mProfile;
+    private final ShopProfile mProfile;
     private final SharePreferenceUtil mPreference;
     private final UpdateRepository mRepository;
+    private final IShopMainHandler mUpdateProfileListener;
 
     public SettingViewModel(Context context, ISettingFragment iSettingFragment,
-                            UpdateRepository repository) {
+            IShopMainHandler listener) {
         mContext = context;
         mListener = iSettingFragment;
-        mRepository = repository;
+        mRepository = UpdateRepository.getInstance();
+        mUpdateProfileListener = listener;
         mPreference = SharePreferenceUtil.getInstance(context);
         mProfile = mPreference.profileShop();
     }
@@ -69,7 +70,17 @@ public class SettingViewModel extends BaseObservable {
     }
 
     public void startCropView(Uri uri, Fragment fragment) {
-        String destinationFileName = "LoveCouponLogo.jpg";
+        String destinationFileName = ActivityUtil.randomId() + ".jpg";
+        Log.d(TAG, "file name = " + destinationFileName);
+        File[] files = getCacheDir().listFiles();
+        if (files != null && files.length > 0) {
+            for (File file : files)
+                if (file.isFile()) {
+                    Log.d(TAG, "file = " + file.getAbsolutePath());
+                    boolean delete = file.delete();
+                    Log.d(TAG, "delete = " + delete);
+                }
+        }
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(getCacheDir(), destinationFileName)));
         uCrop = uCrop.withAspectRatio(1, 1);
         UCrop.Options options = new UCrop.Options();
@@ -87,6 +98,7 @@ public class SettingViewModel extends BaseObservable {
             return;
         }
         mProfile.setLogoLink(resultUri.getPath());
+        Log.d(TAG, resultUri.getPath());
     }
 
     public ShopProfile getProfile() {
@@ -134,47 +146,51 @@ public class SettingViewModel extends BaseObservable {
 
     private void update() {
         if (mRepository == null || mProfile == null) return;
-        if (mProfile.getUser1() != null && !mProfile.getUser1().isEmpty()) checkUser1();
-        else if (mProfile.getUser2() != null && !mProfile.getUser2().isEmpty()) checkUser2();
-        else updateProfile();
+        if (mProfile.getUser1() != null && !mProfile.getUser1().isEmpty()) {
+            checkUser1();
+        } else if (mProfile.getUser2() != null && !mProfile.getUser2().isEmpty()) {
+            checkUser2();
+        } else {
+            updateProfile();
+        }
     }
 
     private void checkUser1() {
-        mRepository.isUserExists(mProfile.getShopId(), mProfile.getUser1(),
-            new Callback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean data) {
-                    checkUser2();
-                }
+        mRepository.isUserExists(mProfile.getId(), mProfile.getUser1(), new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                checkUser2();
+            }
 
-                @Override
-                public void onError() {
-                    ActivityUtil.showMsg(mContext, R.string.msg_existing);
-                }
-            });
+            @Override
+            public void onError() {
+                ActivityUtil.showMsg(mContext, R.string.msg_existing);
+            }
+        });
     }
 
     private void checkUser2() {
-        mRepository.isUserExists(mProfile.getShopId(), mProfile.getUser2(),
-            new Callback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean data) {
-                    updateProfile();
-                }
+        mRepository.isUserExists(mProfile.getId(), mProfile.getUser2(), new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                updateProfile();
+            }
 
-                @Override
-                public void onError() {
-                    ActivityUtil.showMsg(mContext, R.string.msg_existing);
-                }
-            });
+            @Override
+            public void onError() {
+                ActivityUtil.showMsg(mContext, R.string.msg_existing);
+            }
+        });
     }
 
     private void updateProfile() {
         mRepository.updateProfile(mProfile.getToken(), mProfile, new Callback<Boolean>() {
             @Override
             public void onSuccess(Boolean data) {
-                // TODO: 3/10/2017 update profile success
-                Log.d(TAG, "update success");
+                if (mUpdateProfileListener != null) {
+                    mUpdateProfileListener.updateProfile(mProfile);
+                }
+                ActivityUtil.showMsg(mContext, R.string.msg_update_profile_success);
             }
 
             @Override

@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.Profile;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.nhahv.lovecoupon.R;
-import com.nhahv.lovecoupon.data.model.CustomerProfile;
+import com.nhahv.lovecoupon.data.model.LCProfile;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.authorization.AuthorizationRepository;
@@ -42,7 +41,7 @@ public class LoginViewModel extends BaseObservable {
     private final SharePreferenceUtil mPreference;
 
     public LoginViewModel(@NonNull Activity context, @NonNull LoginHandler handler,
-                          @NonNull AccountType type) {
+            @NonNull AccountType type) {
         mContext = context;
         mHandler = handler;
         mType = type;
@@ -58,7 +57,7 @@ public class LoginViewModel extends BaseObservable {
             @Override
             public void onError() {
                 loginError();
-                mHandler.hideProgressDialog();
+                mHandler.hideProgress();
             }
         };
         mFacebook = LCFacebook.getInstance(mContext, callback);
@@ -78,18 +77,20 @@ public class LoginViewModel extends BaseObservable {
         switch (mType) {
             case SHOP:
                 mRepository.loginSocialShop(result.getUserId(), DATA_FACEBOOK, result.getToken(),
-                    new Callback<ShopProfile>() {
-                        @Override
-                        public void onSuccess(ShopProfile data) {
-                            checkStartUiMain();
-                            mPreference.writeProfileShop(data);
-                        }
+                        new Callback<ShopProfile>() {
+                            @Override
+                            public void onSuccess(ShopProfile data) {
+                                checkStartUiMain();
+                                mPreference.writeProfileShop(data);
+                                mHandler.hideProgress();
+                            }
 
-                        @Override
-                        public void onError() {
-                            loginError();
-                        }
-                    });
+                            @Override
+                            public void onError() {
+                                mHandler.hideProgress();
+                                loginError();
+                            }
+                        });
                 break;
             case CUSTOMER:
                 String token = mPreference.getString(PREF_TOKEN);
@@ -99,14 +100,15 @@ public class LoginViewModel extends BaseObservable {
                         String name = profile.getName();
                         String id = profile.getId();
                         String avatar =
-                            mContext.getString(R.string.facebook_avatar, profile.getId());
-                        mPreference.writeProfileCustomer(
-                            new CustomerProfile(id, name, avatar, DATA_FACEBOOK));
+                                mContext.getString(R.string.facebook_avatar, profile.getId());
+                        mPreference.writeProfile(new LCProfile(id, name, avatar, DATA_FACEBOOK));
+                        mHandler.hideProgress();
                         checkStartUiMain();
                     }
 
                     @Override
                     public void onError() {
+                        mHandler.hideProgress();
                         loginError();
                     }
                 });
@@ -138,8 +140,8 @@ public class LoginViewModel extends BaseObservable {
                         if (account.getPhotoUrl() != null) {
                             avatar = account.getPhotoUrl().toString();
                         }
-                        mPreference.writeProfileCustomer(
-                            new CustomerProfile(account.getId(), name, avatar, DATA_GOOGLE));
+                        mPreference.writeProfile(
+                                new LCProfile(account.getId(), name, avatar, DATA_GOOGLE));
                         checkStartUiMain();
                     }
 
@@ -155,6 +157,7 @@ public class LoginViewModel extends BaseObservable {
     }
 
     private void requestGoogleToken(String id, String email) {
+        mHandler.showProgress();
         mLCGoogle.requestToken(email, new LCGoogle.CallBack() {
             @Override
             public void getTokenSuccess(String token) {
@@ -162,11 +165,13 @@ public class LoginViewModel extends BaseObservable {
                     @Override
                     public void onSuccess(ShopProfile data) {
                         mPreference.writeProfileShop(data);
+                        mHandler.hideProgress();
                         checkStartUiMain();
                     }
 
                     @Override
                     public void onError() {
+                        mHandler.hideProgress();
                         loginError();
                     }
                 });
@@ -175,21 +180,23 @@ public class LoginViewModel extends BaseObservable {
             @Override
             public void getTokenError() {
                 loginError();
+                mHandler.hideProgress();
             }
         });
     }
 
     public void clickLogin(LoginType type) {
         if (mHandler == null) return;
-        mHandler.showProgressDialog();
         switch (type) {
             case NORMAL:
                 loginNormal();
                 break;
             case FACEBOOK:
+                mHandler.hideProgress();
                 mFacebook.login();
                 break;
             case GOOGLE:
+                mHandler.hideProgress();
                 mLCGoogle.login();
                 break;
             default:
@@ -203,39 +210,31 @@ public class LoginViewModel extends BaseObservable {
             public void onSuccess() {
                 switch (mType) {
                     case SHOP:
-                        mRepository.loginNormalShop(mEmail.get(), mPassword.get(),
-                            new Callback<ShopProfile>() {
-                                @Override
-                                public void onSuccess(ShopProfile data) {
-                                    mPreference.writeProfileShop(data);
-                                    mPreference.writeEmailPassword(mEmail.get(), mPassword.get());
-                                    checkStartUiMain();
-                                }
-
-                                @Override
-                                public void onError() {
-                                    loginError();
-                                }
-                            });
+                        mHandler.showProgress();
+                        loginNormalShop();
                         break;
                     case CUSTOMER:
+                        mHandler.showProgress();
                         String token = mPreference.getString(PREF_TOKEN);
                         mRepository.loginCustomer(mEmail.get(), mPassword.get(), token,
-                            new Callback<Integer>() {
-                                @Override
-                                public void onSuccess(Integer data) {
-                                    mPreference.writeEmailPassword(mEmail.get(), mPassword.get());
-                                    mPreference.writeProfileCustomer(
-                                        new CustomerProfile(mEmail.get(), mEmail.get(), null,
-                                            null));
-                                    checkStartUiMain();
-                                }
+                                new Callback<Integer>() {
+                                    @Override
+                                    public void onSuccess(Integer data) {
+                                        mPreference.writeEmailPassword(mEmail.get(),
+                                                mPassword.get());
+                                        mPreference.writeProfile(
+                                                new LCProfile(mEmail.get(), mEmail.get(), null,
+                                                        null));
+                                        checkStartUiMain();
+                                        mHandler.hideProgress();
+                                    }
 
-                                @Override
-                                public void onError() {
-                                    loginError();
-                                }
-                            });
+                                    @Override
+                                    public void onError() {
+                                        loginError();
+                                        mHandler.hideProgress();
+                                    }
+                                });
                         break;
                     default:
                         break;
@@ -254,6 +253,24 @@ public class LoginViewModel extends BaseObservable {
                     default:
                         break;
                 }
+                mHandler.hideProgress();
+            }
+        });
+    }
+
+    private void loginNormalShop() {
+        mRepository.loginNormalShop(mEmail.get(), mPassword.get(), new Callback<ShopProfile>() {
+            @Override
+            public void onSuccess(ShopProfile data) {
+                mPreference.writeProfileShop(data);
+                mPreference.writeEmailPassword(mEmail.get(), mPassword.get());
+                checkStartUiMain();
+                mHandler.hideProgress();
+            }
+
+            @Override
+            public void onError() {
+                loginError();
             }
         });
     }
@@ -261,7 +278,7 @@ public class LoginViewModel extends BaseObservable {
     private void checkStartUiMain() {
         mPreference.writePreference(PREF_IS_LOGIN, true);
         mPreference.writePreference(PREF_ACCOUNT_TYPE, mType.toString());
-        mHandler.hideProgressDialog();
+        mHandler.hideProgress();
         switch (mType) {
             case SHOP:
                 mHandler.startUiShopMain();

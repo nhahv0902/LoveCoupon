@@ -2,9 +2,7 @@ package com.nhahv.lovecoupon.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.nhahv.lovecoupon.BR;
-
 import java.util.ArrayList;
 import java.util.List;
 

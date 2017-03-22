@@ -8,7 +8,10 @@ import java.util.Calendar;
  */
 public interface NotificationCreationHandler {
     void openClickDate();
+
     void updateCalendar(Calendar calendar);
+
     void openPickImage();
+
     void createNotificationSuccess();
 }

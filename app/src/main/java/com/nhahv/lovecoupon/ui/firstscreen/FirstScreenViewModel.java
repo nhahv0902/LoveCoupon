@@ -3,7 +3,6 @@ package com.nhahv.lovecoupon.ui.firstscreen;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_ACCOUNT_TYPE;
@@ -18,7 +17,7 @@ public class FirstScreenViewModel extends BaseObservable {
     private final FirstScreenHandler mFirstScreenHandler;
 
     public FirstScreenViewModel(@NonNull Context context,
-                                @NonNull FirstScreenHandler firstScreenHandler) {
+            @NonNull FirstScreenHandler firstScreenHandler) {
         mContext = context;
         mFirstScreenHandler = firstScreenHandler;
         start();

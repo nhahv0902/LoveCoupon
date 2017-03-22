@@ -8,5 +8,6 @@ import com.nhahv.lovecoupon.data.model.Coupon;
  */
 public interface CouponOfShopHandler {
     void backPress();
+
     void showDialog(Coupon coupon, int position);
 }

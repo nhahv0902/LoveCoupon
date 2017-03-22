@@ -8,5 +8,6 @@ import com.nhahv.lovecoupon.data.model.CouponCustomer;
  */
 public interface CouponAdditionHandler {
     void addCouponSuccess(CouponCustomer couponCustomer);
+
     void addCouponError();
 }

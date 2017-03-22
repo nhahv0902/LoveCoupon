@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.Notification;
@@ -16,10 +15,8 @@ import com.nhahv.lovecoupon.databinding.ActivityNotificationCreationBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
 import com.nhahv.lovecoupon.ui.pickimage.folder.ImageFolderActivity;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 import java.util.Calendar;
 import java.util.List;
-
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -31,7 +28,7 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_PICK_IM
 
 @RuntimePermissions
 public class NotificationCreationActivity extends BaseActivity
-    implements NotificationCreationHandler {
+        implements NotificationCreationHandler {
     private ActivityNotificationCreationBinding mBinding;
     private NotificationCreationViewModel mViewModel;
     private ActionNotificationType mType;
@@ -40,8 +37,7 @@ public class NotificationCreationActivity extends BaseActivity
     private Notification mNotification = new Notification();
 
     public static Intent getNotificationIntent(@NonNull Context context,
-                                               @NonNull Notification notification,
-                                               @NonNull ActionNotificationType type) {
+            @NonNull Notification notification, @NonNull ActionNotificationType type) {
         Intent intent = new Intent(context, NotificationCreationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(BUNDLE_NOTIFICATION, notification);
@@ -68,8 +64,8 @@ public class NotificationCreationActivity extends BaseActivity
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_notification_creation);
         mDatePicker = Calendar.getInstance();
         getDataFromIntent();
-        mViewModel =
-            new NotificationCreationViewModel(getApplicationContext(), this, mNotification, mType);
+        mViewModel = new NotificationCreationViewModel(getApplicationContext(), this, mNotification,
+                mType);
         mBinding.setViewModel(mViewModel);
         start();
         mRepository = UpLoadRepository.getInstance();
@@ -117,12 +113,9 @@ public class NotificationCreationActivity extends BaseActivity
 
     @Override
     public void openClickDate() {
-        DatePickerDialog datePicker = DatePickerDialog.newInstance(
-            mViewModel,
-            mDatePicker.get(Calendar.YEAR),
-            mDatePicker.get(Calendar.MONTH),
-            mDatePicker.get(Calendar.DAY_OF_MONTH)
-        );
+        DatePickerDialog datePicker =
+                DatePickerDialog.newInstance(mViewModel, mDatePicker.get(Calendar.YEAR),
+                        mDatePicker.get(Calendar.MONTH), mDatePicker.get(Calendar.DAY_OF_MONTH));
         datePicker.show(getFragmentManager(), DATA_DATE_PICKER);
     }
 
@@ -134,10 +127,10 @@ public class NotificationCreationActivity extends BaseActivity
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        NotificationCreationActivityPermissionsDispatcher
-            .onRequestPermissionsResult(this, requestCode, grantResults);
+        NotificationCreationActivityPermissionsDispatcher.onRequestPermissionsResult(this,
+                requestCode, grantResults);
     }
 
     @Override

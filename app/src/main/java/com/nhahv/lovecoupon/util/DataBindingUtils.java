@@ -29,26 +29,24 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
+import com.nhahv.lovecoupon.data.model.LCProfile;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
-import com.nhahv.lovecoupon.databinding.NavHeaderShopMainBinding;
+import com.nhahv.lovecoupon.databinding.NavHeaderMainBinding;
+import com.nhahv.lovecoupon.ui.MainViewModel;
 import com.nhahv.lovecoupon.ui.ViewModel;
-import com.nhahv.lovecoupon.ui.customer.main.CustomerMainViewModel;
 import com.nhahv.lovecoupon.ui.pickimage.image.ImagePickerViewModel;
-import com.nhahv.lovecoupon.ui.shop.main.ShopMainViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel;
 import com.nhahv.lovecoupon.ui.shop.setting.UserType;
 import com.nhahv.lovecoupon.ui.widget.RecyclerViewHeader;
 import com.rengwuxian.materialedittext.MaterialEditText;
-
 import net.glxn.qrgen.android.QRCode;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ADMIN;
@@ -62,36 +60,26 @@ public final class DataBindingUtils {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     /*
     * bind image path file and url internet
     * */
-    @BindingAdapter({"bind:circleImage", "bind:error"})
+    @BindingAdapter({ "bind:circleImage", "bind:error" })
     public static void setCircleImage(final ImageView view, String url, final Drawable error) {
         Glide.with(view.getContext())
-            .load(url)
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-            .placeholder(error)
-            .dontAnimate()
-            .into(view);
-    }
-
-    @BindingAdapter({"bind:urlImage"})
-    public static void setCircleImage(final ImageView view, String url) {
-        Glide.with(view.getContext())
-            .load(url)
-            .fitCenter()
-            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-            .dontAnimate()
-            .into(view);
+                .load(url)
+                .centerCrop()
+                .placeholder(error)
+                .dontAnimate()
+                .into(view);
     }
     /*
     * bind SwipeRefreshLayout refresh
     * */
 
-    @BindingAdapter({"bind:onRefresh", "bind:refresh"})
+    @BindingAdapter({ "bind:onRefresh", "bind:refresh" })
     public static void onRefresh(SwipeRefreshLayout view, ViewModel viewModel,
-                                 ObservableBoolean isShow) {
+            ObservableBoolean isShow) {
         /*
         * true is show refresh
         * false is hide refresh
@@ -107,23 +95,23 @@ public final class DataBindingUtils {
     /*
     * bind adapter of recycler with linearLayout
     * */
-    @BindingAdapter({"bind:adapter"})
+    @BindingAdapter({ "bind:adapter" })
     public static void setAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setAdapter(adapter);
     }
 
-    @BindingAdapter({"bind:adapterLinear"})
+    @BindingAdapter({ "bind:adapterLinear" })
     public static void setAdapterLinear(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(
-            new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
+                new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         view.setAdapter(adapter);
     }
 
     /*
        * bind adapter of recycler with linearLayout
        * */
-    @BindingAdapter({"bind:gridAdapter"})
+    @BindingAdapter({ "bind:gridAdapter" })
     public static void setGridAdapter(RecyclerView view, RecyclerView.Adapter adapter) {
         view.setLayoutManager(new GridLayoutManager(view.getContext(), DATA_SPAN));
         view.setAdapter(adapter);
@@ -133,7 +121,7 @@ public final class DataBindingUtils {
     * SettingFragment
     * */
 
-    @BindingAdapter({"bind:showPassword"})
+    @BindingAdapter({ "bind:showPassword" })
     public static void setShowPassword(AppCompatImageView view, AppCompatEditText edit) {
         edit.setSelection(edit.getText().length());
         view.setOnClickListener(v -> {
@@ -151,16 +139,22 @@ public final class DataBindingUtils {
     /*
     * check admin setting fragment
     * */
-    @BindingAdapter({"bind:profile", "bind:type"})
+    @BindingAdapter({ "bind:profile", "bind:type" })
     public static void onCheckedAdmin(AppCompatCheckBox view, ShopProfile profile, UserType type) {
         switch (type) {
             case USER1:
-                if (profile.getUserAdmin1() == null) view.setChecked(false);
-                else view.setChecked(profile.getUserAdmin1().equals(DATA_ADMIN));
+                if (profile.getUserAdmin1() == null) {
+                    view.setChecked(false);
+                } else {
+                    view.setChecked(profile.getUserAdmin1().equals(DATA_ADMIN));
+                }
                 break;
             case USER2:
-                if (profile.getUserAdmin2() == null) view.setChecked(false);
-                else view.setChecked(profile.getUserAdmin2().equals(DATA_ADMIN));
+                if (profile.getUserAdmin2() == null) {
+                    view.setChecked(false);
+                } else {
+                    view.setChecked(profile.getUserAdmin2().equals(DATA_ADMIN));
+                }
                 break;
             default:
                 break;
@@ -183,9 +177,9 @@ public final class DataBindingUtils {
     * check user another user2
     * */
 
-    @BindingAdapter({"bind:checkUser", "bind:viewModel"})
+    @BindingAdapter({ "bind:checkUser", "bind:viewModel" })
     public static void checkUser(MaterialEditText view, MaterialEditText user,
-                                 @NonNull final SettingViewModel viewModel) {
+            @NonNull final SettingViewModel viewModel) {
         view.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -213,7 +207,7 @@ public final class DataBindingUtils {
     * viewpager
     * */
 
-    @BindingAdapter({"bind:adapterViewPager", "bind:position"})
+    @BindingAdapter({ "bind:adapterViewPager", "bind:position" })
     public static void setUpViewPager(ViewPager view, FragmentPagerAdapter adapter, int position) {
         view.setAdapter(adapter);
         view.setCurrentItem(position);
@@ -222,7 +216,7 @@ public final class DataBindingUtils {
     /*
     * view pager of tab layout
      */
-    @BindingAdapter({"bind:viewPagerTabLayout"})
+    @BindingAdapter({ "bind:viewPagerTabLayout" })
     public static void setUpTabLayout(TabLayout view, ViewPager viewPager) {
         view.setupWithViewPager(viewPager);
     }
@@ -230,7 +224,7 @@ public final class DataBindingUtils {
     * bind change icon of Floating button Main shop
     * */
 
-    @BindingAdapter({"tools:iconDone"})
+    @BindingAdapter({ "tools:iconDone" })
     public static void onChangeIcon(FloatingActionButton view, boolean isDone) {
         int icon = isDone ? R.drawable.ic_done_white_24px : R.drawable.ic_add_white_24dp;
         view.setImageResource(icon);
@@ -239,9 +233,9 @@ public final class DataBindingUtils {
     /*
     * bind on adapter pickImage
     * */
-    @BindingAdapter({"bind:onChecked", "bind:viewModel"})
+    @BindingAdapter({ "bind:onChecked", "bind:viewModel" })
     public static void onChecked(AppCompatImageView view, ImagePickerItem item,
-                                 ImagePickerViewModel viewModel) {
+            ImagePickerViewModel viewModel) {
         view.setSelected(item.isChecked());
         view.setOnClickListener(v -> {
             view.setSelected(!view.isSelected());
@@ -253,7 +247,7 @@ public final class DataBindingUtils {
     /*
     * Bind QRCode Of CouponCreation
     * */
-    @BindingAdapter({"bind:generate"})
+    @BindingAdapter({ "bind:generate" })
     public static void generateQRCode(AppCompatImageView view, String content) {
         view.setImageBitmap(QRCode.from(content).bitmap());
     }
@@ -262,9 +256,11 @@ public final class DataBindingUtils {
     * Bind spinner
     *
     * */
-    @BindingAdapter(value = {"bind:selectedValue", "bind:selectedValueChanged"}, requireAll = false)
+    @BindingAdapter(value = {
+            "bind:selectedValue", "bind:selectedValueChanged"
+    }, requireAll = false)
     public static void bindSpinnerData(AppCompatSpinner view, int newSelectedValue,
-                                       final InverseBindingListener newTextAttrChanged) {
+            final InverseBindingListener newTextAttrChanged) {
         view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -289,12 +285,12 @@ public final class DataBindingUtils {
     * bind date time of create notification
     * */
 
-    @BindingAdapter({"bind:bindText"})
+    @BindingAdapter({ "bind:bindText" })
     public static void bindTime(AppCompatTextView view, long time) {
         view.setText(ActivityUtil.timeToString(time));
     }
 
-    @BindingAdapter({"bind:bindDayLeft"})
+    @BindingAdapter({ "bind:bindDayLeft" })
     public static void bindDayLeft(AppCompatTextView view, long time) {
         view.setText(ActivityUtil.dayLeft(time));
     }
@@ -302,118 +298,50 @@ public final class DataBindingUtils {
     /*
     * bind  bind:attackToHeader ItemCouponOfShop
     * */
-    @BindingAdapter({"bind:adapterHeader", "bind:header"})
+    @BindingAdapter({ "bind:adapterHeader", "bind:header" })
     public static void attackToHeader(RecyclerView view, RecyclerView.Adapter adapter,
-                                      RecyclerViewHeader header) {
+            RecyclerViewHeader header) {
         view.setLayoutManager(new LinearLayoutManager(view.getContext()));
         view.setAdapter(adapter);
         header.attachTo(view);
     }
 
     /*
-    * binding navigation view in main shop and customer
-    * */
-    @BindingAdapter({"bind:avatar", "bind:name"})
-    public static void bindNavigationView(NavigationView view, String avatar, String name) {
-        NavHeaderShopMainBinding bindHeader =
-            NavHeaderShopMainBinding.inflate(LayoutInflater.from(view.getContext()));
-        bindHeader.setImage(avatar);
-        bindHeader.setName(name);
-        bindHeader.executePendingBindings();
-        view.addHeaderView(bindHeader.getRoot());
-    }
-
-    /*
     * bind drawerLayout
     * */
-    @BindingAdapter({"bind:drawerLayout", "bind:activity"})
+    @BindingAdapter({ "bind:drawerLayout", "bind:activity" })
     public static void drawerLayout(DrawerLayout view, Toolbar toolbar,
-                                    AppCompatActivity activity) {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(activity,
-            view,
-            toolbar,
-            R.string.action_open,
-            R.string.action_close);
+            AppCompatActivity activity) {
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(activity, view, toolbar, R.string.action_open,
+                        R.string.action_close);
         view.setDrawerListener(toggle);
         toggle.syncState();
     }
 
-    @BindingAdapter({"bind:viewModelCustomer", "bind:drawerLayout"})
-    public static void eventNavigationCustomer(NavigationView view,
-                                               CustomerMainViewModel viewModel,
-                                               DrawerLayout drawerLayout) {
-        view.setNavigationItemSelectedListener(
-            item -> {
-                int position = 0;
-                switch (item.getItemId()) {
-                    case R.id.action_coupon:
-                        position = 0;
-                        viewModel.setShowImagePlus(true);
-                        break;
-                    case R.id.action_notification:
-                        position = 1;
-                        viewModel.setShowImagePlus(false);
-                        break;
-                    case R.id.action_other_notification:
-                        position = 2;
-                        viewModel.setShowImagePlus(false);
-                        break;
-                    case R.id.action_share:
-                        position = 3;
-                        viewModel.setShowImagePlus(false);
-                        break;
-                    case R.id.action_exit:
-                        viewModel.logout();
-                        break;
-                    default:
-                        break;
-                }
-                viewModel.addFragment(position);
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            });
-    }
-
-    @BindingAdapter({"bind:viewModelShop", "bind:drawerLayout"})
-    public static void eventNavigationShop(NavigationView view,
-                                           ShopMainViewModel viewModel,
-                                           DrawerLayout drawerLayout) {
-        view.setNavigationItemSelectedListener(
-            item -> {
-                int position = 0;
-                switch (item.getItemId()) {
-                    case R.id.action_coupon:
-                        position = 0;
-                        break;
-                    case R.id.action_notification:
-                        position = 1;
-                        break;
-                    case R.id.action_settings:
-                        position = 2;
-                        break;
-                    case R.id.action_history:
-                        position = 3;
-                        break;
-                    case R.id.action_share:
-                        position = 4;
-                        break;
-                    case R.id.action_exit:
-                        viewModel.logout();
-                        break;
-                    default:
-                        break;
-                }
-                viewModel.setPosition(position);
-                viewModel.startFragment(position);
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            });
+    @BindingAdapter({ "bind:viewModel", "bind:drawerLayout", "bind:profile" })
+    public static void eventNavigationCustomer(NavigationView view, MainViewModel viewModel,
+            DrawerLayout drawerLayout, LCProfile profile) {
+        Log.d("eventNavigationCustomer", "image = " + "pads");
+        for (int i = 0; i < view.getHeaderCount(); i++) {
+            view.removeHeaderView(view.getHeaderView(i));
+        }
+        NavHeaderMainBinding bindHeader =
+                NavHeaderMainBinding.inflate(LayoutInflater.from(view.getContext()));
+        bindHeader.setProfile(profile);
+        bindHeader.executePendingBindings();
+        view.addHeaderView(bindHeader.getRoot());
+        view.setNavigationItemSelectedListener(item -> {
+            viewModel.onNavigationListener(item.getItemId());
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
     }
 
     /*
     * bind time item coupon of shop in item_coupon_of_shop
     * */
-    @BindingAdapter({"bind:timeCouponOfShop", "bind:duration"})
+    @BindingAdapter({ "bind:timeCouponOfShop", "bind:duration" })
     public static void bindTime(AppCompatTextView view, long dateCreated, int duration) {
         view.setText(ActivityUtil.convertDateCouponOfShop(dateCreated, duration));
     }
@@ -421,7 +349,7 @@ public final class DataBindingUtils {
     /*
     * bind date left item coupon of shop in item_coupon_of_shop
     * */
-    @BindingAdapter({"bind:timeDateLeft", "bind:duration"})
+    @BindingAdapter({ "bind:timeDateLeft", "bind:duration" })
     public static void bindDateLeft(AppCompatTextView view, long dateCreated, int duration) {
         view.setText(ActivityUtil.dayLeft(dateCreated, duration));
     }

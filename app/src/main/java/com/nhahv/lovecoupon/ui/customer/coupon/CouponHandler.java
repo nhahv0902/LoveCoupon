@@ -8,5 +8,6 @@ import com.nhahv.lovecoupon.data.model.CouponCustomer;
  */
 public interface CouponHandler {
     void startUiCouponOfShop(CouponCustomer coupon);
+
     void loadData();
 }

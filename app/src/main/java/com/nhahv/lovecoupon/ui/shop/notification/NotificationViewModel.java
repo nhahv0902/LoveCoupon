@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.nhahv.lovecoupon.R;
@@ -24,7 +23,6 @@ import com.nhahv.lovecoupon.ui.INotificationViewModel;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
-
 import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
@@ -36,17 +34,21 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_WEB_SITE;
  * <></>
  */
 public class NotificationViewModel implements ViewModel, INotificationViewModel {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     private final Context mContext;
     private final Fragment mFragment;
     private final IShopNotification mIShopNotification;
     private final NotificationRepository mRepository;
+    private final ObservableBoolean mRefresh = new ObservableBoolean(false);
+    private final ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     private final ObservableList<Notification> mListNotification = new ObservableArrayList<>();
     private final ShopProfile mProfile;
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
+
     public NotificationViewModel(@NonNull Context context, @NonNull Fragment fragment,
-                                 @NonNull IShopNotification iShopNotification) {
+            @NonNull IShopNotification iShopNotification) {
         mContext = context;
         mFragment = fragment;
         mIShopNotification = iShopNotification;
@@ -83,14 +85,13 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
     @Override
     public void clickShare(Notification notification) {
         Uri uriLink =
-            Uri.parse(notification.getLink() != null ? notification.getLink() : DATA_WEB_SITE);
-        ShareLinkContent content = new ShareLinkContent.Builder()
-            .setContentUrl(uriLink)
-            .setContentTitle(notification.getTitle())
-            .setContentDescription(notification.getContent())
-            .setImageUrl(Uri.parse(
-                mProfile.getLogoLink() != null ? mProfile.getLogoLink() : DATA_LINK_PHOTO))
-            .build();
+                Uri.parse(notification.getLink() != null ? notification.getLink() : DATA_WEB_SITE);
+        ShareLinkContent content = new ShareLinkContent.Builder().setContentUrl(uriLink)
+                .setContentTitle(notification.getTitle())
+                .setContentDescription(notification.getContent())
+                .setImageUrl(Uri.parse(
+                        mProfile.getLogoLink() != null ? mProfile.getLogoLink() : DATA_LINK_PHOTO))
+                .build();
         ShareDialog shareDialog = new ShareDialog(mFragment);
         shareDialog.show(content);
     }
@@ -145,18 +146,17 @@ public class NotificationViewModel implements ViewModel, INotificationViewModel 
 
     public void deleteNotification(Notification notification) {
         if (mRepository == null || mProfile == null) return;
-        mRepository.deleteNotification(mProfile.getToken(), notification,
-            new Callback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean data) {
-                    loadData();
-                    ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
-                }
+        mRepository.deleteNotification(mProfile.getToken(), notification, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                loadData();
+                ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
+            }
 
-                @Override
-                public void onError() {
-                    ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
-                }
-            });
+            @Override
+            public void onError() {
+                ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
+            }
+        });
     }
 }

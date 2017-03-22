@@ -6,13 +6,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.ActivityCouponOfShopBinding;
-
 import org.parceler.Parcels;
 
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_COUPON;
@@ -52,14 +50,12 @@ public class CouponOfShopActivity extends AppCompatActivity implements CouponOfS
 
     @Override
     public void showDialog(Coupon coupon, int position) {
-        new MaterialDialog
-            .Builder(this)
-            .content(R.string.title_delete_cooupon)
-            .contentColor(ContextCompat.getColor(this, R.color.color_grey_700))
-            .positiveText(R.string.agree)
-            .positiveColor(ContextCompat.getColor(this, R.color.color_blue_600))
-            .onPositive((dialog, which) -> mViewModel.deleteCoupon(coupon, position))
-            .show();
+        new MaterialDialog.Builder(this).content(R.string.title_delete_cooupon)
+                .contentColor(ContextCompat.getColor(this, R.color.color_grey_700))
+                .positiveText(R.string.agree)
+                .positiveColor(ContextCompat.getColor(this, R.color.color_blue_600))
+                .onPositive((dialog, which) -> mViewModel.deleteCoupon(coupon, position))
+                .show();
     }
 
     @Override

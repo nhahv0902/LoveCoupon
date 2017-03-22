@@ -56,7 +56,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/dp_16"
                 android:onClick="@{()->viewModel.clickImagePlus()}"
-                android:visibility="@{viewModel.showImagePlus ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.isShopPlus ? View.VISIBLE : View.GONE}"
                 app:srcCompat="@drawable/ic_add_white_24dp"
                 tools:iconDone="@{viewModel.iconDone}"/>
 
@@ -69,10 +69,8 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:menu="@menu/activity_main_drawer"
-            tools:avatar="@{viewModel.profile.logoLink}"
             tools:drawerLayout="@{drawerLayout}"
-            tools:name="@{viewModel.profile.name}"
-            tools:viewModelShop="@{viewModel}"/>
-
+            tools:profile="@{viewModel.profile}"
+            tools:viewModel="@{viewModel}"/>
     </android.support.v4.widget.DrawerLayout>
 </layout>

@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.ui.shop.setting;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 /**
@@ -41,14 +40,14 @@ public class ProfileShopValidation {
 
     private boolean isNonNullPassword2() {
         return mProfile.getUser2() == null
-            || mProfile.getUser2().isEmpty()
-            || (mProfile.getPassword2() != null && !mProfile.getPassword2().isEmpty());
+                || mProfile.getUser2().isEmpty()
+                || (mProfile.getPassword2() != null && !mProfile.getPassword2().isEmpty());
     }
 
     private boolean isNonNullPassword1() {
         return mProfile.getUser1() == null
-            || mProfile.getUser1().isEmpty()
-            || (mProfile.getPassword1() != null && !mProfile.getPassword1().isEmpty());
+                || mProfile.getUser1().isEmpty()
+                || (mProfile.getPassword1() != null && !mProfile.getPassword1().isEmpty());
     }
 
     public enum ProfileError {
@@ -57,6 +56,7 @@ public class ProfileShopValidation {
 
     public interface ProfileCallback {
         void onSuccess();
+
         void onError(ProfileError error);
     }
 }

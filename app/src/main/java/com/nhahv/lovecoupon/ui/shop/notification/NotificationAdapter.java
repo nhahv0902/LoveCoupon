@@ -6,12 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.Notification;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ItemNotificationBinding;
 import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAdapter;
-
 import java.util.Collections;
 
 /**
@@ -19,15 +17,14 @@ import java.util.Collections;
  * <></>
  */
 public class NotificationAdapter
-    extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
-    private LayoutInflater mInflater;
+        extends RecyclerView.Adapter<NotificationAdapter.NotificationHolder> {
     private final ObservableList<Notification> mListNotification;
     private final NotificationViewModel mViewModel;
     private final ShopProfile mProfile;
+    private LayoutInflater mInflater;
 
     public NotificationAdapter(@NonNull NotificationViewModel viewModel,
-                               @NonNull ObservableList<Notification> notification,
-                               @NonNull ShopProfile profile) {
+            @NonNull ObservableList<Notification> notification, @NonNull ShopProfile profile) {
         mViewModel = viewModel;
         mProfile = profile;
         mListNotification = notification;
@@ -67,7 +64,7 @@ public class NotificationAdapter
                 Collections.addAll(listImages, listStrImages);
             }
             NotificationCreationAdapter adapter =
-                new NotificationCreationAdapter(mViewModel, listImages, false);
+                    new NotificationCreationAdapter(mViewModel, listImages, false);
             mBinding.setAdapter(adapter);
             mBinding.setNotification(item);
             mBinding.setPosition(position);

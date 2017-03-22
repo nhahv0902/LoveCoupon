@@ -2,9 +2,7 @@ package com.nhahv.lovecoupon.networking.api;
 
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -19,13 +17,16 @@ import retrofit2.http.Query;
 public interface CouponTemplateService {
     @GET("get_coupon_template_by_company_id")
     Call<List<CouponTemplate>> getCoupon(@Query("company_id") String id);
+
     @POST("/addCoupon")
     Call<Integer> generateCoupon(@Header("Authorization") String token, @Body Coupon coupon);
+
     @POST("/addCouponTemplate")
     Call<Integer> createCouponTemplate(@Header("Authorization") String token,
-                                       @Body CouponTemplate template);
+            @Body CouponTemplate template);
+
     @POST("/deleteCouponTemplate")
     Call<Integer> deleteCouponTemplate(@Header("Authorization") String token,
-                                       @Body CouponTemplate template);
+            @Body CouponTemplate template);
 }
 

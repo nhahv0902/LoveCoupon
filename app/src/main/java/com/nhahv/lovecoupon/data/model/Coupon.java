@@ -2,9 +2,7 @@ package com.nhahv.lovecoupon.data.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-
 import com.google.gson.annotations.SerializedName;
-
 import org.parceler.Parcel;
 
 /**
@@ -42,8 +40,8 @@ public class Coupon extends BaseObservable {
     }
 
     public Coupon(String couponId, String userId, String couponTemplateId, long createDate,
-                  long useDate, String shopId, String value, int duration, String userName,
-                  String userSocial, String logoLink, String content) {
+            long useDate, String shopId, String value, int duration, String userName,
+            String userSocial, String logoLink, String content) {
         mCouponId = couponId;
         mUserId = userId;
         mCouponTemplateId = couponTemplateId;
@@ -55,54 +53,6 @@ public class Coupon extends BaseObservable {
         mUserName = userName;
         mUserSocial = userSocial;
         mLogoLink = logoLink;
-        mContent = content;
-    }
-
-    public void setCouponId(String couponId) {
-        mCouponId = couponId;
-    }
-
-    public void setUserId(String userId) {
-        mUserId = userId;
-    }
-
-    public void setCouponTemplateId(String couponTemplateId) {
-        mCouponTemplateId = couponTemplateId;
-    }
-
-    public void setCreateDate(long createDate) {
-        mCreateDate = createDate;
-    }
-
-    public void setUseDate(long useDate) {
-        mUseDate = useDate;
-    }
-
-    public void setShopId(String shopId) {
-        mShopId = shopId;
-    }
-
-    public void setValue(String value) {
-        mValue = value;
-    }
-
-    public void setDuration(int duration) {
-        mDuration = duration;
-    }
-
-    public void setUserName(String userName) {
-        mUserName = userName;
-    }
-
-    public void setUserSocial(String userSocial) {
-        mUserSocial = userSocial;
-    }
-
-    public void setLogoLink(String logoLink) {
-        mLogoLink = logoLink;
-    }
-
-    public void setContent(String content) {
         mContent = content;
     }
 
@@ -111,9 +61,17 @@ public class Coupon extends BaseObservable {
         return mCouponId;
     }
 
+    public void setCouponId(String couponId) {
+        mCouponId = couponId;
+    }
+
     @Bindable
     public String getUserId() {
         return mUserId;
+    }
+
+    public void setUserId(String userId) {
+        mUserId = userId;
     }
 
     @Bindable
@@ -121,9 +79,17 @@ public class Coupon extends BaseObservable {
         return mCouponTemplateId;
     }
 
+    public void setCouponTemplateId(String couponTemplateId) {
+        mCouponTemplateId = couponTemplateId;
+    }
+
     @Bindable
     public long getCreateDate() {
         return mCreateDate;
+    }
+
+    public void setCreateDate(long createDate) {
+        mCreateDate = createDate;
     }
 
     @Bindable
@@ -131,9 +97,17 @@ public class Coupon extends BaseObservable {
         return mUseDate;
     }
 
+    public void setUseDate(long useDate) {
+        mUseDate = useDate;
+    }
+
     @Bindable
     public String getShopId() {
         return mShopId;
+    }
+
+    public void setShopId(String shopId) {
+        mShopId = shopId;
     }
 
     @Bindable
@@ -141,9 +115,17 @@ public class Coupon extends BaseObservable {
         return mValue;
     }
 
+    public void setValue(String value) {
+        mValue = value;
+    }
+
     @Bindable
     public int getDuration() {
         return mDuration;
+    }
+
+    public void setDuration(int duration) {
+        mDuration = duration;
     }
 
     @Bindable
@@ -151,9 +133,17 @@ public class Coupon extends BaseObservable {
         return mUserName;
     }
 
+    public void setUserName(String userName) {
+        mUserName = userName;
+    }
+
     @Bindable
     public String getUserSocial() {
         return mUserSocial;
+    }
+
+    public void setUserSocial(String userSocial) {
+        mUserSocial = userSocial;
     }
 
     @Bindable
@@ -161,8 +151,16 @@ public class Coupon extends BaseObservable {
         return mLogoLink;
     }
 
+    public void setLogoLink(String logoLink) {
+        mLogoLink = logoLink;
+    }
+
     @Bindable
     public String getContent() {
         return mContent;
+    }
+
+    public void setContent(String content) {
+        mContent = content;
     }
 }

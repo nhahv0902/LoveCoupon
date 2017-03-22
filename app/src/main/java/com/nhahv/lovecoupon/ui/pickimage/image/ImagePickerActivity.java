@@ -6,12 +6,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.databinding.ActivityImagePickerBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +20,7 @@ public class ImagePickerActivity extends BaseActivity implements IImagePicker {
     private ActivityImagePickerBinding mBinding;
 
     public static Intent getImagePickerIntent(@NonNull Context context,
-                                              @NonNull List<ImagePickerItem> imagePicker,
-                                              @NonNull String folderName) {
+            @NonNull List<ImagePickerItem> imagePicker, @NonNull String folderName) {
         Intent intent = new Intent(context, ImagePickerActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(BUNDLE_IMAGE, (ArrayList<ImagePickerItem>) imagePicker);
@@ -44,7 +41,7 @@ public class ImagePickerActivity extends BaseActivity implements IImagePicker {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_image_picker);
         mBinding.setViewModel(
-            new ImagePickerViewModel(getApplicationContext(), getDataFromIntent(), this));
+                new ImagePickerViewModel(getApplicationContext(), getDataFromIntent(), this));
         start();
     }
 

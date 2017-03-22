@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.ui.shop.notificationcreation;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.Notification;
 
 /**
@@ -37,6 +36,7 @@ public class NotificationValidation {
 
     public interface Callback {
         void onSuccess();
+
         void onError(Error error);
     }
 }

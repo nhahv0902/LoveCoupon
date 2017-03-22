@@ -5,5 +5,22 @@ package com.nhahv.lovecoupon.ui.login;
  * <></>
  */
 public enum LoginType {
-    NORMAL, FACEBOOK, GOOGLE
+    NORMAL("normal"), FACEBOOK("facebook"), GOOGLE("google");
+    private String mType;
+
+    LoginType(String type) {
+        mType = type;
+    }
+
+    public static LoginType toLoginType(String type) {
+        try {
+            return valueOf(type);
+        } catch (Exception ex) {
+            return NORMAL;
+        }
+    }
+
+    public String getType() {
+        return mType;
+    }
 }

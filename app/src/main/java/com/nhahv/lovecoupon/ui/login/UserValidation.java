@@ -53,6 +53,7 @@ public class UserValidation {
 
     public interface Callback {
         void onSuccess();
+
         void onError(Error error);
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -13,7 +12,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PUBLIC_PROFILE;
@@ -23,40 +22,41 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PUBLIC_PROFIL
  * <></>
  */
 public class LCFacebook {
-    private static LCFacebook sInstance;
     private final static int TIME_DELAY = 1000;
+    private static LCFacebook sInstance;
     private final String TAG = getClass().getSimpleName();
-    private final Activity mContext;
+    private final WeakReference<Activity> mWeakReference;
     private final CallbackManager mCallbackManager;
     private final ProfileTracker mProfileTracker;
     private final AccessTokenTracker mTokenTracker;
     private final FacebookCallback mCallback;
 
-    private LCFacebook(@NonNull Activity context, @NonNull FacebookCallback callback) {
-        mContext = context;
+    private LCFacebook(@NonNull Activity activity, @NonNull FacebookCallback callback) {
+        mWeakReference = new WeakReference<>(activity);
         mCallback = callback;
         mCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallbackManager,
-            new com.facebook.FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult result) {
-                    new Handler().postDelayed(() -> {
-                        Profile profile = Profile.getCurrentProfile();
-                        mCallback.onSuccess(result.getAccessToken(), profile);
-                    }, TIME_DELAY);
-                }
+        LoginManager.getInstance()
+                .registerCallback(mCallbackManager,
+                        new com.facebook.FacebookCallback<LoginResult>() {
+                            @Override
+                            public void onSuccess(LoginResult result) {
+                                new Handler().postDelayed(() -> {
+                                    Profile profile = Profile.getCurrentProfile();
+                                    mCallback.onSuccess(result.getAccessToken(), profile);
+                                }, TIME_DELAY);
+                            }
 
-                @Override
-                public void onCancel() {
-                    mCallback.onError();
-                }
+                            @Override
+                            public void onCancel() {
+                                mCallback.onError();
+                            }
 
-                @Override
-                public void onError(FacebookException error) {
-                    mCallback.onError();
-                    error.printStackTrace();
-                }
-            });
+                            @Override
+                            public void onError(FacebookException error) {
+                                mCallback.onError();
+                                error.printStackTrace();
+                            }
+                        });
         mProfileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
@@ -70,7 +70,7 @@ public class LCFacebook {
         mTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
-                                                       AccessToken currentAccessToken) {
+                    AccessToken currentAccessToken) {
                 oldAccessToken = currentAccessToken;
                 Log.d(TAG, currentAccessToken.getToken() + "");
             }
@@ -80,14 +80,16 @@ public class LCFacebook {
     }
 
     public static LCFacebook getInstance(@NonNull Activity context,
-                                         @NonNull FacebookCallback callback) {
+            @NonNull FacebookCallback callback) {
         if (sInstance == null) sInstance = new LCFacebook(context, callback);
         return sInstance;
     }
 
     public void login() {
+        Activity activity = mWeakReference.get();
+        if (activity == null) return;
         LoginManager.getInstance()
-            .logInWithReadPermissions(mContext, Collections.singletonList(DATA_PUBLIC_PROFILE));
+                .logInWithReadPermissions(activity, Collections.singletonList(DATA_PUBLIC_PROFILE));
     }
 
     public void stopTracker() {
@@ -105,6 +107,7 @@ public class LCFacebook {
 
     public interface FacebookCallback {
         void onSuccess(AccessToken token, Profile profile);
+
         void onError();
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImageFolder;
 import com.nhahv.lovecoupon.databinding.ActivityImageFolderBinding;
@@ -37,9 +36,8 @@ public class ImageFolderActivity extends BaseActivity implements IImageFolder {
 
     @Override
     public void openImagePicker(ImageFolder folder) {
-        startActivityForResult(
-            ImagePickerActivity.getImagePickerIntent(this, folder.getListImage(),folder.getFolderName()),
-            REQUEST_PICK_IMAGE);
+        startActivityForResult(ImagePickerActivity.getImagePickerIntent(this, folder.getListImage(),
+                folder.getFolderName()), REQUEST_PICK_IMAGE);
     }
 
     @Override

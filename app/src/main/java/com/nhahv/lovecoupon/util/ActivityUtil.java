@@ -10,10 +10,8 @@ import android.media.ExifInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.service.NetworkReceiver;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,10 +30,10 @@ import java.util.concurrent.TimeUnit;
 public final class ActivityUtil {
     public static final String DATA_TIME_EN = "MMM dd, yyyy";
     public static final String DATA_TIME_VN = "dd/MM/yyyy";
-    private static final String ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm";
     public static final int DATA_NUMBER = 20;
     public static final int DATA_NUMBER_TEMPLATE = 15;
     public static final int WIDTH_IMAGES_NEWS = 450;
+    private static final String ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm";
 
     public static void addFragment(FragmentManager manager, Fragment fragment, int layout) {
         manager.beginTransaction().replace(layout, fragment).commit();
@@ -108,7 +106,7 @@ public final class ActivityUtil {
         Bitmap bitmap = scaleImages(path, WIDTH_IMAGES_NEWS);
         String nameImages = path.substring(path.lastIndexOf("/") + 1, path.indexOf("."));
         String timeStamp =
-            new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
+                new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
         File resizedFile = new File(context.getCacheDir(), nameImages + "_" + timeStamp + ".png");
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -132,8 +130,7 @@ public final class ActivityUtil {
         if (bWidth > width) {
             float ratioX = width / (float) bitmap.getWidth();
             int height = (int) (ratioX * bitmap.getHeight());
-            Bitmap scaledBitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
+            Bitmap scaledBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             float middleX = width / 2.0f;
             float middleY = height / 2.0f;
             Matrix scaleMatrix = new Matrix();
@@ -141,7 +138,7 @@ public final class ActivityUtil {
             Canvas canvas = new Canvas(scaledBitmap);
             canvas.setMatrix(scaleMatrix);
             canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
-                middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+                    middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
             return modifyOrientation(scaledBitmap, path);
         }
         return modifyOrientation(bitmap, path);
@@ -156,7 +153,7 @@ public final class ActivityUtil {
             return bitmap;
         }
         int orientation =
-            ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         switch (orientation) {
             case ExifInterface.ORIENTATION_ROTATE_90:
                 return rotate(bitmap, 90);
@@ -176,14 +173,14 @@ public final class ActivityUtil {
     private static Bitmap rotate(Bitmap bitmap, float degrees) {
         Matrix matrix = new Matrix();
         matrix.postRotate(degrees);
-        return Bitmap
-            .createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,
+                true);
     }
 
     private static Bitmap flip(Bitmap bitmap, boolean horizontal, boolean vertical) {
         Matrix matrix = new Matrix();
         matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
-        return Bitmap
-            .createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix,
+                true);
     }
 }

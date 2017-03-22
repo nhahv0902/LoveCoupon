@@ -1,11 +1,9 @@
 package com.nhahv.lovecoupon.data.source.remote.coupontemplate;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.source.Callback;
-
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
 
     @Override
     public void getCouponTemplate(@NonNull String shopId,
-                                  @NonNull Callback<List<CouponTemplate>> callback) {
+            @NonNull Callback<List<CouponTemplate>> callback) {
         if (mDataSource == null) return;
         mDataSource.getCouponTemplate(shopId, new Callback<List<CouponTemplate>>() {
             @Override
@@ -44,7 +42,7 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
 
     @Override
     public void createCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
-                                     @NonNull Callback<Boolean> callback) {
+            @NonNull Callback<Boolean> callback) {
         if (mDataSource == null) return;
         mDataSource.createCouponTemplate(token, template, new Callback<Boolean>() {
             @Override
@@ -61,7 +59,7 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
 
     @Override
     public void generateCoupon(@NonNull String token, @NonNull Coupon coupon,
-                               @NonNull Callback<Boolean> callback) {
+            @NonNull Callback<Boolean> callback) {
         if (mDataSource == null) return;
         mDataSource.generateCoupon(token, coupon, new Callback<Boolean>() {
             @Override
@@ -78,7 +76,7 @@ public class CouponTemplateRepository implements CouponTemplateDataSource {
 
     @Override
     public void deleteCouponTemplate(@NonNull String token, @NonNull CouponTemplate template,
-                                     @NonNull Callback<Boolean> callback) {
+            @NonNull Callback<Boolean> callback) {
         if (mDataSource == null) return;
         mDataSource.deleteCouponTemplate(token, template, new Callback<Boolean>() {
             @Override

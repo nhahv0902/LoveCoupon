@@ -4,7 +4,6 @@ import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.databinding.ItemImagePickerBinding;
 
@@ -14,11 +13,11 @@ import com.nhahv.lovecoupon.databinding.ItemImagePickerBinding;
  */
 public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.ImagePickerHolder> {
     private final ImagePickerViewModel mViewModel;
-    private LayoutInflater mInflater;
     private final ObservableList<ImagePickerItem> mListFolder;
+    private LayoutInflater mInflater;
 
     public ImagePickerAdapter(ImagePickerViewModel viewModel,
-                              ObservableList<ImagePickerItem> listFolder) {
+            ObservableList<ImagePickerItem> listFolder) {
         mListFolder = listFolder;
         mViewModel = viewModel;
     }

@@ -7,13 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.nhahv.lovecoupon.databinding.FragmentImagePreviewerBinding;
-
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_IMAGE;
@@ -37,7 +35,7 @@ public class ImagePreviewerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+            @Nullable Bundle savedInstanceState) {
         mBinding = FragmentImagePreviewerBinding.inflate(inflater, container, false);
         start();
         return mBinding.getRoot();
@@ -48,19 +46,19 @@ public class ImagePreviewerFragment extends Fragment {
             String path = getArguments().getString(BUNDLE_IMAGE);
             mAttacher = new PhotoViewAttacher(mBinding.imagePreview);
             Glide.with(this)
-                .load(path)
-                .asBitmap()
-                .thumbnail(0.5f)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .fitCenter()
-                .into(new SimpleTarget<Bitmap>(480, 800) {
-                    @Override
-                    public void onResourceReady(Bitmap resource,
-                                                GlideAnimation<? super Bitmap> glideAnimation) {
-                        mBinding.imagePreview.setImageBitmap(resource);
-                        mAttacher.update();
-                    }
-                });
+                    .load(path)
+                    .asBitmap()
+                    .thumbnail(0.5f)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .fitCenter()
+                    .into(new SimpleTarget<Bitmap>(480, 800) {
+                        @Override
+                        public void onResourceReady(Bitmap resource,
+                                GlideAnimation<? super Bitmap> glideAnimation) {
+                            mBinding.imagePreview.setImageBitmap(resource);
+                            mAttacher.update();
+                        }
+                    });
         }
     }
 }

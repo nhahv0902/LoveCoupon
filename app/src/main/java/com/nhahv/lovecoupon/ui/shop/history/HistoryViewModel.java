@@ -4,11 +4,9 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.support.v4.app.FragmentManager;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.ui.shop.history.usecoupon.UseCreateFragment;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,13 +25,13 @@ public class HistoryViewModel extends BaseObservable implements DatePickerDialog
     private List<UseCreateFragment> mFragments = new ArrayList<>();
 
     public HistoryViewModel(Context context, IHistoryFragment iHistoryFragment,
-                            FragmentManager fragmentManager) {
+            FragmentManager fragmentManager) {
         mContext = context;
         mIHistoryFragment = iHistoryFragment;
         mFragments.add(UseCreateFragment.newInstance(UseCreateType.CREATE));
         mFragments.add(UseCreateFragment.newInstance(UseCreateType.USE));
         mAdapter.set(new ViewPagerAdapter(fragmentManager, mFragments,
-            context.getResources().getStringArray(R.array.array_history)));
+                context.getResources().getStringArray(R.array.array_history)));
     }
 
     @Override

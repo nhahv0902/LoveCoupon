@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.authorization.AuthorizationRepository;
@@ -16,10 +15,10 @@ import com.nhahv.lovecoupon.util.ActivityUtil;
  * <></>
  */
 public class ResetPasswordViewModel extends BaseObservable {
+    private final AuthorizationRepository mRepository;
     private Context mContext;
     private IResetPassword mIResetPassword;
     private ObservableField<String> mEmail = new ObservableField<>();
-    private final AuthorizationRepository mRepository;
 
     public ResetPasswordViewModel(@NonNull Context context, IResetPassword iResetPassword) {
         mContext = context;

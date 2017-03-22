@@ -8,11 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.FragmentHistoryBinding;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 import java.util.Calendar;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_DATE_PICKER;
@@ -51,12 +49,10 @@ public class HistoryFragment extends Fragment implements IHistoryFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_date_time) {
-            DatePickerDialog datePicker = DatePickerDialog.newInstance(
-                mViewModel,
-                mDatePicker.get(Calendar.YEAR),
-                mDatePicker.get(Calendar.MONTH),
-                mDatePicker.get(Calendar.DAY_OF_MONTH)
-            );
+            DatePickerDialog datePicker =
+                    DatePickerDialog.newInstance(mViewModel, mDatePicker.get(Calendar.YEAR),
+                            mDatePicker.get(Calendar.MONTH),
+                            mDatePicker.get(Calendar.DAY_OF_MONTH));
             datePicker.show(getActivity().getFragmentManager(), DATA_DATE_PICKER);
         }
         return super.onOptionsItemSelected(item);

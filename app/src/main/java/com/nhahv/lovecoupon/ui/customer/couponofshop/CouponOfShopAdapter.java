@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.databinding.ItemCouponOfShopBinding;
 
@@ -14,16 +13,15 @@ import com.nhahv.lovecoupon.databinding.ItemCouponOfShopBinding;
  * <></>
  */
 public class CouponOfShopAdapter extends RecyclerView.Adapter<CouponOfShopAdapter.CouponHolder> {
-    private LayoutInflater mInflater;
     private final ObservableList<Coupon> mListCoupon;
     private final CouponOfShopViewModel mViewModel;
     private final String mLogoLink;
     private final String mNameShop;
+    private LayoutInflater mInflater;
 
     public CouponOfShopAdapter(@NonNull CouponOfShopViewModel viewModel,
-                               @NonNull ObservableList<Coupon> listCoupon,
-                               @NonNull String logoLink,
-                               @NonNull String name) {
+            @NonNull ObservableList<Coupon> listCoupon, @NonNull String logoLink,
+            @NonNull String name) {
         mViewModel = viewModel;
         mLogoLink = logoLink;
         mNameShop = name;

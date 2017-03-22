@@ -34,7 +34,6 @@
         android:gravity="center_vertical"
         android:onClick="@{()->viewModel.clickGenerateCoupon(template)}"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/dp_4"
         app:cardElevation="@dimen/dp_4"
@@ -44,7 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/dp_16">
+            android:paddingBottom="@dimen/dp_16"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_16">
 
             <com.nhahv.lovecoupon.ui.widget.CircleImageView
                 android:id="@+id/image_logo"

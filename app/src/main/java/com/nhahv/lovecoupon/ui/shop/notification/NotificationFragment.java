@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
@@ -38,21 +37,19 @@ public class NotificationFragment extends Fragment implements IShopNotification 
 
     @Override
     public void editNotification(@NonNull Notification notification) {
-        startActivityForResult(NotificationCreationActivity
-                .getNotificationIntent(getActivity(), notification, ActionNotificationType.EDIT),
-            REQUEST_NOTIFICATION);
+        startActivityForResult(
+                NotificationCreationActivity.getNotificationIntent(getActivity(), notification,
+                        ActionNotificationType.EDIT), REQUEST_NOTIFICATION);
     }
 
     @Override
     public void showDialogDeleteNotification(Notification notification) {
-        new MaterialDialog
-            .Builder(getActivity())
-            .content(R.string.title_delete_notification)
-            .contentColor(ContextCompat.getColor(getActivity(), R.color.color_grey_700))
-            .positiveText(R.string.agree)
-            .positiveColor(ContextCompat.getColor(getActivity(), R.color.color_blue_600))
-            .onPositive((dialog, which) -> mViewModel.deleteNotification(notification))
-            .show();
+        new MaterialDialog.Builder(getActivity()).content(R.string.title_delete_notification)
+                .contentColor(ContextCompat.getColor(getActivity(), R.color.color_grey_700))
+                .positiveText(R.string.agree)
+                .positiveColor(ContextCompat.getColor(getActivity(), R.color.color_blue_600))
+                .onPositive((dialog, which) -> mViewModel.deleteNotification(notification))
+                .show();
     }
 
     public void loadData() {

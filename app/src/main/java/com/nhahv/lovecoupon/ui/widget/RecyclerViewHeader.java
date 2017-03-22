@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -126,8 +125,8 @@ public class RecyclerViewHeader extends RelativeLayout {
                 verticalMargins = layoutParams.topMargin + layoutParams.bottomMargin;
                 horizontalMargins = layoutParams.leftMargin + layoutParams.rightMargin;
             }
-            recyclerView
-                .onHeaderSizeChanged(getHeight() + verticalMargins, getWidth() + horizontalMargins);
+            recyclerView.onHeaderSizeChanged(getHeight() + verticalMargins,
+                    getWidth() + horizontalMargins);
             onScrollChanged();
         }
     }
@@ -150,12 +149,9 @@ public class RecyclerViewHeader extends RelativeLayout {
             int verticalDiff = isVertical ? scrollDiff : 0;
             int horizontalDiff = isVertical ? 0 : scrollDiff;
             MotionEvent recyclerEvent =
-                MotionEvent.obtain(event.getDownTime(),
-                    event.getEventTime(),
-                    event.getAction(),
-                    event.getX() - horizontalDiff,
-                    event.getY() - verticalDiff,
-                    event.getMetaState());
+                    MotionEvent.obtain(event.getDownTime(), event.getEventTime(), event.getAction(),
+                            event.getX() - horizontalDiff, event.getY() - verticalDiff,
+                            event.getMetaState());
             recyclerView.onTouchEvent(recyclerEvent);
             return false;
         }
@@ -165,11 +161,12 @@ public class RecyclerViewHeader extends RelativeLayout {
     private void validate(RecyclerView recyclerView) {
         if (recyclerView.getLayoutManager() == null) {
             throw new IllegalStateException(
-                "Be sure to attach RecyclerViewHeader after setting your RecyclerView's LayoutManager.");
+                    "Be sure to attach RecyclerViewHeader after setting your RecyclerView's "
+                            + "LayoutManager.");
         }
     }
 
-    @IntDef({VISIBLE, INVISIBLE, GONE})
+    @IntDef({ VISIBLE, INVISIBLE, GONE })
     @Retention(RetentionPolicy.SOURCE)
     private @interface Visibility {
     }
@@ -209,19 +206,18 @@ public class RecyclerViewHeader extends RelativeLayout {
         }
 
         private int getScrollOffset(boolean isVertical) {
-            return isVertical ? recyclerView.computeVerticalScrollOffset() :
-                recyclerView.computeHorizontalScrollOffset();
+            return isVertical ? recyclerView.computeVerticalScrollOffset()
+                    : recyclerView.computeHorizontalScrollOffset();
         }
 
         private int getTranslationBase(boolean isVertical) {
-            return isVertical ?
-                recyclerView.computeVerticalScrollRange() - recyclerView.getHeight() :
-                recyclerView.computeHorizontalScrollRange() - recyclerView.getWidth();
+            return isVertical ? recyclerView.computeVerticalScrollRange() - recyclerView.getHeight()
+                    : recyclerView.computeHorizontalScrollRange() - recyclerView.getWidth();
         }
 
         private boolean hasItems() {
-            return recyclerView.getAdapter() != null &&
-                recyclerView.getAdapter().getItemCount() != 0;
+            return recyclerView.getAdapter() != null
+                    && recyclerView.getAdapter().getItemCount() != 0;
         }
 
         private void setHeaderDecoration(HeaderItemDecoration decoration) {
@@ -251,7 +247,7 @@ public class RecyclerViewHeader extends RelativeLayout {
         }
 
         private void setOnChildAttachListener(
-            RecyclerView.OnChildAttachStateChangeListener onChildAttachListener) {
+                RecyclerView.OnChildAttachStateChangeListener onChildAttachListener) {
             clearOnChildAttachListener();
             this.onChildAttachListener = onChildAttachListener;
             recyclerView.addOnChildAttachStateChangeListener(this.onChildAttachListener);
@@ -297,18 +293,20 @@ public class RecyclerViewHeader extends RelativeLayout {
                 linear = null;
                 grid = (GridLayoutManager) manager;
                 staggeredGrid = null;
-//            } else if (manager instanceof StaggeredGridLayoutManager) { //TODO: 05.04.2016 implement staggered
-//                linear = null;
-//                grid = null;
-//                staggeredGrid = (StaggeredGridLayoutManager) manager;
+                //            } else if (manager instanceof StaggeredGridLayoutManager) { //TODO:
+                // 05.04.2016 implement staggered
+                //                linear = null;
+                //                grid = null;
+                //                staggeredGrid = (StaggeredGridLayoutManager) manager;
             } else {
                 throw new IllegalArgumentException(
-                    "Currently RecyclerViewHeader supports only LinearLayoutManager and GridLayoutManager.");
+                        "Currently RecyclerViewHeader supports only LinearLayoutManager and "
+                                + "GridLayoutManager.");
             }
         }
 
         public static LayoutManagerDelegate with(
-            @NonNull RecyclerView.LayoutManager layoutManager) {
+                @NonNull RecyclerView.LayoutManager layoutManager) {
             return new LayoutManagerDelegate(layoutManager);
         }
 
@@ -317,8 +315,9 @@ public class RecyclerViewHeader extends RelativeLayout {
                 return 1;
             } else if (grid != null) {
                 return grid.getSpanCount();
-//            } else if (staggeredGrid != null) {
-//                return staggeredGrid.getSpanCount(); //TODO: 05.04.2016 implement staggered
+                //            } else if (staggeredGrid != null) {
+                //                return staggeredGrid.getSpanCount(); //TODO: 05.04.2016
+                // implement staggered
             }
             return 0; //shouldn't get here
         }
@@ -328,8 +327,9 @@ public class RecyclerViewHeader extends RelativeLayout {
                 return linear.findFirstVisibleItemPosition() == 0;
             } else if (grid != null) {
                 return grid.findFirstVisibleItemPosition() == 0;
-//            } else if (staggeredGrid != null) {
-//                return staggeredGrid.findFirstCompletelyVisibleItemPositions() //TODO: 05.04.2016 implement staggered
+                //            } else if (staggeredGrid != null) {
+                //                return staggeredGrid.findFirstCompletelyVisibleItemPositions()
+                // TODO: 05.04.2016 implement staggered
             }
             return false; //shouldn't get here
         }
@@ -339,8 +339,8 @@ public class RecyclerViewHeader extends RelativeLayout {
                 return linear.getReverseLayout();
             } else if (grid != null) {
                 return grid.getReverseLayout();
-//            } else if (staggeredGrid != null) {
-//                return ; //TODO: 05.04.2016 implement staggered
+                //            } else if (staggeredGrid != null) {
+                //                return ; //TODO: 05.04.2016 implement staggered
             }
             return false; //shouldn't get here
         }
@@ -350,8 +350,8 @@ public class RecyclerViewHeader extends RelativeLayout {
                 return linear.getOrientation() == LinearLayoutManager.VERTICAL;
             } else if (grid != null) {
                 return grid.getOrientation() == LinearLayoutManager.VERTICAL;
-//            } else if (staggeredGrid != null) {
-//                return ; //TODO: 05.04.2016 implement staggered
+                //            } else if (staggeredGrid != null) {
+                //                return ; //TODO: 05.04.2016 implement staggered
             }
             return false; //shouldn't get here
         }
@@ -376,10 +376,10 @@ public class RecyclerViewHeader extends RelativeLayout {
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                                   RecyclerView.State state) {
+                RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             final boolean headerRelatedPosition =
-                parent.getChildLayoutPosition(view) < firstRowSpan;
+                    parent.getChildLayoutPosition(view) < firstRowSpan;
             int heightOffset = headerRelatedPosition && isVertical ? headerHeight : 0;
             int widthOffset = headerRelatedPosition && !isVertical ? headerWidth : 0;
             if (layoutManager.isReversed()) {

@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityTemplateCreationBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;

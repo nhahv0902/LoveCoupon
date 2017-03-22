@@ -20,8 +20,7 @@ public class SquareLayout extends RelativeLayout {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SquareLayout(Context context, AttributeSet attrs, int defStyleAttr,
-                        int defStyleRes) {
+    public SquareLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

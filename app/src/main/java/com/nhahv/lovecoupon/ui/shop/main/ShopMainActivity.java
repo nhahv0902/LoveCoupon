@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatDelegate;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Notification;
+import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ActivityShopMainBinding;
 import com.nhahv.lovecoupon.ui.BaseActivity;
 import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
@@ -21,7 +21,6 @@ import com.nhahv.lovecoupon.ui.shop.notificationcreation.NotificationCreationAct
 import com.nhahv.lovecoupon.ui.shop.setting.SettingFragment;
 import com.nhahv.lovecoupon.ui.shop.templatecreation.TemplateCreationActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +29,15 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_NOTIFIC
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_TEMPLATE;
 
 public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
-    private ActivityShopMainBinding mBinding;
-    private ShopMainViewModel mViewModel;
-    private final List<Fragment> mListFragment = new ArrayList<>();
-    private String[] mTitles;
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    private final List<Fragment> mListFragment = new ArrayList<>();
+    private ActivityShopMainBinding mBinding;
+    private ShopMainViewModel mViewModel;
+    private String[] mTitles;
+
     public static Intent getShopMainIntent(Context context) {
         return new Intent(context, ShopMainActivity.class);
     }
@@ -55,7 +56,7 @@ public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
     public void start() {
         mListFragment.add(CouponFragment.newInstance());
         mListFragment.add(NotificationFragment.newInstance());
-        mListFragment.add(SettingFragment.newInstance());
+        mListFragment.add(SettingFragment.newInstance(this));
         mListFragment.add(HistoryFragment.newInstance());
         mListFragment.add(ShareFragment.newInstance());
         mTitles = getResources().getStringArray(R.array.activity_main_shop);
@@ -67,35 +68,9 @@ public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
     public void onBackPressed() {
         if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else super.onBackPressed();
-    }
-
-    @Override
-    public void addFragment(int position) {
-        mViewModel.updateShowImagePlus(position <= 2);
-        mViewModel.updateIconDone(position == 2);
-        setTitle(mTitles[position]);
-        ActivityUtil.addFragment(getSupportFragmentManager(),
-            mListFragment.get(position),
-            R.id.frame_layout);
-    }
-
-    @Override
-    public void createCouponTemplate() {
-        startActivityForResult(TemplateCreationActivity.getTemplateIntent(this), REQUEST_TEMPLATE);
-    }
-
-    @Override
-    public void createNotification() {
-        startActivityForResult(
-            NotificationCreationActivity.getNotificationIntent(this, new Notification(), CREATE),
-            REQUEST_NOTIFICATION);
-    }
-
-    @Override
-    public void startUiFirstScreen() {
-        startActivity(FirstScreenActivity.getFirstIntent(this, 0));
-        finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -124,5 +99,38 @@ public class ShopMainActivity extends BaseActivity implements IShopMainHandler {
         if (fragment instanceof SettingFragment) {
             ((SettingFragment) fragment).updateProfile();
         }
+    }
+
+    @Override
+    public void createNotification() {
+        startActivityForResult(
+                NotificationCreationActivity.getNotificationIntent(ShopMainActivity.this,
+                        new Notification(), CREATE), REQUEST_NOTIFICATION);
+    }
+
+    @Override
+    public void createCouponTemplate() {
+        startActivityForResult(TemplateCreationActivity.getTemplateIntent(ShopMainActivity.this),
+                REQUEST_TEMPLATE);
+    }
+
+    @Override
+    public void startUiFirstScreen() {
+        startActivity(FirstScreenActivity.getFirstIntent(ShopMainActivity.this, 0));
+        finish();
+    }
+
+    @Override
+    public void addFragment(int position) {
+        mViewModel.setIsShopPlus(position <= 2);
+        mViewModel.updateIconDone(position == 2);
+        setTitle(mTitles[position]);
+        ActivityUtil.addFragment(getSupportFragmentManager(), mListFragment.get(position),
+                R.id.frame_layout);
+    }
+
+    @Override
+    public void updateProfile(ShopProfile profile) {
+        if (mViewModel != null) mViewModel.updateUiProfile(profile);
     }
 }

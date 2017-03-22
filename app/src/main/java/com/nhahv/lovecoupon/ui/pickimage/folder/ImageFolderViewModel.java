@@ -7,13 +7,11 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImageFolder;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.LoaderImageUtil;
-
 import java.util.List;
 
 /**
@@ -23,6 +21,8 @@ import java.util.List;
 public class ImageFolderViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
     private final IImageFolder mListener;
+    private final ObservableBoolean mRefresh = new ObservableBoolean(false);
+    private final ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     private final ObservableList<ImageFolder> mListFolder = new ObservableArrayList<>();
 
     public ImageFolderViewModel(Context context, IImageFolder iImageFolder) {
@@ -33,8 +33,7 @@ public class ImageFolderViewModel extends BaseObservable implements ViewModel {
     }
 
     public void clickStartImagePicker(ImageFolder folder) {
-        if (mListener != null)
-            mListener.openImagePicker(folder);
+        if (mListener != null) mListener.openImagePicker(folder);
     }
 
     @Override

@@ -1,11 +1,9 @@
 package com.nhahv.lovecoupon.data.source.remote.coupon;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.data.source.Callback;
-
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void getCreateCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                                @NonNull Callback<List<Coupon>> callback) {
+            @NonNull Callback<List<Coupon>> callback) {
         if (mDataSource == null) return;
         mDataSource.getCreateCoupon(header, id, utc1, utc2, new Callback<List<Coupon>>() {
             @Override
@@ -44,7 +42,7 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void getUsedCoupon(@NonNull String header, @NonNull String id, long utc1, long utc2,
-                              @NonNull Callback<List<Coupon>> callback) {
+            @NonNull Callback<List<Coupon>> callback) {
         if (mDataSource == null) return;
         mDataSource.getUsedCoupon(header, id, utc1, utc2, new Callback<List<Coupon>>() {
             @Override
@@ -61,7 +59,7 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void getCouponCustomer(@NonNull String idUser,
-                                  @NonNull Callback<List<CouponCustomer>> callback) {
+            @NonNull Callback<List<CouponCustomer>> callback) {
         if (mDataSource == null) return;
         mDataSource.getCouponCustomer(idUser, new Callback<List<CouponCustomer>>() {
             @Override
@@ -94,7 +92,7 @@ public class CouponRepository implements CouponDataSource {
 
     @Override
     public void addCoupon(@NonNull String city, @NonNull Coupon coupon,
-                          @NonNull Callback<CouponCustomer> callback) {
+            @NonNull Callback<CouponCustomer> callback) {
         if (mDataSource == null) return;
         mDataSource.addCoupon(city, coupon, new Callback<CouponCustomer>() {
             @Override

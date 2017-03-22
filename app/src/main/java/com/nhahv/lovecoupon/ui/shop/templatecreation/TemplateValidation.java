@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.ui.shop.templatecreation;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 
 /**
@@ -37,6 +36,7 @@ public class TemplateValidation {
 
     public interface Callback {
         void onSuccess();
+
         void onError(Error error);
     }
 }

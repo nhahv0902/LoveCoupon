@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.databinding.FragmentUseCreateBinding;
 import com.nhahv.lovecoupon.ui.shop.history.UseCreateType;
 

@@ -1,9 +1,7 @@
 package com.nhahv.lovecoupon.data.source.remote.upload;
 
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.source.Callback;
-
 import java.util.List;
 
 /**
@@ -41,7 +39,7 @@ public class UpLoadRepository implements UpLoadDataSource {
 
     @Override
     public void upLoadMultiple(@NonNull List<String> pathImages,
-                               @NonNull Callback<List<String>> callback) {
+            @NonNull Callback<List<String>> callback) {
         if (mDataSource == null) return;
         mDataSource.upLoadMultiple(pathImages, new Callback<List<String>>() {
             @Override

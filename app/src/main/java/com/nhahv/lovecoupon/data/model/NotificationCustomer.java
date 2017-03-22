@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.data.model;
 
 import android.databinding.Bindable;
-
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 

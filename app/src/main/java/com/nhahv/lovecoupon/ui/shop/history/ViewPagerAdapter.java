@@ -2,9 +2,7 @@ package com.nhahv.lovecoupon.ui.shop.history;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import com.nhahv.lovecoupon.ui.shop.history.usecoupon.UseCreateFragment;
-
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {

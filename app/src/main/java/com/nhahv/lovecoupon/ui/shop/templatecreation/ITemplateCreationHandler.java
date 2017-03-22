@@ -6,5 +6,6 @@ package com.nhahv.lovecoupon.ui.shop.templatecreation;
  */
 public interface ITemplateCreationHandler {
     int getDuration();
+
     void createTemplateSuccess();
 }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityResetPasswordBinding;
@@ -43,10 +42,9 @@ public class ResetPasswordActivity extends AppCompatActivity implements IResetPa
 
     @Override
     public void showDialogResult() {
-        new MaterialDialog.Builder(this)
-            .content(getString(R.string.action_send_email_success))
-            .positiveText(R.string.agree)
-            .positiveColor(getResources().getColor(R.color.color_blue_600))
-            .show();
+        new MaterialDialog.Builder(this).content(getString(R.string.action_send_email_success))
+                .positiveText(R.string.agree)
+                .positiveColor(getResources().getColor(R.color.color_blue_600))
+                .show();
     }
 }

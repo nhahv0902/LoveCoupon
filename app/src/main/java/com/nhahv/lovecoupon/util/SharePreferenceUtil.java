@@ -3,9 +3,8 @@ package com.nhahv.lovecoupon.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-
 import com.google.gson.Gson;
-import com.nhahv.lovecoupon.data.model.CustomerProfile;
+import com.nhahv.lovecoupon.data.model.LCProfile;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 
 import static com.nhahv.lovecoupon.util.Constant.PreferenceConstant.PREF_CITY;
@@ -20,8 +19,8 @@ public class SharePreferenceUtil {
     private static final String SHARED_PREFERENCE = "LoveCoupon";
     private static final String PREF_PROFILE_SHOP = "PREF_PROFILE_SHOP";
     private static final String PREF_PROFILE_CUSTOMER = "PREF_PROFILE_CUSTOMER";
-    private SharedPreferences mPreferences;
     private static SharePreferenceUtil sInstance;
+    private SharedPreferences mPreferences;
 
     private SharePreferenceUtil(Context context) {
         mPreferences = context.getSharedPreferences(SHARED_PREFERENCE, Context.MODE_PRIVATE);
@@ -45,16 +44,16 @@ public class SharePreferenceUtil {
     }
 
     public ShopProfile profileShop() {
-        return new Gson()
-            .fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""), ShopProfile.class);
+        return new Gson().fromJson(mPreferences.getString(PREF_PROFILE_SHOP, ""),
+                ShopProfile.class);
     }
 
-    public CustomerProfile profileCustomer() {
-        return new Gson()
-            .fromJson(mPreferences.getString(PREF_PROFILE_CUSTOMER, ""), CustomerProfile.class);
+    public LCProfile profileCustomer() {
+        return new Gson().fromJson(mPreferences.getString(PREF_PROFILE_CUSTOMER, ""),
+                LCProfile.class);
     }
 
-    public void writeProfileCustomer(@NonNull CustomerProfile profile) {
+    public void writeProfile(@NonNull LCProfile profile) {
         mPreferences.edit().putString(PREF_PROFILE_CUSTOMER, new Gson().toJson(profile)).apply();
     }
 

@@ -6,7 +6,6 @@ import android.databinding.BaseObservable;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 
@@ -46,8 +45,9 @@ public class ShareViewModel extends BaseObservable {
         if (!ActivityUtil.isNetworkConnected(mContext)) return;
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
         intentBuilder.setToolbarColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-            .setSecondaryToolbarColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-            .build().launchUrl(mContext, Uri.parse(DATA_WEB_SITE));
+                .setSecondaryToolbarColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
+                .build()
+                .launchUrl(mContext, Uri.parse(DATA_WEB_SITE));
     }
 
     private String getString(int res) {

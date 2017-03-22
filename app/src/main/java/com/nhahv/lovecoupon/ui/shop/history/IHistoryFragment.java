@@ -8,5 +8,6 @@ import java.util.Calendar;
  */
 public interface IHistoryFragment {
     void updateMenuDatePicker(String dateTime);
+
     void updateDatePicker(Calendar datePicker);
 }

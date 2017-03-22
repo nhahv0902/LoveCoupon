@@ -6,8 +6,12 @@ package com.nhahv.lovecoupon.ui.login;
  */
 public interface LoginHandler {
     void startUiShopMain();
+
     void startUiCustomer();
+
     void startUiResetPassword();
-    void showProgressDialog();
-    void hideProgressDialog();
+
+    void showProgress();
+
+    void hideProgress();
 }

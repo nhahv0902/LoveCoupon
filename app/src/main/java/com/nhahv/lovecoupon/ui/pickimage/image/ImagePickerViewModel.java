@@ -6,10 +6,8 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
-
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.ui.pickimage.preview.ImagePreviewerActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class ImagePickerViewModel extends BaseObservable {
     private final ObservableInt mNumberImage = new ObservableInt();
 
     public ImagePickerViewModel(Context context, List<ImagePickerItem> imagePickerItems,
-                                IImagePicker imagePicker) {
+            IImagePicker imagePicker) {
         mContext = context;
         mImagePicker = imagePicker;
         mAdapter.set(new ImagePickerAdapter(this, mListImage));
@@ -31,7 +29,7 @@ public class ImagePickerViewModel extends BaseObservable {
 
     public void clickPreviewImage(int position) {
         mContext.startActivity(
-            ImagePreviewerActivity.getImagePreviewIntent(mContext, position, mListImage));
+                ImagePreviewerActivity.getImagePreviewIntent(mContext, position, mListImage));
     }
 
     public void updateNumberImage() {

@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.databinding.ActivityImagePreviewerBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class ImagePreviewerActivity extends AppCompatActivity {
     private ImagePreviewerViewModel mViewModel;
 
     public static Intent getImagePreviewIntent(Context context, int position,
-                                               List<ImagePickerItem> imagePickerItems) {
+            List<ImagePickerItem> imagePickerItems) {
         Intent intent = new Intent(context, ImagePreviewerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();

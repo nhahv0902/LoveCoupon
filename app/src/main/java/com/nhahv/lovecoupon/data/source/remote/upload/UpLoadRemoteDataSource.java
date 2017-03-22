@@ -2,15 +2,12 @@ package com.nhahv.lovecoupon.data.source.remote.upload;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.networking.ServiceGenerator;
 import com.nhahv.lovecoupon.networking.api.UpLoadService;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -58,8 +55,9 @@ public class UpLoadRemoteDataSource implements UpLoadDataSource {
         mService.upload(description, body).enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response == null) callback.onError();
-                else {
+                if (response == null) {
+                    callback.onError();
+                } else {
                     Log.d("TAG", response.body().toString() + "");
                     Log.d("TAG", response.toString() + "");
                     String url = URL_UP_LOAD + "/upload/" + file.getName();
@@ -77,7 +75,7 @@ public class UpLoadRemoteDataSource implements UpLoadDataSource {
 
     @Override
     public void upLoadMultiple(@NonNull List<String> pathImages,
-                               @NonNull Callback<List<String>> callback) {
+            @NonNull Callback<List<String>> callback) {
         if (mService == null) return;
         List<MultipartBody.Part> parts = new ArrayList<>();
         List<String> urls = new ArrayList<>();
@@ -87,20 +85,24 @@ public class UpLoadRemoteDataSource implements UpLoadDataSource {
             else {*/
             parts.add(prepareFilePart("LoveCoupon" + i, pathImages.get(i)));
             urls.add(URL_UP_LOAD + "/upload/" + new File(pathImages.get(i)).getName());
-//            }
+            //            }
         }
-        mService.upLoadMultiple(createPartFromString("LoveCoupon"), parts).enqueue(
-            new retrofit2.Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response == null || response.body() == null) callback.onError();
-                    else callback.onSuccess(urls);
-                }
+        mService.upLoadMultiple(createPartFromString("LoveCoupon"), parts)
+                .enqueue(new retrofit2.Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call,
+                            Response<ResponseBody> response) {
+                        if (response == null || response.body() == null) {
+                            callback.onError();
+                        } else {
+                            callback.onSuccess(urls);
+                        }
+                    }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    callback.onError();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        callback.onError();
+                    }
+                });
     }
 }

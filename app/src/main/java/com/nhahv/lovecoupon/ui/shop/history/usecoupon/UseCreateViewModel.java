@@ -9,7 +9,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.source.Callback;
@@ -18,7 +17,6 @@ import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.shop.history.UseCreateType;
 import com.nhahv.lovecoupon.util.ActivityUtil;
-
 import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_FACEBOOK;
@@ -35,6 +33,8 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
     private final long UTC1 = 1488960000901L;
     private final long UTC2 = 1488960006901L;
     private final Context mContext;
+    private final ObservableBoolean mRefresh = new ObservableBoolean(false);
+    private final ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     private final ObservableList<Coupon> mListCoupon = new ObservableArrayList<>();
     private final ObservableBoolean mShowData = new ObservableBoolean(true);
     private final CouponDataSource mRepository;
@@ -52,20 +52,19 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
         if (mRepository == null) return;
         switch (mType) {
             case CREATE:
-                mRepository
-                    .getCreateCoupon(TOKEN, ID, UTC1, UTC2, new Callback<List<Coupon>>() {
-                        @Override
-                        public void onSuccess(List<Coupon> data) {
-                            mListCoupon.clear();
-                            mListCoupon.addAll(data);
-                            mAdapter.get().notifyDataSetChanged();
-                            setRefresh(false);
-                        }
+                mRepository.getCreateCoupon(TOKEN, ID, UTC1, UTC2, new Callback<List<Coupon>>() {
+                    @Override
+                    public void onSuccess(List<Coupon> data) {
+                        mListCoupon.clear();
+                        mListCoupon.addAll(data);
+                        mAdapter.get().notifyDataSetChanged();
+                        setRefresh(false);
+                    }
 
-                        @Override
-                        public void onError() {
-                        }
-                    });
+                    @Override
+                    public void onError() {
+                    }
+                });
                 break;
             case USE:
                 mRepository.getUsedCoupon(TOKEN, ID, UTC1, UTC2, new Callback<List<Coupon>>() {
@@ -88,16 +87,18 @@ public class UseCreateViewModel extends BaseObservable implements ViewModel {
     }
 
     public void updateTime(long time) {
-//        mUtc1 = time;
-//        mUtc2 = (time + TIME_ONE_DAY);
+        //        mUtc1 = time;
+        //        mUtc2 = (time + TIME_ONE_DAY);
         loadData();
     }
 
     public void clickViewUser(Coupon coupon) {
-        String link = coupon.getUserSocial().equals(DATA_FACEBOOK) ?
-            "https://facebook" + "" + ".com/" + coupon.getUserId() :
-            (coupon.getUserSocial().equals(DATA_GOOGLE) ?
-                "https://plus.google.com/" + coupon.getUserId() : "");
+        String link = coupon.getUserSocial().equals(DATA_FACEBOOK) ? "https://facebook"
+                + ""
+                + ".com/"
+                + coupon.getUserId() : (coupon.getUserSocial().equals(DATA_GOOGLE) ?
+                "https://plus.google.com/"
+                        + coupon.getUserId() : "");
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
         mContext.startActivity(intent);
     }

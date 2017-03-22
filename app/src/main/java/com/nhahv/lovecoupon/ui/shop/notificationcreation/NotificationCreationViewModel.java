@@ -8,7 +8,6 @@ import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
 import com.nhahv.lovecoupon.data.model.Notification;
@@ -20,7 +19,6 @@ import com.nhahv.lovecoupon.ui.INotificationViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -29,7 +27,7 @@ import java.util.List;
  * <></>
  */
 public class NotificationCreationViewModel extends BaseObservable
-    implements DatePickerDialog.OnDateSetListener, INotificationViewModel {
+        implements DatePickerDialog.OnDateSetListener, INotificationViewModel {
     private final String TAG = getClass().getSimpleName();
     private final Context mContext;
     private final ActionNotificationType mType;
@@ -42,9 +40,8 @@ public class NotificationCreationViewModel extends BaseObservable
     private final ShopProfile mProfile;
 
     public NotificationCreationViewModel(@NonNull Context context,
-                                         @NonNull NotificationCreationHandler handler,
-                                         @NonNull Notification notification,
-                                         @NonNull ActionNotificationType type) {
+            @NonNull NotificationCreationHandler handler, @NonNull Notification notification,
+            @NonNull ActionNotificationType type) {
         mContext = context;
         mHandler = handler;
         mNotification = notification;
@@ -65,15 +62,18 @@ public class NotificationCreationViewModel extends BaseObservable
 
     public void clickCreateNotification() {
         if (!ActivityUtil.isNetworkConnected(mContext)
-            || mRepository == null
-            || mUpLoadRepository == null) {
+                || mRepository == null
+                || mUpLoadRepository == null) {
             return;
         }
         new NotificationValidation(mNotification).validation(new NotificationValidation.Callback() {
             @Override
             public void onSuccess() {
-                if (mListImage.size() > 0) upLoadImage();
-                else createNotification();
+                if (mListImage.size() > 0) {
+                    upLoadImage();
+                } else {
+                    createNotification();
+                }
             }
 
             @Override
@@ -124,20 +124,19 @@ public class NotificationCreationViewModel extends BaseObservable
     }
 
     private void createNotification() {
-        mNotification.setShopId(mProfile.getShopId());
+        mNotification.setShopId(mProfile.getId());
         mNotification.setNotificationId(ActivityUtil.randomId());
-        mRepository.createNotification(mProfile.getToken(), mNotification,
-            new Callback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean data) {
-                    mHandler.createNotificationSuccess();
-                }
+        mRepository.createNotification(mProfile.getToken(), mNotification, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean data) {
+                mHandler.createNotificationSuccess();
+            }
 
-                @Override
-                public void onError() {
-                    ActivityUtil.showMsg(mContext, R.string.msg_create_error);
-                }
-            });
+            @Override
+            public void onError() {
+                ActivityUtil.showMsg(mContext, R.string.msg_create_error);
+            }
+        });
     }
 
     @Override
@@ -184,7 +183,7 @@ public class NotificationCreationViewModel extends BaseObservable
     }
 
     private boolean checkImageExists(@NonNull ImagePickerItem item,
-                                     @NonNull List<String> listImage) {
+            @NonNull List<String> listImage) {
         for (String itemImage : listImage) {
             if (itemImage.equals(item.getPathImage())) return true;
         }

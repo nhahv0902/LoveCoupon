@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
 import com.nhahv.lovecoupon.databinding.ItemShopCouponBinding;
@@ -21,8 +20,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
     private LayoutInflater mInflater;
 
     public CouponAdapter(@NonNull ObservableList<CouponTemplate> couponItems,
-                         @NonNull CouponViewModel viewModel,
-                         @NonNull ShopProfile profile) {
+            @NonNull CouponViewModel viewModel, @NonNull ShopProfile profile) {
         mListCoupon = couponItems;
         mProfile = profile;
         mViewModel = viewModel;

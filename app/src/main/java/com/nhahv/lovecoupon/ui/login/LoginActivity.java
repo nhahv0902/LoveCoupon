@@ -1,28 +1,27 @@
 package com.nhahv.lovecoupon.ui.login;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.databinding.ActivityLoginBinding;
+import com.nhahv.lovecoupon.ui.BaseActivity;
 import com.nhahv.lovecoupon.ui.customer.main.CustomerMainActivity;
 import com.nhahv.lovecoupon.ui.firstscreen.AccountType;
+import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
 import com.nhahv.lovecoupon.ui.resetpassword.ResetPasswordActivity;
 import com.nhahv.lovecoupon.ui.shop.main.ShopMainActivity;
 
 import static com.nhahv.lovecoupon.util.Constant.BundleConstant.BUNDLE_ACCOUNT_TYPE;
+import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_NOT_NOTIFICATION;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_GOOGLE;
 
-public class LoginActivity extends AppCompatActivity implements LoginHandler {
+public class LoginActivity extends BaseActivity implements LoginHandler {
     private ActivityLoginBinding mBinding;
     private LoginViewModel mViewModel;
-    private ProgressDialog mProgressDialog;
 
     public static Intent getLoginIntent(Context context, AccountType type) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -47,17 +46,13 @@ public class LoginActivity extends AppCompatActivity implements LoginHandler {
     }
 
     @Override
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.msg_loading));
-        }
-        if (!mProgressDialog.isShowing()) mProgressDialog.show();
+    public void showProgress() {
+        showProgressDialog();
     }
 
     @Override
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) mProgressDialog.hide();
+    public void hideProgress() {
+        hideProgressDialog();
     }
 
     @Override
@@ -74,16 +69,25 @@ public class LoginActivity extends AppCompatActivity implements LoginHandler {
     @Override
     public void startUiShopMain() {
         startActivity(ShopMainActivity.getShopMainIntent(this));
+        finish();
     }
 
     @Override
     public void startUiCustomer() {
         startActivity(CustomerMainActivity.getCustomerMainIntent(this));
+        finish();
     }
 
     @Override
     public void startUiResetPassword() {
         startActivity(ResetPasswordActivity.getIntent(this));
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(FirstScreenActivity.getFirstIntent(this, DATA_NOT_NOTIFICATION));
+        finish();
     }
 
     @Override

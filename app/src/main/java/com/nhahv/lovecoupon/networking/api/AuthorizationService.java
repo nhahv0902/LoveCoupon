@@ -2,9 +2,7 @@ package com.nhahv.lovecoupon.networking.api;
 
 import com.google.gson.annotations.SerializedName;
 import com.nhahv.lovecoupon.data.model.ShopProfile;
-
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -19,8 +17,10 @@ public interface AuthorizationService {
     interface LoginService {
         @POST("/get_company_profile")
         Call<List<ShopProfile>> loginShop(@Body LoginShopBody body);
+
         @POST("/get_user_profile")
         Call<Integer> loginCustomer(@Body LoginCustomerBody body);
+
         @POST("/sendPassword")
         Call<String> resetPassword(@Body ResetPasswordBody value);
     }

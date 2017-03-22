@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
 import com.nhahv.lovecoupon.databinding.ActivityCustomerMainBinding;
@@ -21,12 +20,9 @@ import com.nhahv.lovecoupon.ui.customer.notification.NotificationType;
 import com.nhahv.lovecoupon.ui.firstscreen.FirstScreenActivity;
 import com.nhahv.lovecoupon.ui.share.ShareFragment;
 import com.nhahv.lovecoupon.util.ActivityUtil;
-
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import org.parceler.Parcels;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -36,9 +32,9 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_UI_COUP
 
 @RuntimePermissions
 public class CustomerMainActivity extends BaseActivity implements CustomerMainHandler {
+    private final List<Fragment> mListFragment = new ArrayList<>();
     private ActivityCustomerMainBinding mBinding;
     private CustomerMainViewModel mViewModel;
-    private final List<Fragment> mListFragment = new ArrayList<>();
     private String[] mTitles;
 
     public static Intent getCustomerMainIntent(Context context) {
@@ -70,14 +66,15 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
     public void onBackPressed() {
         if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mBinding.drawerLayout.closeDrawer(GravityCompat.START);
-        } else super.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
     public void addFragment(int position) {
-        ActivityUtil.addFragment(getSupportFragmentManager(),
-            mListFragment.get(position),
-            R.id.frame_layout);
+        ActivityUtil.addFragment(getSupportFragmentManager(), mListFragment.get(position),
+                R.id.frame_layout);
         setTitle(mTitles[position]);
     }
 
@@ -106,9 +103,9 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
             case REQUEST_ADDITION_COUPON:
                 if (data == null || data.getExtras() == null) return;
                 CouponCustomer coupon =
-                    Parcels.unwrap(data.getExtras().getParcelable(BUNDLE_COUPON));
+                        Parcels.unwrap(data.getExtras().getParcelable(BUNDLE_COUPON));
                 startActivityForResult(CouponOfShopActivity.getIntent(this, coupon),
-                    REQUEST_UI_COUPON_OF_SHOP);
+                        REQUEST_UI_COUPON_OF_SHOP);
                 break;
             case REQUEST_UI_COUPON_OF_SHOP:
                 if (mListFragment.get(0) != null) {
@@ -122,9 +119,9 @@ public class CustomerMainActivity extends BaseActivity implements CustomerMainHa
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        CustomerMainActivityPermissionsDispatcher
-            .onRequestPermissionsResult(this, requestCode, grantResults);
+        CustomerMainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode,
+                grantResults);
     }
 }

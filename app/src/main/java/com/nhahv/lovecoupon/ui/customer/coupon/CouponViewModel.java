@@ -8,16 +8,14 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
-import com.nhahv.lovecoupon.data.model.CustomerProfile;
+import com.nhahv.lovecoupon.data.model.LCProfile;
 import com.nhahv.lovecoupon.data.source.Callback;
 import com.nhahv.lovecoupon.data.source.remote.coupon.CouponRepository;
 import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
-
 import java.util.List;
 
 /**
@@ -27,8 +25,10 @@ import java.util.List;
 public class CouponViewModel extends BaseObservable implements ViewModel {
     private final Context mContext;
     private final ObservableList<CouponCustomer> mListCoupon = new ObservableArrayList<>();
+    private final ObservableBoolean mRefresh = new ObservableBoolean(false);
+    private final ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     private final CouponRepository mRepository;
-    private final CustomerProfile mProfile;
+    private final LCProfile mProfile;
     private final CouponHandler mHandler;
 
     public CouponViewModel(@NonNull Context context, @NonNull CouponHandler handler) {
@@ -44,7 +44,8 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
     public void loadData() {
         if (mRepository == null) return;
         mRepository.getCouponCustomer(mProfile.getId(), new Callback<List<CouponCustomer>>() {
-            //        mRepository.getCouponCustomer("nhahv0902@gmail.com", new Callback<List<CouponCustomer>>() {
+            //        mRepository.getCouponCustomer("nhahv0902@gmail.com", new
+            // Callback<List<CouponCustomer>>() {
             @Override
             public void onSuccess(List<CouponCustomer> data) {
                 mListCoupon.clear();

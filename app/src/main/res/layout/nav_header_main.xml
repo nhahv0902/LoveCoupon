@@ -8,16 +8,8 @@
         <import type="org.apache.commons.lang3.StringUtils"/>
 
         <variable
-            name="viewModel"
-            type="com.nhahv.lovecoupon.ui.shop.setting.SettingViewModel"/>
-
-        <variable
-            name="image"
-            type="java.lang.String"/>
-
-        <variable
-            name="name"
-            type="java.lang.String"/>
+            name="profile"
+            type="com.nhahv.lovecoupon.data.model.LCProfile"/>
     </data>
 
     <LinearLayout
@@ -28,16 +20,14 @@
         android:orientation="vertical"
         android:paddingBottom="@dimen/dp_16"
         android:paddingTop="@dimen/dp_30"
-
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <com.nhahv.lovecoupon.ui.widget.CircleImageView
             android:layout_width="@dimen/size_82"
             android:layout_height="@dimen/size_82"
             android:layout_marginTop="@dimen/dp_20"
-            android:onClick="@{()->viewModel.clickPickLogo()}"
             app:srcCompat="@drawable/ic_logo"
-            bind:circleImage="@{image}"
+            bind:circleImage="@{profile.logoLink}"
             bind:error="@{@drawable/ic_logo}"/>
 
         <android.support.v7.widget.AppCompatTextView
@@ -45,7 +35,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="@dimen/dp_8"
-            android:text="@{StringUtils.capitalize(name)}"
+            android:text="@{StringUtils.capitalize(profile.name)}"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_17"/>
     </LinearLayout>

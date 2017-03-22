@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.databinding.ItemUseCreateBinding;
 
@@ -14,12 +13,12 @@ import com.nhahv.lovecoupon.databinding.ItemUseCreateBinding;
  * <></>
  */
 public class UseCreateAdapter extends RecyclerView.Adapter<UseCreateAdapter.UseCreateHolder> {
-    private LayoutInflater mInflater;
     private final ObservableList<Coupon> mListCoupon;
     private final UseCreateViewModel mViewModel;
+    private LayoutInflater mInflater;
 
     public UseCreateAdapter(@NonNull UseCreateViewModel viewModel,
-                            @NonNull ObservableList<Coupon> listCoupon) {
+            @NonNull ObservableList<Coupon> listCoupon) {
         mViewModel = viewModel;
         mListCoupon = listCoupon;
     }

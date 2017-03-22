@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-
 import com.nhahv.lovecoupon.databinding.ItemNotificationImageBinding;
 import com.nhahv.lovecoupon.ui.INotificationViewModel;
 
@@ -14,15 +13,14 @@ import com.nhahv.lovecoupon.ui.INotificationViewModel;
  * <></>
  */
 public class NotificationCreationAdapter
-    extends RecyclerView.Adapter<NotificationCreationAdapter.NotificationHolder> {
+        extends RecyclerView.Adapter<NotificationCreationAdapter.NotificationHolder> {
     private final INotificationViewModel mViewModel;
-    private LayoutInflater mInflater;
     private final ObservableList<String> mListFolder;
+    private LayoutInflater mInflater;
     private boolean mShowDelete;
 
     public NotificationCreationAdapter(@NonNull INotificationViewModel viewModel,
-                                       @NonNull ObservableList<String> listFolder,
-                                       @NonNull boolean showDelete) {
+            @NonNull ObservableList<String> listFolder, @NonNull boolean showDelete) {
         mListFolder = listFolder;
         mViewModel = viewModel;
         mShowDelete = showDelete;
@@ -32,7 +30,7 @@ public class NotificationCreationAdapter
     public NotificationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (mInflater == null) mInflater = LayoutInflater.from(parent.getContext());
         ItemNotificationImageBinding binding =
-            ItemNotificationImageBinding.inflate(mInflater, parent, false);
+                ItemNotificationImageBinding.inflate(mInflater, parent, false);
         binding.setViewModel(mViewModel);
         binding.setShowDelete(mShowDelete);
         return new NotificationHolder(binding);

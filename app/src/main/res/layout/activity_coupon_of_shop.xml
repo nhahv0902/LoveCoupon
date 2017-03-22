@@ -64,7 +64,6 @@
                             bind:error="@{@drawable/ic_logo}"/>
                     </FrameLayout>
 
-
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

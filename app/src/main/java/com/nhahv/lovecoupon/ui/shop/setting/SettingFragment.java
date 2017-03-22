@@ -2,13 +2,13 @@ package com.nhahv.lovecoupon.ui.shop.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.nhahv.lovecoupon.data.source.remote.updateprofile.UpdateRepository;
 import com.nhahv.lovecoupon.databinding.FragmentSettingBinding;
+import com.nhahv.lovecoupon.ui.shop.main.IShopMainHandler;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_PICK_LOGO;
 import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_OPEN_GALLERY;
@@ -16,16 +16,19 @@ import static com.nhahv.lovecoupon.util.Constant.RequestConstant.REQUEST_OPEN_GA
 public class SettingFragment extends Fragment implements ISettingFragment {
     private FragmentSettingBinding mBinding;
     private SettingViewModel mViewModel;
+    private IShopMainHandler mListener;
 
-    public static SettingFragment newInstance() {
-        return new SettingFragment();
+    public static SettingFragment newInstance(@NonNull IShopMainHandler handler) {
+        SettingFragment fragment = new SettingFragment();
+        fragment.setShopMainListener(handler);
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         mBinding = FragmentSettingBinding.inflate(inflater, container, false);
-        mViewModel = new SettingViewModel(getActivity(), this, UpdateRepository.getInstance());
+        mViewModel = new SettingViewModel(getActivity(), this, mListener);
         mBinding.setViewModel(mViewModel);
         return mBinding.getRoot();
     }
@@ -34,12 +37,7 @@ public class SettingFragment extends Fragment implements ISettingFragment {
     public void openGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        Intent pickIntent = new Intent(Intent.ACTION_PICK,
-            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-        Intent chooserIntent = Intent.createChooser(intent, DATA_PICK_LOGO);
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-        startActivityForResult(chooserIntent, REQUEST_OPEN_GALLERY);
+        startActivityForResult(Intent.createChooser(intent, DATA_PICK_LOGO), REQUEST_OPEN_GALLERY);
     }
 
     @Override
@@ -50,5 +48,9 @@ public class SettingFragment extends Fragment implements ISettingFragment {
 
     public void updateProfile() {
         mViewModel.updateProfileShop();
+    }
+
+    public void setShopMainListener(@NonNull IShopMainHandler shopMainListener) {
+        mListener = shopMainListener;
     }
 }

@@ -11,9 +11,11 @@
         <import type="android.view.View"/>
 
         <import type="com.nhahv.lovecoupon.ui.shop.setting.UserType"/>
+
+        <import type="org.apache.commons.lang3.StringUtils"/>
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -23,13 +25,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/layout_header"
-                layout="@layout/partial_header_setting"
-                bind:address="@{viewModel.profile.address}"
-                bind:image="@{viewModel.profile.logoLink}"
-                bind:shopName="@{viewModel.profile.name}"
-                bind:viewModel="@{viewModel}"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_200"
+                android:background="@color/colorPrimary"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_8">
+
+                <com.nhahv.lovecoupon.ui.widget.CircleImageView
+                    android:layout_width="@dimen/dp_92"
+                    android:layout_height="@dimen/dp_92"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:onClick="@{()->viewModel.clickPickLogo()}"
+                    android:src="@drawable/ic_logo"
+                    bind:circleImage="@{viewModel.profile.logoLink}"
+                    bind:error="@{@drawable/ic_logo}"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp_8"
+                    android:text="@{StringUtils.capitalize(viewModel.profile.name)}"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:gravity="center"
+                    android:text="@{StringUtils.capitalize(viewModel.profile.address)}"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_17"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -157,7 +189,6 @@
 
                 </android.support.v7.widget.CardView>
 
-
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -225,5 +256,5 @@
                 </android.support.v7.widget.CardView>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

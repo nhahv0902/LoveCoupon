@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.CouponTemplate;
@@ -22,7 +21,6 @@ import com.nhahv.lovecoupon.ui.ViewModel;
 import com.nhahv.lovecoupon.ui.shop.couponcreation.CouponCreationActivity;
 import com.nhahv.lovecoupon.util.ActivityUtil;
 import com.nhahv.lovecoupon.util.SharePreferenceUtil;
-
 import java.util.List;
 
 import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
@@ -34,6 +32,8 @@ import static com.nhahv.lovecoupon.util.Constant.DataConstant.DATA_ID_SHOP;
 public class CouponViewModel extends BaseObservable implements ViewModel {
     private final String TAG = getClass().getSimpleName();
     private final Context mContext;
+    private final ObservableBoolean mRefresh = new ObservableBoolean(false);
+    private final ObservableField<RecyclerView.Adapter> mAdapter = new ObservableField<>();
     private final ObservableList<CouponTemplate> mListCoupon = new ObservableArrayList<>();
     private final CouponTemplateRepository mRepository;
     private final ShopProfile mProfile;
@@ -82,30 +82,30 @@ public class CouponViewModel extends BaseObservable implements ViewModel {
                     clickGenerateCoupon(template);
                     break;
                 case R.id.action_delete_notification:
-                    new MaterialDialog
-                        .Builder(mContext)
-                        .content(R.string.title_delete_notification)
-                        .contentColor(ContextCompat.getColor(mContext, R.color.color_grey_700))
-                        .positiveText(R.string.agree)
-                        .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
-                        .onPositive((dialog, which) -> {
-                            dialog.dismiss();
-                            if (mRepository == null) return;
-                            mRepository.deleteCouponTemplate(mProfile.getToken(), template,
-                                new Callback<Boolean>() {
-                                    @Override
-                                    public void onSuccess(Boolean data) {
-                                        loadData();
-                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_success);
-                                    }
+                    new MaterialDialog.Builder(mContext).content(R.string.title_delete_notification)
+                            .contentColor(ContextCompat.getColor(mContext, R.color.color_grey_700))
+                            .positiveText(R.string.agree)
+                            .positiveColor(ContextCompat.getColor(mContext, R.color.color_blue_600))
+                            .onPositive((dialog, which) -> {
+                                dialog.dismiss();
+                                if (mRepository == null) return;
+                                mRepository.deleteCouponTemplate(mProfile.getToken(), template,
+                                        new Callback<Boolean>() {
+                                            @Override
+                                            public void onSuccess(Boolean data) {
+                                                loadData();
+                                                ActivityUtil.showMsg(mContext,
+                                                        R.string.msg_delete_success);
+                                            }
 
-                                    @Override
-                                    public void onError() {
-                                        ActivityUtil.showMsg(mContext, R.string.msg_delete_error);
-                                    }
-                                });
-                        })
-                        .show();
+                                            @Override
+                                            public void onError() {
+                                                ActivityUtil.showMsg(mContext,
+                                                        R.string.msg_delete_error);
+                                            }
+                                        });
+                            })
+                            .show();
                     break;
                 default:
                     break;

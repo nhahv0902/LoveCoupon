@@ -7,7 +7,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
-
 import com.nhahv.lovecoupon.R;
 import com.nhahv.lovecoupon.data.model.Coupon;
 import com.nhahv.lovecoupon.data.model.CouponCustomer;
@@ -20,6 +19,10 @@ import com.nhahv.lovecoupon.util.ActivityUtil;
  * <></>
  */
 public class CouponOfShopViewModel extends BaseObservable {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     private final String TAG = getClass().getSimpleName();
     private final Context mContext;
     private final CouponCustomer mCouponCustomer;
@@ -27,18 +30,15 @@ public class CouponOfShopViewModel extends BaseObservable {
     private final ObservableField<CouponOfShopAdapter> mAdapter = new ObservableField<>();
     private final CouponRepository mRepository;
     private final CouponOfShopHandler mHandler;
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
-    public CouponOfShopViewModel(@NonNull Context context,
-                                 @NonNull CouponOfShopHandler handler,
-                                 @NonNull CouponCustomer couponCustomer) {
+
+    public CouponOfShopViewModel(@NonNull Context context, @NonNull CouponOfShopHandler handler,
+            @NonNull CouponCustomer couponCustomer) {
         mContext = context;
         mHandler = handler;
         mCouponCustomer = couponCustomer;
         mRepository = CouponRepository.getInstance();
         mAdapter.set(new CouponOfShopAdapter(this, mListCoupon, mCouponCustomer.getLogoLink(),
-            mCouponCustomer.getName()));
+                mCouponCustomer.getName()));
         mListCoupon.addAll(mCouponCustomer.getListCoupon());
     }
 

@@ -1,7 +1,6 @@
 package com.nhahv.lovecoupon.ui.pickimage.image;
 
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
-
 import java.util.List;
 
 /**

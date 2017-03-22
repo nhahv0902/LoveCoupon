@@ -5,10 +5,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-
 import com.nhahv.lovecoupon.data.model.ImageFolder;
 import com.nhahv.lovecoupon.data.model.ImagePickerItem;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +19,12 @@ public class LoaderImageUtil {
     private static final String TAG = "LoaderImageUtil";
     private static final String DATA_JPG = ".jpg";
     private static final String DATA_PNG = ".png";
-    private static final String[] SELECTION_ARGS = new String[]{"image/jpeg", "image/png"};
+    private static final String[] SELECTION_ARGS = new String[] { "image/jpeg", "image/png" };
     private static final String MIME_TYPE = MediaStore.Images.Media.MIME_TYPE;
     private static final String SELECTION = MIME_TYPE + "=? or " + MIME_TYPE + "=?";
     private final static String[] IMAGE_PROJECTION = {
-        MediaStore.Images.Media.DATA,
-        MediaStore.Images.Media.DISPLAY_NAME,
-        MediaStore.Images.Media.DATE_ADDED,
-        MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
+            MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME,
+            MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME
     };
     private static LoaderImageUtil sInstance;
     private Context mContext;
@@ -48,12 +44,9 @@ public class LoaderImageUtil {
 
     private List<LoaderImageItem> getListImage() {
         List<LoaderImageItem> images = new ArrayList<>();
-        Cursor cursor = mContext.getContentResolver().query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            IMAGE_PROJECTION,
-            SELECTION,
-            SELECTION_ARGS,
-            IMAGE_PROJECTION[2] + " DESC", null);
+        Cursor cursor = mContext.getContentResolver()
+                .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, SELECTION,
+                        SELECTION_ARGS, IMAGE_PROJECTION[2] + " DESC", null);
         if (cursor == null || !cursor.moveToFirst()) return images;
         LoaderImageItem loaderImageItem;
         int indexPath = cursor.getColumnIndex(IMAGE_PROJECTION[0]);
@@ -90,8 +83,9 @@ public class LoaderImageUtil {
         List<ImagePickerItem> inFiles = new ArrayList<>();
         File[] files = parentDir.listFiles();
         for (File file : files) {
-            if (file.isDirectory()) inFiles.addAll(getListFiles(file));
-            else if (file.getPath().endsWith(DATA_JPG) || file.getPath().endsWith(DATA_PNG)) {
+            if (file.isDirectory()) {
+                inFiles.addAll(getListFiles(file));
+            } else if (file.getPath().endsWith(DATA_JPG) || file.getPath().endsWith(DATA_PNG)) {
                 inFiles.add(new ImagePickerItem(file.getPath()));
             }
         }
@@ -103,6 +97,12 @@ public class LoaderImageUtil {
             if (item.getFolderName().toLowerCase().equals(nameFolder.toLowerCase())) return true;
         }
         return false;
+    }
+
+    public interface LoaderCallback {
+        void onSuccess(List<ImageFolder> imageFolders);
+
+        void onError();
     }
 
     public class LoaderImageItem {
@@ -139,13 +139,11 @@ public class LoaderImageUtil {
         protected void onPostExecute(List<ImageFolder> imageFolders) {
             super.onPostExecute(imageFolders);
             if (mCallback == null) return;
-            if (imageFolders != null) mCallback.onSuccess(imageFolders);
-            else mCallback.onError();
+            if (imageFolders != null) {
+                mCallback.onSuccess(imageFolders);
+            } else {
+                mCallback.onError();
+            }
         }
-    }
-
-    public interface LoaderCallback {
-        void onSuccess(List<ImageFolder> imageFolders);
-        void onError();
     }
 }
